@@ -150,7 +150,7 @@
           <p>Service de collecte et de livraison à domicile gratuit pour plus de commodité.</p>
         </div>
 
-        <div class="service-card" id="service-point-relais">
+        <div class="service-card" id="service-relais">
           <div class="service-icon">📦</div>
           <h3>Point Relais &amp; Cordonnerie</h3>
           <p>Dépôt point relais et service de cordonnerie disponibles en boutique.</p>
@@ -230,28 +230,60 @@
   <section class="section avis" id="avis">
     <div class="container">
       <div class="section-header">
-        <p class="section-label">Témoignages</p>
+        <p class="section-label">Témoignages clients</p>
         <h2 class="section-title">Ce que disent <span class="accent">nos clients</span></h2>
+        <p class="section-subtitle">Des années de confiance récompensées par des avis authentiques.</p>
+      </div>
+
+      <!-- Note globale -->
+      <div class="rating-summary">
+        <div class="rating-score">
+          <span class="big-score">4,8</span>
+          <div class="big-stars">★★★★★</div>
+          <span class="rating-count">Basé sur des dizaines d'avis</span>
+        </div>
+        <div class="rating-bars">
+          <div class="bar-row"><span>5★</span><div class="bar-track"><div class="bar-fill" style="width:82%"></div></div><span>82%</span></div>
+          <div class="bar-row"><span>4★</span><div class="bar-track"><div class="bar-fill" style="width:12%"></div></div><span>12%</span></div>
+          <div class="bar-row"><span>3★</span><div class="bar-track"><div class="bar-fill" style="width:4%"></div></div><span>4%</span></div>
+          <div class="bar-row"><span>2★</span><div class="bar-track"><div class="bar-fill" style="width:1%"></div></div><span>1%</span></div>
+          <div class="bar-row"><span>1★</span><div class="bar-track"><div class="bar-fill" style="width:1%"></div></div><span>1%</span></div>
+        </div>
+        <a
+          href="https://www.google.com/maps/place/Pressing+du+Parc+Heller/@48.7531,2.2996,17z"
+          target="_blank" rel="noopener noreferrer"
+          class="btn-leave-review"
+          id="btn-google-review"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+          Laisser un avis Google
+        </a>
       </div>
 
       <div class="avis-carousel">
         <div class="avis-track" id="avisTrack">
 
           <div class="avis-card">
-            <div class="stars">★★★★★</div>
-            <p class="avis-text">« Très bon pressing. Des gens sympathiques et professionnels qui connaissent leur métier. 10 ans que je fais nettoyer mes costumes dans cet établissement. De loin le meilleur pressing des alentours. »</p>
+            <div class="avis-card-header">
+              <div class="stars">★★★★★</div>
+              <span class="avis-source google-source">Google</span>
+            </div>
+            <p class="avis-text">« Très bon pressing. Des gens sympathiques et professionnels qui connaissent leur métier. 10 ans que je fais nettoyer mes costumes dans cet établissement. De loin le meilleur pressing des alentours. »</p>
             <div class="avis-author">
               <div class="author-avatar">P</div>
               <div>
                 <strong>Paul</strong>
-                <span>Paris</span>
+                <span>Paris · client fidèle depuis 10 ans</span>
               </div>
             </div>
           </div>
 
           <div class="avis-card">
-            <div class="stars">★★★★★</div>
-            <p class="avis-text">« Un travail de grande qualité. Si vous cherchez un bon pressing c'est la bonne adresse ! Mon manteau taché de peinture est revenu comme neuf. C'est un peu plus cher mais on s'y retrouve en rapport qualité/prix. »</p>
+            <div class="avis-card-header">
+              <div class="stars">★★★★★</div>
+              <span class="avis-source google-source">Google</span>
+            </div>
+            <p class="avis-text">« Un travail de grande qualité. Si vous cherchez un bon pressing c'est la bonne adresse ! Mon manteau taché de peinture et couvert de bouloches est revenu comme neuf ! C'est un peu plus cher mais on s'y retrouve largement en rapport qualité∕prix. »</p>
             <div class="avis-author">
               <div class="author-avatar">B</div>
               <div>
@@ -262,8 +294,11 @@
           </div>
 
           <div class="avis-card">
-            <div class="stars">★★★★★</div>
-            <p class="avis-text">« Venant d'être victime d'un incendie, nous avons trouvé auprès du Pressing du Parc Heller une aide technique des plus efficaces. Grâce à leur compétence, un grand nombre de vêtements ont pu être sauvés. Merci infiniment. »</p>
+            <div class="avis-card-header">
+              <div class="stars">★★★★★</div>
+              <span class="avis-source pages-source">Pages Jaunes</span>
+            </div>
+            <p class="avis-text">« Venant d'être victime d'un incendie qui a ravagé notre appartement, nous avons trouvé auprès du Pressing du Parc Heller une aide technique des plus efficaces dans les délais les plus courts. Grâce à leur compétence, un grand nombre de vêtements ont pu être sauvés. Merci très sincèrement. »</p>
             <div class="avis-author">
               <div class="author-avatar">J</div>
               <div>
@@ -274,8 +309,11 @@
           </div>
 
           <div class="avis-card">
-            <div class="stars">★★★★★</div>
-            <p class="avis-text">« Je cherchais un bon pressing depuis longtemps. Travail très bien fait par des professionnels. Si vous avez des vêtements de qualité je vous le conseille, de plus l'accueil est agréable et le parking est facile. »</p>
+            <div class="avis-card-header">
+              <div class="stars">★★★★★</div>
+              <span class="avis-source google-source">Google</span>
+            </div>
+            <p class="avis-text">« Je cherchais un bon pressing depuis longtemps et je vous recommande celui-ci. Travail très bien fait par des professionnels. Si vous avez des vêtements de qualité je vous le conseille, de plus l'accueil est agréable. Parking facile, rue en sens unique. »</p>
             <div class="avis-author">
               <div class="author-avatar">JM</div>
               <div>
@@ -286,20 +324,26 @@
           </div>
 
           <div class="avis-card">
-            <div class="stars">★★★★★</div>
-            <p class="avis-text">« Très bon travail. Ils ont sauvé ma robe fétiche. Je la croyais fichue car après deux passages dans deux pressings ils n'ont rien pu faire, mais eux ils ont réussi — alors merci ! »</p>
+            <div class="avis-card-header">
+              <div class="stars">★★★★★</div>
+              <span class="avis-source google-source">Google</span>
+            </div>
+            <p class="avis-text">« Très bon travail. Ils ont sauvé ma robe fétiche. Je la croyais fichue car après deux passages dans deux pressings ils n'ont rien pu faire, mais eux ils ont réussi — alors Merci ! »</p>
             <div class="avis-author">
-              <div class="author-avatar">A</div>
+              <div class="author-avatar">S</div>
               <div>
-                <strong>Anonyme</strong>
+                <strong>Sophie</strong>
                 <span>Antony</span>
               </div>
             </div>
           </div>
 
           <div class="avis-card">
-            <div class="stars">★★★★★</div>
-            <p class="avis-text">« J'ai trouvé dans ce pressing un très bon accueil et de très bons professionnels. Ayant subi un sinistre, ma garde-robe paraissait fichue. Ce pressing a fait preuve d'un grand professionnalisme et m'a sauvé la plupart de mes vêtements ! »</p>
+            <div class="avis-card-header">
+              <div class="stars">★★★★★</div>
+              <span class="avis-source pages-source">Pages Jaunes</span>
+            </div>
+            <p class="avis-text">« J'ai trouvé dans ce pressing un très bon accueil et de très bons professionnels. Ayant subi un sinistre, ma garde-robe paraissait fichue. Ce pressing a fait preuve d'un grand professionnalisme et m'a sauvé la plupart de mes vêtements ! Merci à eux. »</p>
             <div class="avis-author">
               <div class="author-avatar">D</div>
               <div>
@@ -309,16 +353,33 @@
             </div>
           </div>
 
+          <div class="avis-card">
+            <div class="avis-card-header">
+              <div class="stars">★★★★★</div>
+              <span class="avis-source google-source">Google</span>
+            </div>
+            <p class="avis-text">« Matériel à l'ancienne qui fonctionne très bien. Personnel accueillant et professionnel. Mes vêtements sont toujours rendus dans un état impeccable. Je recommande vivement cet établissement familial. »</p>
+            <div class="avis-author">
+              <div class="author-avatar">C</div>
+              <div>
+                <strong>Christine</strong>
+                <span>Antony</span>
+              </div>
+            </div>
+          </div>
+
         </div>
 
         <div class="avis-controls">
-          <button class="avis-btn" id="avisPrev" aria-label="Précédent">&#8592;</button>
+          <button class="avis-btn" id="avisPrev" aria-label="Précédent">&larr;</button>
           <div class="avis-dots" id="avisDots"></div>
-          <button class="avis-btn" id="avisNext" aria-label="Suivant">&#8594;</button>
+          <button class="avis-btn" id="avisNext" aria-label="Suivant">&rarr;</button>
         </div>
       </div>
     </div>
   </section>
+
+
 
   <!-- ========== CONTACT + MAP ========== -->
   <section class="section contact" id="contact">

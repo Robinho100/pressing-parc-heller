@@ -5,9 +5,42 @@
    - Avis carousel
    - Stats counter animation
    - Scroll reveal
+   - Chargement dynamique des prix (API)
    ============================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
+
+  // -------- PRIX DYNAMIQUES (API) --------
+  async function loadPrices() {
+    try {
+      const res  = await fetch('/api/prices');
+      if (!res.ok) return;
+      const data = await res.json();
+
+      data.services.forEach(svc => {
+        // Chercher la carte correspondante par son id (service-{slug})
+        const card = document.getElementById(`service-${svc.slug}`);
+        if (!card) return;
+
+        // Supprimer l'ancien badge si existant
+        const existing = card.querySelector('.price-badge');
+        if (existing) existing.remove();
+
+        // Ajouter le badge de prix
+        const badge = document.createElement('span');
+        badge.className = 'price-badge';
+        badge.textContent = svc.prix;
+        card.appendChild(badge);
+
+        // Masquer la carte si non visible
+        card.style.display = svc.visible === 1 || svc.visible === true ? '' : 'none';
+      });
+    } catch (e) {
+      // Silencieux — les prix sont optionnels
+    }
+  }
+
+  loadPrices();
 
   // -------- NAVBAR SCROLL --------
   const navbar = document.getElementById('navbar');

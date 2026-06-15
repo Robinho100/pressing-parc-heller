@@ -475,6 +475,20 @@ a {
   line-height: 1.65;
 }
 
+.price-badge {
+  display: inline-block;
+  margin-top: 16px;
+  background: linear-gradient(135deg, var(--navy), var(--navy-light));
+  color: var(--gold-light);
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 5px 14px;
+  border-radius: 20px;
+  letter-spacing: 0.03em;
+  border: 1px solid rgba(200,169,110,0.3);
+  animation: fadeInUp 0.4s ease both;
+}
+
 /* -------- ABOUT -------- */
 .about {
   background: var(--white);

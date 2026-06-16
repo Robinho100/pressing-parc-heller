@@ -452,9 +452,17 @@ a {
 .service-icon {
   font-size: 2.5rem;
   margin-bottom: 20px;
-  display: block;
-  filter: grayscale(0);
+  display: flex;
+  align-items: center;
+  height: 48px;
   transition: transform var(--transition);
+}
+
+.service-icon svg {
+  width: 42px;
+  height: 42px;
+  stroke: var(--gold);
+  display: block;
 }
 
 .service-card:hover .service-icon {

@@ -11,6 +11,22 @@
 document.addEventListener('DOMContentLoaded', () => {
   let observer;
 
+  // Icon mapping helper (SVGs for premium feel, emojis for fallbacks)
+  function getServiceIcon(slug, emojiFallback) {
+    const iconMap = {
+      costumes: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3h6a3 3 0 0 0-3-3z"/><path d="M12 5v3"/><path d="M21 16.5A2.5 2.5 0 0 1 18.5 19H5.5A2.5 2.5 0 0 1 3 16.5L12 8l9 8.5z"/></svg>`,
+      mariage: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l-2 5H8L6 3z"/><path d="M8 8l-3 13h14L16 8H8z"/><path d="M12 3v5"/></svg>`,
+      chemises: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20.38 3.46L16 6.14V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3.14L3.62 3.46A1 1 0 0 0 2 4.3v15.2a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1V4.3a1 1 0 0 0-1.62-.84z"/><path d="M12 22V6"/><path d="M16 6l-4 4-4-4"/></svg>`,
+      doudounes: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 3v18"/><path d="M15 3v18"/><path d="M4 8h16"/><path d="M4 13h16"/><path d="M4 17h16"/></svg>`,
+      cuir: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+      rideaux: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/><path d="M15 3v18"/><path d="M3 9h18"/><path d="M3 15h18"/></svg>`,
+      couture: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="9.8" y1="8.2" x2="20" y2="17"/><line x1="9.8" y1="15.8" x2="20" y2="7"/></svg>`,
+      blanchisserie: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><circle cx="12" cy="12" r="4"/><circle cx="8" cy="7" r="1"/></svg>`,
+      livraison: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>`,
+    };
+    return iconMap[slug] || `<span style="font-size: 2.2rem; line-height: 1;">${emojiFallback || '✦'}</span>`;
+  }
+
   // -------- PRIX DYNAMIQUES (API) --------
   async function loadPrices() {
     try {
@@ -31,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const iconDiv = document.createElement('div');
         iconDiv.className = 'service-icon';
-        iconDiv.innerHTML = svc.emoji || '✦';
+        iconDiv.innerHTML = getServiceIcon(svc.slug, svc.emoji);
         card.appendChild(iconDiv);
 
         const title = document.createElement('h3');
@@ -186,7 +202,6 @@ document.addEventListener('DOMContentLoaded', () => {
   let current = 0;
   let perView = getPerView();
   let total   = Math.ceil(cards.length / perView);
-  let autoInterval;
 
   function getPerView() {
     if (window.innerWidth < 768) return 1;
@@ -235,16 +250,8 @@ document.addEventListener('DOMContentLoaded', () => {
     goTo(current);
   }
 
-  function startAuto() {
-    autoInterval = setInterval(next, 5000);
-  }
-
-  function stopAuto() {
-    clearInterval(autoInterval);
-  }
-
-  nextBtn.addEventListener('click', () => { stopAuto(); next(); startAuto(); });
-  prevBtn.addEventListener('click', () => { stopAuto(); prev(); startAuto(); });
+  nextBtn.addEventListener('click', () => { next(); });
+  prevBtn.addEventListener('click', () => { prev(); });
 
   // Touch swipe support
   let startX = 0;
@@ -252,9 +259,7 @@ document.addEventListener('DOMContentLoaded', () => {
   track.addEventListener('touchend', e => {
     const dx = e.changedTouches[0].clientX - startX;
     if (Math.abs(dx) > 50) {
-      stopAuto();
       if (dx < 0) next(); else prev();
-      startAuto();
     }
   }, { passive: true });
 
@@ -268,12 +273,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   initCarousel();
-  startAuto();
 
   window.addEventListener('resize', () => {
-    stopAuto();
     initCarousel();
-    startAuto();
   });
 
   // -------- STATS COUNTER --------

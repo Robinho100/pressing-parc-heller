@@ -434,7 +434,19 @@ input, textarea, button { font-family: var(--font); }
   padding: 32px !important;
 }
 
-.emoji-cell { font-size: 1.4rem; }
+.emoji-cell {
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  height: 28px;
+}
+
+.emoji-cell svg {
+  width: 24px;
+  height: 24px;
+  stroke: var(--navy);
+  display: block;
+}
 
 .prix-badge {
   display: inline-block;

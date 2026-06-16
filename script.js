@@ -29,15 +29,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // -------- PRIX DYNAMIQUES (API) --------
   async function loadPrices() {
+    const grid = document.querySelector('.services-grid');
+    if (!grid) return;
+
+    const originalHTML = grid.innerHTML;
+
+    // Afficher des skeleton loaders pendant le chargement
+    grid.innerHTML = Array(6).fill(0).map(() => `
+      <div class="service-card skeleton">
+        <div class="skeleton-box skeleton-icon"></div>
+        <div class="skeleton-box skeleton-title"></div>
+        <div class="skeleton-box skeleton-desc"></div>
+        <div class="skeleton-box skeleton-desc-short"></div>
+        <div class="skeleton-box skeleton-price"></div>
+      </div>
+    `).join('');
+
     try {
       const res  = await fetch('/api/prices');
-      if (!res.ok) return;
+      if (!res.ok) {
+        grid.innerHTML = originalHTML;
+        return;
+      }
       const data = await res.json();
 
-      const grid = document.querySelector('.services-grid');
-      if (!grid) return;
-
-      // Vider le grid de secours statique et le remplacer par le contenu dynamique de la base de données
+      // Vider les skeletons et insérer les vrais services
       grid.innerHTML = '';
 
       data.services.forEach(svc => {

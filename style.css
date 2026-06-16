@@ -497,6 +497,64 @@ a {
   animation: fadeInUp 0.4s ease both;
 }
 
+/* -------- SKELETON LOADERS -------- */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton-box {
+  background: linear-gradient(90deg, #f2f2f2 25%, #e9e9e9 50%, #f2f2f2 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite linear;
+  border-radius: 4px;
+}
+
+.service-card.skeleton {
+  pointer-events: none;
+  background: var(--white);
+  border-color: var(--gray-200);
+}
+
+.service-card.skeleton::before {
+  display: none;
+}
+
+.skeleton-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+}
+
+.skeleton-title {
+  width: 60%;
+  height: 20px;
+  margin-bottom: 12px;
+}
+
+.skeleton-desc {
+  width: 100%;
+  height: 14px;
+  margin-bottom: 8px;
+}
+
+.skeleton-desc-short {
+  width: 75%;
+  height: 14px;
+  margin-bottom: 20px;
+}
+
+.skeleton-price {
+  width: 90px;
+  height: 26px;
+  border-radius: 20px;
+}
+
 /* -------- ABOUT -------- */
 .about {
   background: var(--white);
@@ -1304,6 +1362,12 @@ a {
 
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .avis-card {
+    width: calc(50% - 12px);
+    min-width: calc(50% - 12px);
+    max-width: calc(50% - 12px);
   }
 }
 

@@ -591,8 +591,8 @@ input:checked + .switch-slider::before { transform: translateX(16px); }
 
 .btn-cancel:hover { border-color: var(--navy); color: var(--navy); }
 
-/* PASSWORD FORM */
-.password-form { max-width: 420px; margin-top: 8px; }
+/* PASSWORD & SETTINGS FORMS */
+.password-form, .settings-form { max-width: 540px; margin-top: 8px; }
 
 /* -------- RESPONSIVE -------- */
 @media (max-width: 768px) {

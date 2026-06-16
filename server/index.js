@@ -34,8 +34,9 @@ app.use(cookieParser());
 // ============================================================
 //   ROUTES API
 // ============================================================
-app.use('/api/auth',   require('./routes/auth'));
-app.use('/api/prices', require('./routes/prices'));
+app.use('/api/auth',     require('./routes/auth'));
+app.use('/api/prices',   require('./routes/prices'));
+app.use('/api/settings', require('./routes/settings'));
 
 // ============================================================
 //   FICHIERS STATIQUES
@@ -47,9 +48,9 @@ app.use('/admin', express.static(path.join(__dirname, '..', 'admin')));
 // Site public (index.html, style.css, etc.)
 app.use(express.static(path.join(__dirname, '..')));
 
-// Fallback → index.html (SPA-like)
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'index.html'));
+// Fallback → 404.html (page introuvable)
+app.use((req, res) => {
+  res.status(404).sendFile(path.join(__dirname, '..', '404.html'));
 });
 
 // ============================================================

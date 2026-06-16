@@ -43,12 +43,46 @@ async function initDb() {
     );
   `);
 
+  db.run(`
+    CREATE TABLE IF NOT EXISTS settings (
+      key   TEXT PRIMARY KEY,
+      value TEXT NOT NULL
+    );
+  `);
+
   // -------- SEED ADMIN --------
-  const adminRow = db.exec("SELECT id FROM admin WHERE email = 'admin@pressing-parc-heller.com'");
+  const adminRow = db.exec("SELECT id, email FROM admin");
   if (!adminRow.length || !adminRow[0].values.length) {
     const hash = bcrypt.hashSync('Admin2025!', 12);
-    db.run('INSERT INTO admin (email, password) VALUES (?, ?)', ['admin@pressing-parc-heller.com', hash]);
-    console.log('✅ Compte admin créé : admin@pressing-parc-heller.com / Admin2025!');
+    db.run('INSERT INTO admin (email, password) VALUES (?, ?)', ['pressingparcheller@yahoo.fr', hash]);
+    console.log('✅ Compte admin créé : pressingparcheller@yahoo.fr / Admin2025!');
+    save();
+  } else {
+    // Si l'ancienne adresse par défaut est présente, la mettre à jour vers la nouvelle adresse pro
+    const currentEmail = adminRow[0].values[0][1];
+    if (currentEmail === 'admin@pressing-parc-heller.com') {
+      db.run("UPDATE admin SET email = 'pressingparcheller@yahoo.fr' WHERE email = 'admin@pressing-parc-heller.com'");
+      console.log('🔄 Email admin mis à jour vers : pressingparcheller@yahoo.fr');
+      save();
+    }
+  }
+
+  // -------- SEED SETTINGS --------
+  const settingsCountRow = db.exec('SELECT COUNT(*) FROM settings');
+  const settingsCount = settingsCountRow.length && settingsCountRow[0].values.length ? settingsCountRow[0].values[0][0] : 0;
+  if (settingsCount === 0) {
+    const defaultSettings = [
+      ['contact_email',      'pressingparcheller@yahoo.fr'],
+      ['contact_phone',      '01 42 37 47 48'],
+      ['contact_address',    '50 Rue Prosper Legouté, 92160 Antony'],
+      ['hours_week',         '9h–12h30 · 14h–19h'],
+      ['hours_sat',          '9h–13h · 13h30–19h'],
+      ['google_maps_iframe', 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2636.0!2d2.2996!3d48.7531!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e67172b01f7ce1%3A0x82c3b0f3bef3e2c0!2s50%20Rue%20Prosper%20Legout%C3%A9%2C%2092160%20Antony!5e0!3m2!1sfr!2sfr!4v1718461234567!5m2!1sfr!2sfr']
+    ];
+    defaultSettings.forEach(([k, v]) => {
+      db.run('INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)', [k, v]);
+    });
+    console.log('✅ Coordonnées et horaires par défaut insérés.');
     save();
   }
 

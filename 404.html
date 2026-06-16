@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Page introuvable – Pressing du Parc Heller</title>
+  <meta name="description" content="Cette page n'existe pas. Retournez à l'accueil du Pressing du Parc Heller à Antony." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    /* ============================================
+       PAGE 404 — Styles spécifiques
+       ============================================ */
+
+    body {
+      background: var(--navy-dark);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ---- Navbar simplifié (toujours en fond sombre) ---- */
+    .navbar-404 {
+      background: rgba(8, 15, 31, 0.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(200, 169, 110, 0.12);
+    }
+
+    /* ---- Contenu principal ---- */
+    .error-page {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      padding: 120px 24px 80px;
+    }
+
+    /* Motif de fond subtil (même que stats) */
+    .error-page::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c8a96e' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+
+    .error-content {
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      max-width: 580px;
+    }
+
+    /* ---- Grand "404" animé ---- */
+    .error-code {
+      font-family: var(--font-heading);
+      font-size: clamp(7rem, 20vw, 12rem);
+      font-weight: 700;
+      line-height: 1;
+      color: transparent;
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold) 100%);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      animation: shimmer 4s ease-in-out infinite, float 6s ease-in-out infinite;
+      margin-bottom: 8px;
+      user-select: none;
+    }
+
+    @keyframes shimmer {
+      0%, 100% { background-position: 0% 50%; }
+      50%      { background-position: 100% 50%; }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-12px); }
+    }
+
+    /* ---- Icône de cintre ---- */
+    .error-icon {
+      font-size: 3rem;
+      margin-bottom: 24px;
+      display: block;
+      animation: fadeInUp 0.8s ease 0.2s both;
+    }
+
+    /* ---- Texte ---- */
+    .error-title {
+      font-family: var(--font-heading);
+      font-size: clamp(1.5rem, 3.5vw, 2rem);
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 16px;
+      animation: fadeInUp 0.8s ease 0.3s both;
+    }
+
+    .error-subtitle {
+      font-size: 1.05rem;
+      color: rgba(255, 255, 255, 0.55);
+      line-height: 1.7;
+      margin-bottom: 40px;
+      animation: fadeInUp 0.8s ease 0.45s both;
+    }
+
+    /* ---- Boutons ---- */
+    .error-actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeInUp 0.8s ease 0.6s both;
+    }
+
+    .btn-home {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 32px;
+      border-radius: var(--radius);
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition);
+      border: 2px solid transparent;
+      background: var(--gold);
+      color: var(--navy-dark);
+      border-color: var(--gold);
+      letter-spacing: 0.02em;
+    }
+
+    .btn-home:hover {
+      background: var(--gold-light);
+      border-color: var(--gold-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(200, 169, 110, 0.35);
+    }
+
+    .btn-call {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 32px;
+      border-radius: var(--radius);
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition);
+      border: 2px solid rgba(255, 255, 255, 0.25);
+      background: transparent;
+      color: var(--white);
+      letter-spacing: 0.02em;
+    }
+
+    .btn-call:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: translateY(-2px);
+    }
+
+    /* ---- Ligne décorative ---- */
+    .error-divider {
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--navy-light), var(--gold), var(--navy-light));
+      border-radius: 2px;
+      margin: 0 auto 32px;
+      animation: fadeInUp 0.8s ease 0.25s both;
+    }
+
+    /* ---- Footer simplifié ---- */
+    .footer-404 {
+      text-align: center;
+      padding: 24px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .footer-404 p {
+      font-size: 0.82rem;
+      color: rgba(255, 255, 255, 0.25);
+    }
+
+    /* ---- Responsive ---- */
+    @media (max-width: 480px) {
+      .error-actions {
+        flex-direction: column;
+      }
+
+      .btn-home,
+      .btn-call {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========== NAVBAR SIMPLIFIÉ ========== -->
+  <header class="navbar navbar-404">
+    <div class="nav-container">
+      <a href="/" class="nav-logo">
+        <span class="logo-icon">✦</span>
+        <span class="logo-text">Pressing <span class="logo-accent">Parc Heller</span></span>
+      </a>
+    </div>
+  </header>
+
+  <!-- ========== CONTENU 404 ========== -->
+  <main class="error-page">
+    <div class="error-content">
+
+      <!-- Code d'erreur animé -->
+      <div class="error-code">404</div>
+
+      <!-- Ligne dorée -->
+      <div class="error-divider"></div>
+
+      <!-- Icône -->
+      <span class="error-icon">🧥</span>
+
+      <!-- Message principal -->
+      <h1 class="error-title">Cette page n'existe pas</h1>
+      <p class="error-subtitle">
+        Il semble que cette page ait été égarée… comme une chaussette dans la lessive !
+        Pas d'inquiétude, nous pouvons vous ramener au bon endroit.
+      </p>
+
+      <!-- Actions -->
+      <div class="error-actions">
+        <a href="/" class="btn-home">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1h-2z"/>
+          </svg>
+          Retour à l'accueil
+        </a>
+        <a href="tel:0142374748" class="btn-call" id="call-btn">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11.5 19.79 19.79 0 01.04 2.83 2 2 0 012 .67h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.19a16 16 0 006.72 6.72l1.06-1.06a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+          </svg>
+          <span id="call-btn-text">01 42 37 47 48</span>
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ========== FOOTER MINIMAL ========== -->
+  <footer class="footer-404">
+    <p>© 2025 Pressing du Parc Heller. Tous droits réservés.</p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const res = await fetch('/api/settings');
+        if (res.ok) {
+          const data = await res.json();
+          const settings = data.settings;
+          if (settings && settings.contact_phone) {
+            const btn = document.getElementById('call-btn');
+            const txt = document.getElementById('call-btn-text');
+            if (btn) btn.href = 'tel:' + settings.contact_phone.replace(/\s+/g, '');
+            if (txt) txt.textContent = settings.contact_phone;
+          }
+        }
+      } catch (e) {}
+    });
+  </script>
+
+</body>
+</html>

@@ -40,7 +40,88 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // -------- PARAMÈTRES DYNAMIQUES (API) --------
+  async function loadSettings() {
+    try {
+      const res = await fetch('/api/settings');
+      if (!res.ok) return;
+      const data = await res.json();
+      const settings = data.settings;
+      if (!settings) return;
+
+      // 1. Téléphone
+      if (settings.contact_phone) {
+        const heroPhoneLink = document.getElementById('hero-phone-link');
+        const heroPhoneText = document.getElementById('hero-phone-text');
+        const contactPhone = document.getElementById('contact-phone');
+        const contactPhoneText = document.getElementById('contact-phone-text');
+        const footerPhone = document.getElementById('footer-phone');
+
+        const telLink = `tel:${settings.contact_phone.replace(/\s+/g, '')}`;
+        if (heroPhoneLink) heroPhoneLink.href = telLink;
+        if (heroPhoneText) heroPhoneText.textContent = settings.contact_phone;
+        if (contactPhone) contactPhone.href = telLink;
+        if (contactPhoneText) contactPhoneText.textContent = settings.contact_phone;
+        if (footerPhone) {
+          footerPhone.href = telLink;
+          footerPhone.textContent = settings.contact_phone;
+        }
+      }
+
+      // 2. Email
+      if (settings.contact_email) {
+        const contactEmail = document.getElementById('contact-email');
+        const contactEmailText = document.getElementById('contact-email-text');
+        const footerEmail = document.getElementById('footer-email');
+
+        const mailtoLink = `mailto:${settings.contact_email}`;
+        if (contactEmail) contactEmail.href = mailtoLink;
+        if (contactEmailText) contactEmailText.textContent = settings.contact_email;
+        if (footerEmail) {
+          footerEmail.href = mailtoLink;
+          footerEmail.textContent = settings.contact_email;
+        }
+      }
+
+      // 3. Adresse
+      if (settings.contact_address) {
+        const heroAddress = document.getElementById('hero-address');
+        const contactAddressText = document.getElementById('contact-address-text');
+        const footerAddress = document.getElementById('footer-address');
+
+        if (heroAddress) heroAddress.textContent = settings.contact_address;
+        const formatted = settings.contact_address.replace(/,\s*/, '<br/>');
+        if (contactAddressText) contactAddressText.innerHTML = formatted;
+        if (footerAddress) footerAddress.innerHTML = formatted;
+      }
+
+      // 4. Horaires
+      if (settings.hours_week) {
+        const heroHoursWeek = document.getElementById('hero-hours-week');
+        const contactHoursWeek = document.getElementById('contact-hours-week');
+        if (heroHoursWeek) heroHoursWeek.textContent = settings.hours_week;
+        if (contactHoursWeek) contactHoursWeek.textContent = settings.hours_week;
+      }
+
+      if (settings.hours_sat) {
+        const heroHoursSat = document.getElementById('hero-hours-sat');
+        const contactHoursSat = document.getElementById('contact-hours-sat');
+        if (heroHoursSat) heroHoursSat.textContent = settings.hours_sat;
+        if (contactHoursSat) contactHoursSat.textContent = settings.hours_sat;
+      }
+
+      // 5. Carte Google Maps
+      if (settings.google_maps_iframe) {
+        const googleMap = document.getElementById('google-map');
+        if (googleMap) googleMap.src = settings.google_maps_iframe;
+      }
+    } catch (e) {
+      // Silencieux
+    }
+  }
+
   loadPrices();
+  loadSettings();
 
   // -------- NAVBAR SCROLL --------
   const navbar = document.getElementById('navbar');

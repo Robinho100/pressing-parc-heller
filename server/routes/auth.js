@@ -82,13 +82,18 @@ router.get('/me', require('../middleware/auth').authMiddleware, (req, res) => {
   return res.json({ email: req.admin.email });
 });
 
-// -------- POST /api/auth/change-password --------
+// -------- POST /api/auth/update-profile --------
 router.post(
-  '/change-password',
+  '/update-profile',
   require('../middleware/auth').authMiddleware,
   [
+    body('email')
+      .isEmail().withMessage('Email invalide.')
+      .normalizeEmail()
+      .trim(),
     body('currentPassword').trim().notEmpty().withMessage('Mot de passe actuel requis.'),
     body('newPassword')
+      .optional({ checkFalsy: true })
       .isLength({ min: 8 }).withMessage('Le nouveau mot de passe doit faire au moins 8 caractères.')
       .matches(/[A-Z]/).withMessage('Doit contenir au moins une majuscule.')
       .matches(/[0-9]/).withMessage('Doit contenir au moins un chiffre.')
@@ -100,18 +105,50 @@ router.post(
       return res.status(400).json({ error: errors.array()[0].msg });
     }
 
-    const { currentPassword, newPassword } = req.body;
+    const { email, currentPassword, newPassword } = req.body;
     const admin = get('SELECT * FROM admin WHERE id = ?', [req.admin.id]);
 
+    if (!admin) {
+      return res.status(404).json({ error: 'Administrateur introuvable.' });
+    }
+
+    // Vérifier le mot de passe actuel
     const valid = await bcrypt.compare(currentPassword, admin.password);
     if (!valid) {
       return res.status(401).json({ error: 'Mot de passe actuel incorrect.' });
     }
 
-    const hash = await bcrypt.hash(newPassword, 12);
-    run('UPDATE admin SET password = ? WHERE id = ?', [hash, req.admin.id]);
+    // Si l'email change, vérifier l'unicité
+    if (email !== admin.email) {
+      const existing = get('SELECT id FROM admin WHERE email = ? AND id != ?', [email, req.admin.id]);
+      if (existing) {
+        return res.status(400).json({ error: 'Cette adresse email est déjà utilisée.' });
+      }
+    }
 
-    return res.json({ success: true, message: 'Mot de passe changé avec succès.' });
+    // Effectuer les mises à jour
+    let newHash = admin.password;
+    if (newPassword) {
+      newHash = await bcrypt.hash(newPassword, 12);
+      run('UPDATE admin SET password = ? WHERE id = ?', [newHash, req.admin.id]);
+    }
+
+    run('UPDATE admin SET email = ? WHERE id = ?', [email, req.admin.id]);
+
+    // Générer et renvoyer un nouveau JWT cookie car l'email ou les infos ont pu changer
+    const token = jwt.sign(
+      { id: admin.id, email: email },
+      JWT_SECRET,
+      { expiresIn: '8h' }
+    );
+
+    res.cookie('token', token, {
+      httpOnly: true,
+      sameSite: 'strict',
+      maxAge: 8 * 60 * 60 * 1000,
+    });
+
+    return res.json({ success: true, message: 'Profil mis à jour avec succès.', email });
   }
 );
 

@@ -9,6 +9,7 @@
    ============================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
+  let observer;
 
   // -------- PRIX DYNAMIQUES (API) --------
   async function loadPrices() {
@@ -17,26 +18,44 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!res.ok) return;
       const data = await res.json();
 
+      const grid = document.querySelector('.services-grid');
+      if (!grid) return;
+
+      // Vider le grid de secours statique et le remplacer par le contenu dynamique de la base de données
+      grid.innerHTML = '';
+
       data.services.forEach(svc => {
-        // Chercher la carte correspondante par son id (service-{slug})
-        const card = document.getElementById(`service-${svc.slug}`);
-        if (!card) return;
+        const card = document.createElement('div');
+        card.className = 'service-card reveal';
+        card.id = `service-${svc.slug}`;
 
-        // Supprimer l'ancien badge si existant
-        const existing = card.querySelector('.price-badge');
-        if (existing) existing.remove();
+        const iconDiv = document.createElement('div');
+        iconDiv.className = 'service-icon';
+        iconDiv.innerHTML = svc.emoji || '✦';
+        card.appendChild(iconDiv);
 
-        // Ajouter le badge de prix
+        const title = document.createElement('h3');
+        title.innerHTML = svc.nom;
+        card.appendChild(title);
+
+        const desc = document.createElement('p');
+        desc.innerHTML = svc.description || '';
+        card.appendChild(desc);
+
         const badge = document.createElement('span');
         badge.className = 'price-badge';
-        badge.textContent = svc.prix;
+        badge.innerHTML = svc.prix;
         card.appendChild(badge);
 
-        // Masquer la carte si non visible
-        card.style.display = svc.visible === 1 || svc.visible === true ? '' : 'none';
+        grid.appendChild(card);
+
+        // Enregistrer la carte avec l'intersection observer pour l'effet de scroll reveal
+        if (observer) {
+          observer.observe(card);
+        }
       });
     } catch (e) {
-      // Silencieux — les prix sont optionnels
+      // Silencieux — en cas d'erreur on laisse le HTML statique de secours
     }
   }
 
@@ -286,7 +305,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   revealEls.forEach(el => el.classList.add('reveal'));
 
-  const observer = new IntersectionObserver((entries) => {
+  observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');

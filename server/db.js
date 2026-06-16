@@ -112,7 +112,6 @@ async function initDb() {
       ['couture',       'Couture & Réparation',    'Retouches et réparations par nos couturières expertes.',    'à partir de 5€',  '🧵'],
       ['blanchisserie', 'Blanchisserie',           'Lavage, séchage et repassage de votre linge.',              'à partir de 3€',  '🫧'],
       ['livraison',     'Livraison à domicile',    'Collecte et livraison gratuite pour plus de commodité.',    'Gratuite',        '🚚'],
-      ['relais',        'Point Relais & Cordonnerie', 'Dépôt relais colis et réparation de chaussures en boutique.', 'Sur place',       '📦'],
     ];
     services.forEach(s => {
       db.run('INSERT INTO services (slug, nom, description, prix, emoji) VALUES (?, ?, ?, ?, ?)', s);

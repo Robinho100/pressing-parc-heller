@@ -802,7 +802,9 @@ a {
   background: var(--white);
   border-radius: var(--radius-lg);
   padding: 40px 36px;
+  width: calc(33.333% - 16px);
   min-width: calc(33.333% - 16px);
+  max-width: calc(33.333% - 16px);
   border: 1px solid var(--gray-200);
   box-shadow: var(--shadow-sm);
   flex-shrink: 0;
@@ -1352,7 +1354,9 @@ a {
   }
 
   .avis-card {
-    min-width: calc(100% - 0px);
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
   }
 
   .services-grid {

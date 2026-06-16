@@ -594,6 +594,33 @@ input:checked + .switch-slider::before { transform: translateX(16px); }
 /* PASSWORD & SETTINGS FORMS */
 .password-form, .settings-form { max-width: 540px; margin-top: 8px; }
 
+/* MESSAGES INBOX */
+.badge-unread {
+  background: var(--error);
+  color: white;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 10px;
+  margin-left: 8px;
+  line-height: 1.2;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+tr.msg-unread {
+  background-color: rgba(200, 169, 110, 0.04) !important;
+}
+
+tr.msg-unread td {
+  font-weight: 600;
+  color: var(--text) !important;
+}
+
+tr.msg-read {
+  opacity: 0.85;
+}
+
 /* -------- RESPONSIVE -------- */
 @media (max-width: 768px) {
   .sidebar { width: 100%; height: auto; position: relative; flex-direction: row; flex-wrap: wrap; }

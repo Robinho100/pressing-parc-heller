@@ -71,4 +71,110 @@ router.put(
   }
 );
 
+function slugify(text) {
+  return text
+    .toString()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/[^\w\-]+/g, '')
+    .replace(/\-\-+/g, '-')
+    .replace(/^-+/, '')
+    .replace(/-+$/, '');
+}
+
+// -------- POST /api/prices — ADMIN ONLY --------
+// Crée un nouveau service
+router.post(
+  '/',
+  authMiddleware,
+  [
+    body('nom')
+      .trim()
+      .isLength({ min: 1, max: 100 }).withMessage('Le nom est requis (max 100 caractères).')
+      .escape(),
+    body('prix')
+      .trim()
+      .isLength({ min: 1, max: 100 }).withMessage('Le prix est requis (max 100 caractères).')
+      .escape(),
+    body('description')
+      .optional()
+      .trim()
+      .isLength({ max: 300 }).withMessage('La description fait au max 300 caractères.')
+      .escape(),
+    body('emoji')
+      .optional()
+      .trim()
+      .escape(),
+  ],
+  (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ error: errors.array()[0].msg });
+    }
+
+    const { nom, prix, description = '', emoji = '✦' } = req.body;
+
+    try {
+      let baseSlug = slugify(nom);
+      if (!baseSlug) baseSlug = 'service';
+      
+      let slug = baseSlug;
+      let counter = 1;
+
+      // S'assurer que le slug est unique
+      while (true) {
+        const existing = get('SELECT id FROM services WHERE slug = ?', [slug]);
+        if (!existing) break;
+        slug = `${baseSlug}-${counter}`;
+        counter++;
+      }
+
+      run(
+        'INSERT INTO services (slug, nom, description, prix, emoji) VALUES (?, ?, ?, ?, ?)',
+        [slug, nom, description, prix, emoji]
+      );
+
+      const created = get('SELECT * FROM services WHERE slug = ?', [slug]);
+      return res.status(201).json({ success: true, service: created });
+    } catch (err) {
+      return res.status(500).json({ error: 'Erreur lors de la création du service.' });
+    }
+  }
+);
+
+// -------- DELETE /api/prices/:slug — ADMIN ONLY --------
+// Supprime définitivement un service
+router.delete(
+  '/:slug',
+  authMiddleware,
+  [
+    param('slug')
+      .trim()
+      .isAlphanumeric('fr-FR', { ignore: '-' }).withMessage('Slug invalide.'),
+  ],
+  (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ error: errors.array()[0].msg });
+    }
+
+    const { slug } = req.params;
+
+    try {
+      const service = get('SELECT id FROM services WHERE slug = ?', [slug]);
+      if (!service) {
+        return res.status(404).json({ error: 'Service introuvable.' });
+      }
+
+      run('DELETE FROM services WHERE slug = ?', [slug]);
+      return res.json({ success: true, message: 'Service supprimé définitivement.' });
+    } catch (err) {
+      return res.status(500).json({ error: 'Erreur lors de la suppression du service.' });
+    }
+  }
+);
+
 module.exports = router;

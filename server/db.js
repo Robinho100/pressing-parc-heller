@@ -50,6 +50,18 @@ async function initDb() {
     );
   `);
 
+  db.run(`
+    CREATE TABLE IF NOT EXISTS messages (
+      id         INTEGER PRIMARY KEY AUTOINCREMENT,
+      nom        TEXT NOT NULL,
+      email      TEXT NOT NULL,
+      sujet      TEXT NOT NULL,
+      message    TEXT NOT NULL,
+      lu         INTEGER NOT NULL DEFAULT 0,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    );
+  `);
+
   // -------- SEED ADMIN --------
   const adminRow = db.exec("SELECT id, email FROM admin");
   if (!adminRow.length || !adminRow[0].values.length) {

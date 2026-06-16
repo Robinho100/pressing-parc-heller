@@ -86,4 +86,18 @@ router.put(
   }
 );
 
+// -------- GET /api/settings/backup — ADMIN ONLY --------
+// Permet de télécharger le fichier de base de données SQLite
+router.get('/backup', authMiddleware, (req, res) => {
+  const path = require('path');
+  const fs = require('fs');
+  const DB_PATH = path.join(__dirname, '..', '..', 'data', 'pressing.db');
+
+  if (fs.existsSync(DB_PATH)) {
+    return res.download(DB_PATH, 'pressing.db');
+  } else {
+    return res.status(404).json({ error: 'Fichier de base de données introuvable.' });
+  }
+});
+
 module.exports = router;

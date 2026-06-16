@@ -37,6 +37,7 @@ app.use(cookieParser());
 app.use('/api/auth',     require('./routes/auth'));
 app.use('/api/prices',   require('./routes/prices'));
 app.use('/api/settings', require('./routes/settings'));
+app.use('/api/contact',  require('./routes/contact'));
 
 // ============================================================
 //   FICHIERS STATIQUES

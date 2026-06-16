@@ -5,11 +5,13 @@
 // ============================================================
 const navLinks = {
   prices: document.getElementById('navPrices'),
+  messages: document.getElementById('navMessages'),
   settings: document.getElementById('navSettings'),
   password: document.getElementById('navPassword')
 };
 const sections = {
   prices: document.getElementById('sectionPrices'),
+  messages: document.getElementById('sectionMessages'),
   settings: document.getElementById('sectionSettings'),
   password: document.getElementById('sectionPassword')
 };
@@ -22,6 +24,7 @@ function showSection(key) {
 }
 
 navLinks.prices.addEventListener('click',   () => showSection('prices'));
+navLinks.messages.addEventListener('click', () => { showSection('messages'); loadMessages(); });
 navLinks.settings.addEventListener('click', () => { showSection('settings'); loadSettingsForm(); });
 navLinks.password.addEventListener('click', () => showSection('password'));
 
@@ -71,9 +74,30 @@ async function loadServices() {
       const profileEmailInput = document.getElementById('profileEmail');
       if (profileEmailInput) profileEmailInput.value = me.email;
     }
+
+    // Charger le compteur de messages non lus
+    await loadUnreadCount();
   } catch (err) {
     tbody.innerHTML = '<tr><td colspan="6" class="loading-row" style="color:#ef4444">Erreur de chargement.</td></tr>';
   }
+}
+
+async function loadUnreadCount() {
+  try {
+    const res = await fetch('/api/contact/messages/unread-count', { credentials: 'same-origin' });
+    if (res.ok) {
+      const data = await res.json();
+      const badge = document.getElementById('unreadBadge');
+      if (badge) {
+        if (data.count > 0) {
+          badge.textContent = data.count;
+          badge.style.display = 'inline-block';
+        } else {
+          badge.style.display = 'none';
+        }
+      }
+    }
+  } catch (e) {}
 }
 
 function renderTable(services) {
@@ -96,7 +120,10 @@ function renderTable(services) {
         </label>
       </td>
       <td>
-        <button class="btn-edit" data-slug="${esc(s.slug)}">Modifier</button>
+        <div style="display:flex; gap:8px;">
+          <button class="btn-edit btn-modify-svc" data-slug="${esc(s.slug)}">Modifier</button>
+          <button class="btn-edit btn-delete-svc" data-slug="${esc(s.slug)}" style="background:#ef4444; border-color:#ef4444;">Supprimer</button>
+        </div>
       </td>
     </tr>
   `).join('');
@@ -107,7 +134,7 @@ function renderTable(services) {
   });
 
   // Events bouton modifier
-  tbody.querySelectorAll('.btn-edit').forEach(btn => {
+  tbody.querySelectorAll('.btn-modify-svc').forEach(btn => {
     btn.addEventListener('click', () => openModal(btn.dataset.slug));
   });
 }
@@ -393,6 +420,204 @@ settingsForm.addEventListener('submit', async (e) => {
     btnSaveSettings.disabled = false;
     btnSaveSettings.textContent = 'Enregistrer les paramètres';
   }
+});
+
+  tbody.querySelectorAll('.btn-delete-svc').forEach(btn => {
+    btn.addEventListener('click', () => deleteService(btn.dataset.slug));
+  });
+});
+
+async function deleteService(slug) {
+  if (!confirm('Êtes-vous sûr de vouloir supprimer définitivement ce service ? Cette action est irréversible.')) {
+    return;
+  }
+
+  try {
+    const res = await fetch(`/api/prices/${slug}`, {
+      method: 'DELETE',
+      credentials: 'same-origin'
+    });
+    const data = await res.json();
+    if (res.ok) {
+      showToast('Service supprimé avec succès.');
+      await loadServices();
+    } else {
+      showToast(data.error || 'Erreur lors de la suppression.', 'error');
+    }
+  } catch (err) {
+    showToast('Erreur réseau.', 'error');
+  }
+}
+
+// ============================================================
+//  MODAL AJOUT SERVICE
+// ============================================================
+const addServiceModal = document.getElementById('addServiceModal');
+const addServiceForm  = document.getElementById('addServiceForm');
+const addEmoji         = document.getElementById('addEmoji');
+const addNom           = document.getElementById('addNom');
+const addDesc          = document.getElementById('addDescription');
+const addPrix          = document.getElementById('addPrix');
+const addServiceError  = document.getElementById('addServiceError');
+const addDescCount     = document.getElementById('addDescCount');
+const btnSubmitAddService = document.getElementById('btnSubmitAddService');
+
+document.getElementById('btnOpenAddServiceModal').addEventListener('click', () => {
+  addServiceError.textContent = '';
+  addServiceForm.reset();
+  addDescCount.textContent = '0 / 300';
+  addServiceModal.style.display = '';
+  addEmoji.focus();
+});
+
+function closeAddServiceModal() {
+  addServiceModal.style.display = 'none';
+}
+
+document.getElementById('addServiceClose').addEventListener('click', closeAddServiceModal);
+document.getElementById('addServiceCancel').addEventListener('click', closeAddServiceModal);
+addServiceModal.addEventListener('click', e => { if (e.target === addServiceModal) closeAddServiceModal(); });
+
+addDesc.addEventListener('input', () => {
+  addDescCount.textContent = `${addDesc.value.length} / 300`;
+});
+
+addServiceForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  addServiceError.textContent = '';
+
+  const emoji = addEmoji.value.trim();
+  const nom = addNom.value.trim();
+  const desc = addDesc.value.trim();
+  const prix = addPrix.value.trim();
+
+  if (!emoji || !nom || !prix) {
+    addServiceError.textContent = 'L\'emoji, le nom et le prix sont requis.';
+    return;
+  }
+
+  btnSubmitAddService.disabled = true;
+  btnSubmitAddService.textContent = 'Création...';
+
+  try {
+    const res = await fetch('/api/prices', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
+      body: JSON.stringify({ emoji, nom, description: desc, prix }),
+    });
+    const data = await res.json();
+
+    if (res.ok) {
+      closeAddServiceModal();
+      showToast(`Service "${nom}" créé avec succès !`);
+      await loadServices();
+    } else {
+      addServiceError.textContent = data.error || 'Erreur lors de la création.';
+    }
+  } catch (err) {
+    addServiceError.textContent = 'Erreur réseau. Réessayez.';
+  } finally {
+    btnSubmitAddService.disabled = false;
+    btnSubmitAddService.textContent = 'Créer le service';
+  }
+});
+
+// ============================================================
+//  GESTION DES MESSAGES
+// ============================================================
+async function loadMessages() {
+  const tbody = document.getElementById('messagesBody');
+  tbody.innerHTML = '<tr><td colspan="5" class="loading-row">Chargement...</td></tr>';
+
+  try {
+    const res = await fetch('/api/contact/messages', { credentials: 'same-origin' });
+    if (res.status === 401) { window.location.href = '/admin/'; return; }
+    const data = await res.json();
+    renderMessages(data.messages);
+    await loadUnreadCount(); // rafraîchir le badge
+  } catch (err) {
+    tbody.innerHTML = '<tr><td colspan="5" class="loading-row" style="color:#ef4444">Erreur lors de la récupération des messages.</td></tr>';
+  }
+}
+
+function renderMessages(messages) {
+  const tbody = document.getElementById('messagesBody');
+  if (!messages || !messages.length) {
+    tbody.innerHTML = '<tr><td colspan="5" class="loading-row">Aucun message reçu.</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = messages.map(m => {
+    const dateStr = new Date(m.created_at).toLocaleDateString('fr-FR', {
+      day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit'
+    });
+    const rowClass = m.lu ? 'msg-read' : 'msg-unread';
+    return `
+      <tr class="${rowClass}" data-id="${m.id}">
+        <td><span style="font-size:0.83rem; color:#6b7280;">${esc(dateStr)}</span></td>
+        <td>
+          <strong>${esc(m.nom)}</strong><br/>
+          <a href="mailto:${esc(m.email)}" style="font-size:0.8rem; color:var(--gold); text-decoration:underline;">${esc(m.email)}</a>
+        </td>
+        <td><strong>${esc(m.sujet)}</strong></td>
+        <td><div style="max-height:100px; overflow-y:auto; font-size:0.88rem; white-space:pre-wrap;">${esc(m.message)}</div></td>
+        <td>
+          <div style="display:flex; gap:8px;">
+            <button class="btn-read-toggle btn-edit" data-id="${m.id}" data-lu="${m.lu}" style="font-size:0.75rem; padding:6px 10px;">
+              ${m.lu ? 'Non lu' : 'Lu'}
+            </button>
+            <button class="btn-delete-msg btn-edit" data-id="${m.id}" style="background:#ef4444; border-color:#ef4444; font-size:0.75rem; padding:6px 10px;">
+              Supprimer
+            </button>
+          </div>
+        </td>
+      </tr>
+    `;
+  }).join('');
+
+  tbody.querySelectorAll('.btn-read-toggle').forEach(btn => {
+    btn.addEventListener('click', () => toggleMessageRead(btn.dataset.id, btn.dataset.lu !== '1'));
+  });
+
+  tbody.querySelectorAll('.btn-delete-msg').forEach(btn => {
+    btn.addEventListener('click', () => deleteMessage(btn.dataset.id));
+  });
+}
+
+async function toggleMessageRead(id, shouldBeRead) {
+  try {
+    const res = await fetch(`/api/contact/messages/${id}/read`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
+      body: JSON.stringify({ lu: shouldBeRead }),
+    });
+    if (res.ok) {
+      await loadMessages();
+    }
+  } catch (e) {}
+}
+
+async function deleteMessage(id) {
+  if (!confirm('Supprimer définitivement ce message ?')) return;
+  try {
+    const res = await fetch(`/api/contact/messages/${id}`, {
+      method: 'DELETE',
+      credentials: 'same-origin'
+    });
+    if (res.ok) {
+      showToast('Message supprimé.');
+      await loadMessages();
+    }
+  } catch (e) {}
+}
+
+// ============================================================
+//  SAUVEGARDE DB
+// ============================================================
+document.getElementById('btnBackupDb').addEventListener('click', () => {
+  window.location.href = '/api/settings/backup';
 });
 
 // ============================================================

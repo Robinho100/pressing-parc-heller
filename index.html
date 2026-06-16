@@ -402,58 +402,92 @@
 
   <!-- ========== CONTACT + MAP ========== -->
   <section class="section contact" id="contact">
-    <div class="container contact-container">
+    <div class="container">
+      <div class="contact-grid">
 
-      <div class="contact-info">
-        <p class="section-label">Nous trouver</p>
-        <h2 class="section-title">Venez nous <span class="accent">rendre visite</span></h2>
+        <div class="contact-info">
+          <p class="section-label">Nous trouver</p>
+          <h2 class="section-title">Venez nous <span class="accent">rendre visite</span></h2>
 
-        <div class="contact-cards">
-          <a href="tel:0142374748" class="contact-card" id="contact-phone">
-            <div class="contact-card-icon">📞</div>
-            <div>
-              <strong>Téléphone</strong>
-              <span id="contact-phone-text">01 42 37 47 48</span>
+          <div class="contact-cards">
+            <a href="tel:0142374748" class="contact-card" id="contact-phone">
+              <div class="contact-card-icon">📞</div>
+              <div>
+                <strong>Téléphone</strong>
+                <span id="contact-phone-text">01 42 37 47 48</span>
+              </div>
+            </a>
+            <a href="mailto:pressingparcheller@yahoo.fr" class="contact-card" id="contact-email">
+              <div class="contact-card-icon">✉️</div>
+              <div>
+                <strong>Email</strong>
+                <span id="contact-email-text">pressingparcheller@yahoo.fr</span>
+              </div>
+            </a>
+            <div class="contact-card" id="contact-address-card">
+              <div class="contact-card-icon">📍</div>
+              <div>
+                <strong>Adresse</strong>
+                <span id="contact-address-text">50 Rue Prosper Legouté<br/>92160 Antony</span>
+              </div>
             </div>
-          </a>
-          <a href="mailto:pressingparcheller@yahoo.fr" class="contact-card" id="contact-email">
-            <div class="contact-card-icon">✉️</div>
-            <div>
-              <strong>Email</strong>
-              <span id="contact-email-text">pressingparcheller@yahoo.fr</span>
+          </div>
+
+          <div class="horaires-box">
+            <h3>Horaires d'ouverture</h3>
+            <div class="horaire-row">
+              <span class="horaire-day">Lundi</span>
+              <span class="horaire-hours closed">Fermé</span>
             </div>
-          </a>
-          <div class="contact-card" id="contact-address-card">
-            <div class="contact-card-icon">📍</div>
-            <div>
-              <strong>Adresse</strong>
-              <span id="contact-address-text">50 Rue Prosper Legouté<br/>92160 Antony</span>
+            <div class="horaire-row">
+              <span class="horaire-day">Mardi – Vendredi</span>
+              <span class="horaire-hours" id="contact-hours-week">9h–12h30 · 14h–19h</span>
+            </div>
+            <div class="horaire-row">
+              <span class="horaire-day">Samedi</span>
+              <span class="horaire-hours" id="contact-hours-sat">9h–13h · 13h30–19h</span>
+            </div>
+            <div class="horaire-row">
+              <span class="horaire-day">Dimanche</span>
+              <span class="horaire-hours closed">Fermé</span>
             </div>
           </div>
         </div>
 
-        <div class="horaires-box">
-          <h3>Horaires d'ouverture</h3>
-          <div class="horaire-row">
-            <span class="horaire-day">Lundi</span>
-            <span class="horaire-hours closed">Fermé</span>
-          </div>
-          <div class="horaire-row">
-            <span class="horaire-day">Mardi – Vendredi</span>
-            <span class="horaire-hours" id="contact-hours-week">9h–12h30 · 14h–19h</span>
-          </div>
-          <div class="horaire-row">
-            <span class="horaire-day">Samedi</span>
-            <span class="horaire-hours" id="contact-hours-sat">9h–13h · 13h30–19h</span>
-          </div>
-          <div class="horaire-row">
-            <span class="horaire-day">Dimanche</span>
-            <span class="horaire-hours closed">Fermé</span>
-          </div>
+        <div class="contact-form-wrap">
+          <p class="section-label">Contactez-nous</p>
+          <h2 class="section-title">Envoyez-nous <span class="accent">un message</span></h2>
+
+          <form class="home-contact-form" id="homeContactForm" novalidate>
+            <div class="form-row">
+              <div class="form-group-home">
+                <label for="contact_nom">Nom complet</label>
+                <input type="text" id="contact_nom" required placeholder="Votre nom" />
+              </div>
+              <div class="form-group-home">
+                <label for="contact_email">Adresse email</label>
+                <input type="email" id="contact_email" required placeholder="Votre adresse email" />
+              </div>
+            </div>
+            <div class="form-group-home">
+              <label for="contact_sujet">Sujet</label>
+              <input type="text" id="contact_sujet" required placeholder="Sujet de votre message" />
+            </div>
+            <div class="form-group-home">
+              <label for="contact_message">Votre message</label>
+              <textarea id="contact_message" rows="5" required placeholder="Comment pouvons-nous vous aider ?"></textarea>
+            </div>
+            <div class="contact-form-feedback" id="contactFormFeedback" role="alert" aria-live="polite"></div>
+            <button type="submit" class="btn btn-primary" id="btnSendContact">
+              <span id="contactBtnText">Envoyer le message</span>
+              <span class="contact-loader" id="contactBtnLoader" style="display:none;">Envoi...</span>
+            </button>
+          </form>
         </div>
+
       </div>
 
-      <div class="map-wrap" id="map-section">
+      <div class="map-wrap" id="map-section" style="margin-top: 56px;">
         <iframe
           id="google-map"
           title="Localisation du Pressing du Parc Heller"

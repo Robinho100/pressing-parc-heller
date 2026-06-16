@@ -326,4 +326,60 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }, { passive: true });
 
+  // -------- FORMULAIRE DE CONTACT --------
+  const contactForm = document.getElementById('homeContactForm');
+  const contactFeedback = document.getElementById('contactFormFeedback');
+  const btnSend = document.getElementById('btnSendContact');
+  const btnSendText = document.getElementById('contactBtnText');
+  const btnSendLoader = document.getElementById('contactBtnLoader');
+
+  if (contactForm) {
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      contactFeedback.textContent = '';
+      contactFeedback.className = 'contact-form-feedback';
+
+      const nom = document.getElementById('contact_nom').value.trim();
+      const email = document.getElementById('contact_email').value.trim();
+      const sujet = document.getElementById('contact_sujet').value.trim();
+      const message = document.getElementById('contact_message').value.trim();
+
+      if (!nom || !email || !sujet || !message) {
+        contactFeedback.textContent = 'Veuillez remplir tous les champs.';
+        contactFeedback.classList.add('error');
+        return;
+      }
+
+      // Loader
+      btnSendText.style.display = 'none';
+      btnSendLoader.style.display = 'inline-block';
+      btnSend.disabled = true;
+
+      try {
+        const res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ nom, email, sujet, message }),
+        });
+        const data = await res.json();
+
+        if (res.ok) {
+          contactFeedback.textContent = data.message || 'Votre message a bien été envoyé !';
+          contactFeedback.classList.add('success');
+          contactForm.reset();
+        } else {
+          contactFeedback.textContent = data.error || 'Une erreur est survenue.';
+          contactFeedback.classList.add('error');
+        }
+      } catch (err) {
+        contactFeedback.textContent = 'Impossible de se connecter au serveur. Réessayez.';
+        contactFeedback.classList.add('error');
+      } finally {
+        btnSendText.style.display = 'inline';
+        btnSendLoader.style.display = 'none';
+        btnSend.disabled = false;
+      }
+    });
+  }
+
 });

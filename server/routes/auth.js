@@ -64,7 +64,7 @@ router.post(
       httpOnly: true,
       sameSite: 'strict',
       maxAge: 8 * 60 * 60 * 1000, // 8h
-      // secure: true, // À activer quand HTTPS est configuré
+      secure: process.env.NODE_ENV === 'production',
     });
 
     return res.json({ success: true, message: 'Connecté avec succès.' });
@@ -146,6 +146,7 @@ router.post(
       httpOnly: true,
       sameSite: 'strict',
       maxAge: 8 * 60 * 60 * 1000,
+      secure: process.env.NODE_ENV === 'production',
     });
 
     return res.json({ success: true, message: 'Profil mis à jour avec succès.', email });

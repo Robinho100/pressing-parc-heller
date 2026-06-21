@@ -112,12 +112,28 @@ async function initDb() {
       ['couture',       'Couture & Réparation',    'Retouches et réparations par nos couturières expertes.',    'à partir de 5€',  '🧵'],
       ['blanchisserie', 'Blanchisserie',           'Lavage, séchage et repassage de votre linge.',              'à partir de 3€',  '🫧'],
       ['livraison',     'Livraison à domicile',    'Collecte et livraison gratuite pour plus de commodité.',    'Gratuite',        '🚚'],
+      ['colissimo',     'Colissimo',               'Dépôt et retrait de vos colis Colissimo.',                  'Sur place',        '📦'],
     ];
     services.forEach(s => {
       db.run('INSERT INTO services (slug, nom, description, prix, emoji) VALUES (?, ?, ?, ?, ?)', s);
     });
     console.log('✅ Services insérés en base.');
     save();
+  }
+
+  // S'assurer que le service colissimo existe (migration pour les bases de données existantes)
+  const colissimoExists = db.exec("SELECT COUNT(*) FROM services WHERE slug = 'colissimo'");
+  const existsVal = colissimoExists.length && colissimoExists[0].values.length ? colissimoExists[0].values[0][0] : 0;
+  if (existsVal === 0) {
+    db.run("INSERT INTO services (slug, nom, description, prix, emoji) VALUES (?, ?, ?, ?, ?)", [
+      'colissimo',
+      'Colissimo',
+      'Dépôt et retrait de vos colis Colissimo.',
+      'Sur place',
+      '📦'
+    ]);
+    save();
+    console.log('✅ Service Colissimo inséré.');
   }
 
   console.log('✅ Base de données initialisée.');

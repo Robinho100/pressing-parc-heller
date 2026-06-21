@@ -46,6 +46,10 @@ router.put(
       .trim()
       .isLength({ min: 1, max: 100 }).withMessage('Les horaires du samedi doivent faire entre 1 et 100 caractères.')
       .escape(),
+    body('hours_thursday')
+      .trim()
+      .isLength({ min: 1, max: 100 }).withMessage('Les horaires du jeudi doivent faire entre 1 et 100 caractères.')
+      .escape(),
     body('google_maps_iframe')
       .trim()
       .isURL({ protocols: ['https'], require_protocol: true }).withMessage('L\'URL Google Maps doit être valide.')
@@ -67,6 +71,7 @@ router.put(
       contact_phone,
       contact_address,
       hours_week,
+      hours_thursday,
       hours_sat,
       google_maps_iframe
     } = req.body;
@@ -76,6 +81,7 @@ router.put(
       run('UPDATE settings SET value = ? WHERE key = "contact_phone"', [contact_phone]);
       run('UPDATE settings SET value = ? WHERE key = "contact_address"', [contact_address]);
       run('UPDATE settings SET value = ? WHERE key = "hours_week"', [hours_week]);
+      run('UPDATE settings SET value = ? WHERE key = "hours_thursday"', [hours_thursday]);
       run('UPDATE settings SET value = ? WHERE key = "hours_sat"', [hours_sat]);
       run('UPDATE settings SET value = ? WHERE key = "google_maps_iframe"', [google_maps_iframe]);
 

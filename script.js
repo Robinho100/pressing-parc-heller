@@ -151,8 +151,20 @@ document.addEventListener('DOMContentLoaded', () => {
       if (settings.hours_week) {
         const heroHoursWeek = document.getElementById('hero-hours-week');
         const contactHoursWeek = document.getElementById('contact-hours-week');
-        if (heroHoursWeek) heroHoursWeek.textContent = settings.hours_week;
+        if (heroHoursWeek) {
+          if (settings.hours_thursday && settings.hours_thursday !== settings.hours_week) {
+            const thursPm = settings.hours_thursday.split('·')[1] || settings.hours_thursday.split('/')[1] || settings.hours_thursday;
+            heroHoursWeek.textContent = `${settings.hours_week} (Jeu. après-midi : ${thursPm.trim()})`;
+          } else {
+            heroHoursWeek.textContent = settings.hours_week;
+          }
+        }
         if (contactHoursWeek) contactHoursWeek.textContent = settings.hours_week;
+      }
+
+      if (settings.hours_thursday) {
+        const contactHoursThursday = document.getElementById('contact-hours-thursday');
+        if (contactHoursThursday) contactHoursThursday.textContent = settings.hours_thursday;
       }
 
       if (settings.hours_sat) {

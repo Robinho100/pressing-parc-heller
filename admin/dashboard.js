@@ -357,6 +357,7 @@ const contactEmailInput = document.getElementById('contactEmail');
 const contactPhoneInput = document.getElementById('contactPhone');
 const contactAddressInput = document.getElementById('contactAddress');
 const hoursWeekInput = document.getElementById('hoursWeek');
+const hoursThursdayInput = document.getElementById('hoursThursday');
 const hoursSatInput = document.getElementById('hoursSat');
 const googleMapsIframeInput = document.getElementById('googleMapsIframe');
 const settingsError = document.getElementById('settingsError');
@@ -378,6 +379,7 @@ async function loadSettingsForm() {
       contactPhoneInput.value = settings.contact_phone || '';
       contactAddressInput.value = settings.contact_address || '';
       hoursWeekInput.value = settings.hours_week || '';
+      hoursThursdayInput.value = settings.hours_thursday || '';
       hoursSatInput.value = settings.hours_sat || '';
       googleMapsIframeInput.value = settings.google_maps_iframe || '';
     }
@@ -397,10 +399,11 @@ settingsForm.addEventListener('submit', async (e) => {
   const phone = contactPhoneInput.value.trim();
   const address = contactAddressInput.value.trim();
   const hoursWeek = hoursWeekInput.value.trim();
+  const hoursThursday = hoursThursdayInput.value.trim();
   const hoursSat = hoursSatInput.value.trim();
   const mapUrl = googleMapsIframeInput.value.trim();
 
-  if (!email || !phone || !address || !hoursWeek || !hoursSat || !mapUrl) {
+  if (!email || !phone || !address || !hoursWeek || !hoursThursday || !hoursSat || !mapUrl) {
     settingsError.textContent = 'Tous les champs sont obligatoires.';
     return;
   }
@@ -418,6 +421,7 @@ settingsForm.addEventListener('submit', async (e) => {
         contact_phone: phone,
         contact_address: address,
         hours_week: hoursWeek,
+        hours_thursday: hoursThursday,
         hours_sat: hoursSat,
         google_maps_iframe: mapUrl
       }),

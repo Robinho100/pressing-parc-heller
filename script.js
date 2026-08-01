@@ -42,7 +42,6 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="skeleton-box skeleton-title"></div>
         <div class="skeleton-box skeleton-desc"></div>
         <div class="skeleton-box skeleton-desc-short"></div>
-        <div class="skeleton-box skeleton-price"></div>
       </div>
     `).join('');
 
@@ -74,11 +73,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const desc = document.createElement('p');
         desc.innerHTML = svc.description || '';
         card.appendChild(desc);
-
-        const badge = document.createElement('span');
-        badge.className = 'price-badge';
-        badge.innerHTML = svc.prix;
-        card.appendChild(badge);
 
         grid.appendChild(card);
 

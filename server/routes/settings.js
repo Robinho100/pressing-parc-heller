@@ -5,14 +5,11 @@ const { body, validationResult } = require('express-validator');
 const router = require('express').Router();
 
 // -------- GET /api/settings — PUBLIC --------
-// Retourne tous les paramètres sous forme d'objet clé-valeur
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
   try {
-    const rows = query('SELECT key, value FROM settings');
+    const rows = await query('SELECT key, value FROM settings');
     const settings = {};
-    rows.forEach(r => {
-      settings[r.key] = r.value;
-    });
+    rows.forEach(r => { settings[r.key] = r.value; });
     return res.json({ settings });
   } catch (err) {
     return res.status(500).json({ error: 'Erreur lors de la récupération des paramètres.' });
@@ -20,70 +17,38 @@ router.get('/', (req, res) => {
 });
 
 // -------- PUT /api/settings — ADMIN ONLY --------
-// Met à jour les coordonnées et horaires
 router.put(
   '/',
   authMiddleware,
   [
-    body('contact_email')
-      .trim()
-      .isEmail().withMessage('Adresse email de contact invalide.')
-      .isLength({ max: 100 }).withMessage('Email trop long (max 100 caractères).')
-      .normalizeEmail(),
-    body('contact_phone')
-      .trim()
-      .isLength({ min: 5, max: 25 }).withMessage('Le téléphone doit faire entre 5 et 25 caractères.')
-      .escape(),
-    body('contact_address')
-      .trim()
-      .isLength({ min: 5, max: 200 }).withMessage('L\'adresse doit faire entre 5 et 200 caractères.')
-      .escape(),
-    body('hours_week')
-      .trim()
-      .isLength({ min: 1, max: 100 }).withMessage('Les horaires de semaine doivent faire entre 1 et 100 caractères.')
-      .escape(),
-    body('hours_sat')
-      .trim()
-      .isLength({ min: 1, max: 100 }).withMessage('Les horaires du samedi doivent faire entre 1 et 100 caractères.')
-      .escape(),
-    body('hours_thursday')
-      .trim()
-      .isLength({ min: 1, max: 100 }).withMessage('Les horaires du jeudi doivent faire entre 1 et 100 caractères.')
-      .escape(),
-    body('google_maps_iframe')
-      .trim()
-      .isURL({ protocols: ['https'], require_protocol: true }).withMessage('L\'URL Google Maps doit être valide.')
+    body('contact_email').trim().isEmail().withMessage('Email de contact invalide.').isLength({ max: 100 }).normalizeEmail(),
+    body('contact_phone').trim().isLength({ min: 5, max: 25 }).withMessage('Téléphone invalide.').escape(),
+    body('contact_address').trim().isLength({ min: 5, max: 200 }).withMessage('Adresse invalide.').escape(),
+    body('hours_week').trim().isLength({ min: 1, max: 100 }).withMessage('Horaires semaine invalides.').escape(),
+    body('hours_sat').trim().isLength({ min: 1, max: 100 }).withMessage('Horaires samedi invalides.').escape(),
+    body('hours_thursday').trim().isLength({ min: 1, max: 100 }).withMessage('Horaires jeudi invalides.').escape(),
+    body('google_maps_iframe').trim().isURL({ protocols: ['https'], require_protocol: true }).withMessage("URL Google Maps invalide.")
       .custom(val => {
         if (!val.startsWith('https://www.google.com/maps/embed') && !val.startsWith('https://maps.google.com')) {
-          throw new Error('L\'URL doit provenir de Google Maps (embed).');
+          throw new Error("L'URL doit provenir de Google Maps (embed).");
         }
         return true;
       }),
   ],
-  (req, res) => {
+  async (req, res) => {
     const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ error: errors.array()[0].msg });
-    }
+    if (!errors.isEmpty()) return res.status(400).json({ error: errors.array()[0].msg });
 
-    const {
-      contact_email,
-      contact_phone,
-      contact_address,
-      hours_week,
-      hours_thursday,
-      hours_sat,
-      google_maps_iframe
-    } = req.body;
+    const { contact_email, contact_phone, contact_address, hours_week, hours_thursday, hours_sat, google_maps_iframe } = req.body;
 
     try {
-      run('UPDATE settings SET value = ? WHERE key = "contact_email"', [contact_email]);
-      run('UPDATE settings SET value = ? WHERE key = "contact_phone"', [contact_phone]);
-      run('UPDATE settings SET value = ? WHERE key = "contact_address"', [contact_address]);
-      run('UPDATE settings SET value = ? WHERE key = "hours_week"', [hours_week]);
-      run('UPDATE settings SET value = ? WHERE key = "hours_thursday"', [hours_thursday]);
-      run('UPDATE settings SET value = ? WHERE key = "hours_sat"', [hours_sat]);
-      run('UPDATE settings SET value = ? WHERE key = "google_maps_iframe"', [google_maps_iframe]);
+      await run('UPDATE settings SET value = ? WHERE key = "contact_email"', [contact_email]);
+      await run('UPDATE settings SET value = ? WHERE key = "contact_phone"', [contact_phone]);
+      await run('UPDATE settings SET value = ? WHERE key = "contact_address"', [contact_address]);
+      await run('UPDATE settings SET value = ? WHERE key = "hours_week"', [hours_week]);
+      await run('UPDATE settings SET value = ? WHERE key = "hours_thursday"', [hours_thursday]);
+      await run('UPDATE settings SET value = ? WHERE key = "hours_sat"', [hours_sat]);
+      await run('UPDATE settings SET value = ? WHERE key = "google_maps_iframe"', [google_maps_iframe]);
 
       return res.json({ success: true, message: 'Paramètres mis à jour.' });
     } catch (err) {
@@ -93,17 +58,9 @@ router.put(
 );
 
 // -------- GET /api/settings/backup — ADMIN ONLY --------
-// Permet de télécharger le fichier de base de données SQLite
+// Note: backup non disponible avec Turso (base cloud), endpoint conservé pour compatibilité
 router.get('/backup', authMiddleware, (req, res) => {
-  const path = require('path');
-  const fs = require('fs');
-  const DB_PATH = path.join(__dirname, '..', '..', 'data', 'pressing.db');
-
-  if (fs.existsSync(DB_PATH)) {
-    return res.download(DB_PATH, 'pressing.db');
-  } else {
-    return res.status(404).json({ error: 'Fichier de base de données introuvable.' });
-  }
+  return res.status(410).json({ error: 'La sauvegarde locale n\'est plus disponible en mode cloud. Utilisez le dashboard Turso pour exporter vos données.' });
 });
 
 module.exports = router;

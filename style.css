@@ -1,9 +1,9 @@
 /* ============================================
    PRESSING DU PARC HELLER — STYLE PRINCIPAL
-   Palette extraite de la photo de devanture réelle :
-   - Bleu Enseigne "PRESSING" (#0284c7 / #0091ea)
-   - Blanc Pur (#ffffff) de la pancarte
-   - Ardoise / Métal (#1e293b / #0f172a) des grilles et du cadre
+   Palette claire & lumineuse inspirée de l'enseigne du magasin :
+   - Fond global : Blanc pur (#ffffff) & Bleu glacé ultra-doux (#f0f7ff)
+   - Bleu Enseigne : Bleu Ciel / Cyan Pressing (#0284c7 / #0369a1)
+   - Textes & Contrasts : Ardoise / Charbon sobre (#0f172a / #1e293b)
    ============================================ */
 
 /* -------- RESET & BASE -------- */
@@ -14,25 +14,25 @@
 }
 
 :root {
-  --navy: #1e293b;          /* Ardoise cadre enseigne */
-  --navy-light: #334155;    /* Ardoise moyenne */
-  --navy-dark: #0f172a;     /* Charbon nuit fond hero / footer */
+  --navy: #0f172a;          /* Ardoise sombre pour titres */
+  --navy-light: #1e293b;    /* Ardoise moyenne */
+  --navy-dark: #090d16;     /* Charbon pour footer uniquement */
   --accent: #0284c7;        /* Bleu ciel de l'enseigne "PRESSING" */
   --accent-hover: #0369a1;  /* Survol bleu */
-  --accent-light: #38bdf8;  /* Bleu lumineux sur fond sombre */
-  --blue-soft: #f0f9ff;     /* Teinte bleu glacé très douce */
+  --accent-light: #0284c7;  /* Bleu ciel vif pour accents */
+  --blue-soft: #f0f7ff;     /* Teinte bleu glacé douce et lumineuse */
   --white: #ffffff;         /* Blanc pur */
-  --off-white: #f8fafc;     /* Blanc cassé très doux */
+  --off-white: #f8fafc;     /* Blanc cassé doux */
   --gray-100: #f1f5f9;
   --gray-200: #e2e8f0;
   --gray-400: #94a3b8;
   --gray-600: #475569;
-  --gray-800: #1e293b;
+  --gray-800: #0f172a;
   --font-heading: 'Playfair Display', serif;
   --font-body: 'Inter', sans-serif;
-  --shadow-sm: 0 1px 4px rgba(15,23,42,0.06);
-  --shadow-md: 0 4px 16px rgba(15,23,42,0.09);
-  --shadow-lg: 0 8px 28px rgba(15,23,42,0.12);
+  --shadow-sm: 0 2px 8px rgba(15,23,42,0.05);
+  --shadow-md: 0 6px 20px rgba(15,23,42,0.08);
+  --shadow-lg: 0 12px 32px rgba(15,23,42,0.12);
   --radius: 8px;
   --radius-lg: 12px;
   --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -98,7 +98,7 @@ a {
 .section-subtitle {
   font-size: 1.05rem;
   color: var(--gray-600);
-  max-width: 520px;
+  max-width: 540px;
 }
 
 .section-header {
@@ -139,14 +139,15 @@ a {
 
 .btn-outline {
   background: transparent;
-  color: var(--white);
-  border-color: rgba(255,255,255,0.5);
+  color: var(--navy);
+  border-color: var(--navy);
 }
 
 .btn-outline:hover {
-  background: rgba(255,255,255,0.1);
-  border-color: var(--white);
+  background: var(--navy);
+  color: var(--white);
   transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(15,23,42,0.15);
 }
 
 /* -------- NAVBAR -------- */
@@ -158,13 +159,14 @@ a {
   z-index: 1000;
   padding: 0;
   transition: all var(--transition);
-  background: transparent;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
 }
 
 .navbar.scrolled {
-  background: rgba(15, 23, 42, 0.97);
-  backdrop-filter: blur(12px);
-  box-shadow: 0 2px 20px rgba(0,0,0,0.25);
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 2px 20px rgba(15, 23, 42, 0.08);
 }
 
 .nav-container {
@@ -181,24 +183,24 @@ a {
   display: flex;
   align-items: center;
   gap: 10px;
-  color: var(--white);
+  color: var(--navy);
   font-weight: 600;
 }
 
 .logo-icon {
-  color: var(--accent-light);
+  color: var(--accent);
   font-size: 1.2rem;
 }
 
 .logo-text {
   font-family: var(--font-heading);
-  font-size: 1.15rem;
+  font-size: 1.2rem;
   font-weight: 700;
   letter-spacing: 0.01em;
 }
 
 .logo-accent {
-  color: var(--accent-light);
+  color: var(--accent);
 }
 
 .nav-menu ul {
@@ -209,8 +211,8 @@ a {
 }
 
 .nav-link {
-  color: rgba(255,255,255,0.85);
-  font-size: 0.9rem;
+  color: var(--gray-800);
+  font-size: 0.92rem;
   font-weight: 500;
   padding: 8px 14px;
   border-radius: 8px;
@@ -219,8 +221,8 @@ a {
 }
 
 .nav-link:hover {
-  color: var(--white);
-  background: rgba(255,255,255,0.1);
+  color: var(--accent);
+  background: rgba(2, 132, 199, 0.08);
 }
 
 .nav-link.nav-cta {
@@ -231,6 +233,7 @@ a {
 
 .nav-link.nav-cta:hover {
   background: var(--accent-hover);
+  color: var(--white);
   transform: translateY(-1px);
   box-shadow: 0 4px 16px rgba(2,132,199,0.3);
 }
@@ -249,37 +252,32 @@ a {
   display: block;
   width: 24px;
   height: 2px;
-  background: var(--white);
+  background: var(--navy);
   border-radius: 2px;
   transition: all var(--transition);
 }
 
-/* -------- HERO -------- */
+/* -------- HERO (Lumineux & Clair) -------- */
 .hero {
   position: relative;
-  min-height: 100vh;
+  min-height: 90vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  background: linear-gradient(135deg, #e0f2fe 0%, #f0f7ff 50%, #ffffff 100%);
   overflow: hidden;
+  padding-top: 72px;
 }
 
 .hero-bg {
   position: absolute;
   inset: 0;
-  background: var(--navy-dark);
+  background: radial-gradient(circle at 80% 20%, rgba(56, 189, 248, 0.15) 0%, transparent 60%);
   z-index: 0;
 }
 
 .hero-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    135deg,
-    rgba(15,23,42,0.85) 0%,
-    rgba(30,41,59,0.70) 100%
-  );
-  z-index: 1;
+  display: none;
 }
 
 .hero-content {
@@ -287,37 +285,33 @@ a {
   z-index: 2;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 140px 24px 100px;
+  padding: 100px 24px 80px;
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.hero-badge {
-  display: none;
-}
-
 .hero-title {
   font-family: var(--font-heading);
-  font-size: clamp(2.8rem, 7vw, 5.5rem);
+  font-size: clamp(2.8rem, 6.5vw, 5.2rem);
   font-weight: 700;
-  color: var(--white);
+  color: var(--navy);
   line-height: 1.1;
   margin-bottom: 24px;
-  max-width: 700px;
+  max-width: 720px;
   animation: fadeInUp 0.8s ease 0.15s both;
 }
 
 .hero-accent {
-  color: var(--accent-light);
+  color: var(--accent);
   display: block;
 }
 
 .hero-subtitle {
-  font-size: clamp(1rem, 2vw, 1.2rem);
-  color: rgba(255,255,255,0.85);
-  max-width: 540px;
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  color: var(--gray-600);
+  max-width: 580px;
   margin-bottom: 40px;
   line-height: 1.7;
   animation: fadeInUp 0.8s ease 0.3s both;
@@ -334,15 +328,16 @@ a {
 .hero-info-bar {
   position: relative;
   z-index: 2;
-  background: rgba(15,23,42,0.95);
-  backdrop-filter: blur(8px);
-  border-top: 1px solid rgba(56,189,248,0.25);
+  background: var(--white);
+  border-top: 1px solid var(--gray-200);
+  border-bottom: 1px solid var(--gray-200);
+  box-shadow: var(--shadow-sm);
 }
 
 .info-bar-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 24px 24px;
+  padding: 22px 24px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -354,11 +349,11 @@ a {
   display: flex;
   align-items: center;
   gap: 12px;
-  color: var(--white);
+  color: var(--navy);
 }
 
 .info-item svg {
-  color: var(--accent-light);
+  color: var(--accent);
   flex-shrink: 0;
 }
 
@@ -369,40 +364,42 @@ a {
 }
 
 .info-item strong {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--accent-light);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--accent);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
 .info-item span {
   font-size: 0.9rem;
-  color: rgba(255,255,255,0.85);
+  color: var(--gray-800);
+  font-weight: 500;
 }
 
 .info-divider {
   width: 1px;
   height: 40px;
-  background: rgba(255,255,255,0.15);
+  background: var(--gray-200);
 }
 
-/* -------- SERVICES -------- */
+/* -------- SERVICES (Riche & Habillé) -------- */
 .services {
   background: var(--blue-soft);
 }
 
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 28px;
 }
 
 .service-card {
   background: var(--white);
   border-radius: var(--radius-lg);
-  padding: 32px 24px;
+  padding: 36px 28px;
   border: 1px solid var(--gray-200);
+  box-shadow: var(--shadow-sm);
   transition: all var(--transition);
   position: relative;
   overflow: hidden;
@@ -415,18 +412,18 @@ a {
 .service-card::before {
   content: '';
   position: absolute;
-  bottom: 0;
+  top: 0;
   left: 0;
   right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--navy), var(--accent));
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent), #38bdf8);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform var(--transition);
 }
 
 .service-card:hover {
-  border-color: var(--accent);
+  border-color: rgba(2, 132, 199, 0.4);
   box-shadow: var(--shadow-lg);
   transform: translateY(-6px);
 }
@@ -437,45 +434,66 @@ a {
 
 .service-icon {
   font-size: 2.5rem;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 48px;
-  transition: transform var(--transition);
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(2, 132, 199, 0.08);
+  transition: all var(--transition);
 }
 
 .service-icon svg {
-  width: 42px;
-  height: 42px;
+  width: 32px;
+  height: 32px;
   stroke: var(--accent);
   display: block;
 }
 
 .service-card:hover .service-icon {
-  transform: scale(1.1);
+  background: var(--accent);
+  transform: scale(1.08);
+}
+
+.service-card:hover .service-icon svg {
+  stroke: var(--white);
 }
 
 .service-card h3 {
   font-family: var(--font-heading);
-  font-size: 1.15rem;
-  font-weight: 600;
+  font-size: 1.2rem;
+  font-weight: 700;
   color: var(--navy);
-  margin-bottom: 0;
+  margin-bottom: 10px;
+}
+
+.service-card p {
+  font-size: 0.9rem;
+  color: var(--gray-600);
+  line-height: 1.6;
+  margin-bottom: 16px;
+  flex: 1;
 }
 
 .price-badge {
   display: inline-block;
-  margin-top: 16px;
-  background: linear-gradient(135deg, var(--navy), var(--navy-light));
-  color: var(--accent-light);
+  margin-top: auto;
+  background: rgba(2, 132, 199, 0.1);
+  color: var(--accent-hover);
   font-size: 0.82rem;
   font-weight: 700;
-  padding: 5px 14px;
+  padding: 6px 16px;
   border-radius: 20px;
-  letter-spacing: 0.03em;
-  border: 1px solid rgba(56,189,248,0.3);
-  animation: fadeInUp 0.4s ease both;
+  letter-spacing: 0.02em;
+  border: 1px solid rgba(2, 132, 199, 0.2);
+}
+
+.service-card:hover .price-badge {
+  background: var(--accent);
+  color: var(--white);
+  border-color: var(--accent);
 }
 
 /* -------- SKELETON LOADERS -------- */
@@ -506,8 +524,8 @@ a {
 }
 
 .skeleton-icon {
-  width: 42px;
-  height: 42px;
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
   margin-bottom: 20px;
 }
@@ -568,7 +586,7 @@ a {
 
 /* Placeholder en attendant une vraie photo */
 .about-img-placeholder {
-  background: linear-gradient(160deg, var(--navy-dark) 0%, var(--navy) 100%);
+  background: linear-gradient(160deg, #0f172a 0%, #1e293b 100%);
   border-radius: var(--radius-lg);
   aspect-ratio: 4/5;
   display: flex;
@@ -601,7 +619,7 @@ a {
   font-family: var(--font-heading);
   font-size: clamp(5rem, 12vw, 9rem);
   font-weight: 700;
-  color: var(--accent-light);
+  color: #38bdf8;
   line-height: 1;
   letter-spacing: -2px;
 }
@@ -631,7 +649,7 @@ a {
   font-family: var(--font-heading);
   font-size: 2.5rem;
   font-weight: 700;
-  color: var(--accent-light);
+  color: #38bdf8;
   line-height: 1;
 }
 
@@ -697,17 +715,11 @@ a {
 
 /* -------- STATS -------- */
 .stats-section {
-  background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 100%);
+  background: linear-gradient(135deg, var(--accent-hover) 0%, var(--accent) 100%);
   padding: 80px 0;
   position: relative;
   overflow: hidden;
-}
-
-.stats-section::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230284c7' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  color: var(--white);
 }
 
 .stats-grid {
@@ -721,14 +733,14 @@ a {
   text-align: center;
   padding: 32px 20px;
   border-radius: var(--radius);
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(56,189,248,0.18);
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.25);
   transition: all var(--transition);
 }
 
 .stat-card:hover {
-  background: rgba(2,132,199,0.12);
-  border-color: rgba(56,189,248,0.4);
+  background: rgba(255,255,255,0.2);
   transform: translateY(-4px);
 }
 
@@ -736,28 +748,28 @@ a {
   font-family: var(--font-heading);
   font-size: 3.2rem;
   font-weight: 700;
-  color: var(--accent-light);
+  color: var(--white);
   line-height: 1;
 }
 
 .stat-suffix {
   font-family: var(--font-heading);
   font-size: 2rem;
-  color: var(--accent-light);
+  color: var(--white);
 }
 
 .stat-card p {
   font-size: 0.85rem;
-  color: rgba(255,255,255,0.7);
+  color: rgba(255,255,255,0.9);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   margin-top: 10px;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 /* -------- AVIS -------- */
 .avis {
-  background: var(--blue-soft);
+  background: var(--white);
 }
 
 /* Note globale */
@@ -765,7 +777,7 @@ a {
   display: flex;
   align-items: center;
   gap: 48px;
-  background: var(--white);
+  background: var(--blue-soft);
   border-radius: var(--radius-lg);
   padding: 36px 40px;
   margin-bottom: 52px;
@@ -829,7 +841,7 @@ a {
 
 .bar-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--navy), var(--accent));
+  background: linear-gradient(90deg, var(--accent), #38bdf8);
   border-radius: 4px;
   transition: width 1s ease;
 }
@@ -940,7 +952,7 @@ a {
 .author-avatar {
   width: 46px;
   height: 46px;
-  background: linear-gradient(135deg, var(--navy-dark), var(--navy));
+  background: linear-gradient(135deg, var(--accent-hover), var(--accent));
   color: var(--white);
   border-radius: 50%;
   display: flex;
@@ -949,7 +961,8 @@ a {
   font-weight: 700;
   font-size: 0.85rem;
   flex-shrink: 0;
-  border: 2px solid var(--accent);
+  border: 2px solid var(--white);
+  box-shadow: var(--shadow-sm);
 }
 
 .avis-author strong {
@@ -976,9 +989,9 @@ a {
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  border: 2px solid var(--navy);
+  border: 2px solid var(--accent);
   background: transparent;
-  color: var(--navy);
+  color: var(--accent);
   font-size: 1.1rem;
   cursor: pointer;
   transition: all var(--transition);
@@ -988,7 +1001,7 @@ a {
 }
 
 .avis-btn:hover {
-  background: var(--navy);
+  background: var(--accent);
   color: var(--white);
   transform: scale(1.08);
 }
@@ -1016,7 +1029,7 @@ a {
 
 /* -------- CONTACT -------- */
 .contact {
-  background: var(--white);
+  background: var(--blue-soft);
 }
 
 .contact-grid {
@@ -1146,7 +1159,7 @@ a {
   align-items: center;
   gap: 20px;
   padding: 20px 24px;
-  background: var(--blue-soft);
+  background: var(--white);
   border-radius: var(--radius);
   border: 1px solid var(--gray-200);
   transition: all var(--transition);
@@ -1155,7 +1168,7 @@ a {
 
 .contact-card:hover {
   border-color: var(--accent);
-  background: rgba(2,132,199,0.06);
+  background: rgba(2,132,199,0.04);
   transform: translateX(6px);
   box-shadow: var(--shadow-sm);
 }
@@ -1181,18 +1194,20 @@ a {
 }
 
 .horaires-box {
-  background: var(--navy);
+  background: var(--white);
   border-radius: var(--radius-lg);
   padding: 32px;
-  color: var(--white);
+  color: var(--navy);
+  border: 1px solid var(--gray-200);
+  box-shadow: var(--shadow-sm);
 }
 
 .horaires-box h3 {
   font-family: var(--font-heading);
   font-size: 1.15rem;
-  font-weight: 600;
+  font-weight: 700;
   margin-bottom: 24px;
-  color: var(--accent-light);
+  color: var(--accent);
 }
 
 .horaire-row {
@@ -1200,7 +1215,7 @@ a {
   justify-content: space-between;
   align-items: center;
   padding: 12px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+  border-bottom: 1px solid var(--gray-200);
 }
 
 .horaire-row:last-child {
@@ -1209,17 +1224,17 @@ a {
 
 .horaire-day {
   font-size: 0.9rem;
-  color: rgba(255,255,255,0.75);
+  color: var(--gray-600);
 }
 
 .horaire-hours {
   font-size: 0.9rem;
   font-weight: 600;
-  color: var(--accent-light);
+  color: var(--navy);
 }
 
 .horaire-hours.closed {
-  color: rgba(255,255,255,0.4);
+  color: var(--gray-400);
   font-weight: 400;
   font-style: italic;
 }
@@ -1270,7 +1285,7 @@ a {
 }
 
 .footer-brand .logo-icon {
-  color: var(--accent-light);
+  color: #38bdf8;
   font-size: 1.1rem;
   margin-right: 8px;
 }
@@ -1288,7 +1303,7 @@ a {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: var(--accent-light);
+  color: #38bdf8;
   margin-bottom: 20px;
 }
 
@@ -1307,7 +1322,7 @@ a {
 }
 
 .footer ul a:hover {
-  color: var(--accent-light);
+  color: #38bdf8;
 }
 
 .footer-contact p {
@@ -1323,7 +1338,7 @@ a {
 }
 
 .footer-contact a:hover {
-  color: var(--accent-light);
+  color: #38bdf8;
 }
 
 .footer-bottom {
@@ -1413,13 +1428,14 @@ a {
     top: 72px;
     left: 0;
     right: 0;
-    background: rgba(15,23,42,0.98);
+    background: rgba(255,255,255,0.98);
     backdrop-filter: blur(12px);
     padding: 24px;
     transform: translateY(-100%);
     opacity: 0;
     pointer-events: none;
     transition: all var(--transition);
+    border-bottom: 1px solid var(--gray-200);
   }
 
   .nav-menu.open {
@@ -1437,6 +1453,7 @@ a {
     display: block;
     padding: 12px 16px;
     font-size: 1rem;
+    color: var(--navy);
   }
 
   .nav-toggle {

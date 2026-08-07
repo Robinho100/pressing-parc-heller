@@ -70,6 +70,17 @@ document.addEventListener('DOMContentLoaded', () => {
         title.innerHTML = (svc.nom || '').replace(/\s*&\s*/g, ' et ');
         card.appendChild(title);
 
+        const desc = document.createElement('p');
+        desc.innerHTML = svc.description || '';
+        card.appendChild(desc);
+
+        if (svc.prix) {
+          const priceBadge = document.createElement('span');
+          priceBadge.className = 'price-badge';
+          priceBadge.textContent = svc.prix;
+          card.appendChild(priceBadge);
+        }
+
         grid.appendChild(card);
 
         // Enregistrer la carte avec l'intersection observer pour l'effet de scroll reveal

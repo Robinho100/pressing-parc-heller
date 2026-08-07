@@ -812,13 +812,14 @@ a {
 }
 
 .about-img-placeholder {
-  background: linear-gradient(160deg, #0f172a 0%, #1e293b 100%);
+  background: linear-gradient(160deg, #dbeafe 0%, #f0f7ff 100%);
   border-radius: var(--radius-lg);
   aspect-ratio: 4/5;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--gray-200);
   position: relative;
 }
 
@@ -834,8 +835,8 @@ a {
 .about-since {
   display: block;
   font-size: 0.85rem;
-  font-weight: 500;
-  color: rgba(255,255,255,0.65);
+  font-weight: 600;
+  color: var(--accent);
   letter-spacing: 0.15em;
   text-transform: uppercase;
 }
@@ -843,17 +844,18 @@ a {
 .about-year {
   display: block;
   font-family: var(--font-heading);
-  font-size: clamp(5rem, 12vw, 9rem);
+  font-size: clamp(5rem, 12vw, 8.5rem);
   font-weight: 700;
-  color: #60a5fa;
+  color: var(--accent);
   line-height: 1;
   letter-spacing: -2px;
 }
 
 .about-city {
   display: block;
-  font-size: 0.9rem;
-  color: rgba(255,255,255,0.6);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--navy);
   letter-spacing: 0.05em;
 }
 
@@ -861,13 +863,13 @@ a {
   position: absolute;
   bottom: -24px;
   right: -24px;
-  background: var(--navy);
-  color: var(--white);
-  border-radius: var(--radius);
+  background: var(--white);
+  color: var(--navy);
+  border-radius: var(--radius-lg);
   padding: 20px 24px;
   text-align: center;
   box-shadow: var(--shadow-md);
-  border: 3px solid var(--accent);
+  border: 2px solid var(--accent);
 }
 
 .badge-number {
@@ -875,12 +877,22 @@ a {
   font-family: var(--font-heading);
   font-size: 2.5rem;
   font-weight: 700;
-  color: #60a5fa;
+  color: var(--accent);
   line-height: 1;
 }
 
 .badge-number sup {
   font-size: 1.2rem;
+}
+
+.badge-text {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--gray-600);
+  font-weight: 600;
+  margin-top: 4px;
+  display: block;
 }
 
 .badge-text {

@@ -90,7 +90,6 @@ async function initDb() {
       ['rideaux',       'Rideaux et Linge',         'Nettoyage et repassage, rendu soigné et parfumé.',          'à partir de 12€', '🪟'],
       ['couture',       'Couture et Réparation',    'Retouches et réparations par nos couturières expertes.',    'à partir de 5€',  '🧵'],
       ['blanchisserie', 'Blanchisserie',           'Lavage, séchage et repassage de votre linge.',              'à partir de 3€',  '🫧'],
-      ['livraison',     'Livraison à domicile',    'Collecte et livraison gratuite pour plus de commodité.',    'Gratuite',        '🚚'],
     ];
     for (const s of services) {
       await db.execute({
@@ -101,8 +100,9 @@ async function initDb() {
     console.log('✅ Services insérés en base.');
   }
 
-  // Migration : supprimer le service Colissimo s'il existe
+  // Migrations : supprimer les anciens services obsolètes
   await db.execute("DELETE FROM services WHERE slug = 'colissimo'");
+  await db.execute("DELETE FROM services WHERE slug = 'livraison'");
 
   console.log('✅ Base de données initialisée.');
 }

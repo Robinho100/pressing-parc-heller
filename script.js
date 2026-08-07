@@ -300,16 +300,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function animateCounters() {
     statNums.forEach(el => {
-      const target = parseInt(el.getAttribute('data-target'), 10);
+      const rawTarget = el.getAttribute('data-target');
+      const target = parseFloat(rawTarget);
+      const isFloat = rawTarget.includes('.');
       const duration = 2000;
       const step = target / (duration / 16);
       let current = 0;
 
       const timer = setInterval(() => {
         current = Math.min(current + step, target);
-        el.textContent = Math.floor(current).toLocaleString('fr-FR');
+        el.textContent = isFloat ? current.toFixed(1) : Math.floor(current).toLocaleString('fr-FR');
         if (current >= target) {
-          el.textContent = target.toLocaleString('fr-FR');
+          el.textContent = isFloat ? target.toFixed(1) : target.toLocaleString('fr-FR');
           clearInterval(timer);
         }
       }, 16);

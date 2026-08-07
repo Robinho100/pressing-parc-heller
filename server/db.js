@@ -82,14 +82,14 @@ async function initDb() {
   const countRow = await db.execute('SELECT COUNT(*) as count FROM services');
   if (!countRow.rows[0].count) {
     const services = [
-      ['costumes',      'Costumes et Tailleurs',   'Nettoyage à sec professionnel, rendu impeccable.',          'à partir de 15€', '👔'],
-      ['mariage',       'Robe de Mariée',          'Traitement délicat et spécialisé, conservation incluse.',   'à partir de 80€', '👗'],
-      ['chemises',      'Chemises à la main',      'Repassage minutieux à la main, résultat parfait.',          'à partir de 4€',  '👕'],
-      ['doudounes',     'Doudounes en duvet',      "Nettoyage spécialisé, restitution du volume d'origine.",   'à partir de 18€', '🧥'],
-      ['cuir',          'Cuir et Peaux',            'Nettoyage, nourrissage et protection de vos articles.',     'à partir de 25€', '🧣'],
-      ['rideaux',       'Rideaux et Linge',         'Nettoyage et repassage, rendu soigné et parfumé.',          'à partir de 12€', '🪟'],
-      ['couture',       'Couture et Réparation',    'Retouches et réparations par nos couturières expertes.',    'à partir de 5€',  '🧵'],
-      ['blanchisserie', 'Blanchisserie',           'Lavage, séchage et repassage de votre linge.',              'à partir de 3€',  '🫧'],
+      ['costumes',      'Costumes et Tailleurs',   'Nettoyage à sec et repassage soigné de vos costumes, vestes et tailleurs.',  'à partir de 15€', '👔'],
+      ['mariage',       'Robe de Mariée',          "Nettoyage délicat et préservation spécialisée de vos tenues d'exception.",   'à partir de 80€', '👗'],
+      ['chemises',      'Chemises à la main',      'Repassage méticuleux réalisé à la main pour un résultat lisse et soigné.',     'à partir de 4€',  '👕'],
+      ['doudounes',     'Doudounes en duvet',      "Lavage et séchage spécialisés pour restituer le volume d'origine.",          'à partir de 18€', '🧥'],
+      ['cuir',          'Cuir et Peaux',            'Entretien expert, nettoyage et soin protecteur pour blousons en cuir et daim.','à partir de 25€', '🧣'],
+      ['rideaux',       'Rideaux et Linge',         'Nettoyage et repassage de vos rideaux, voilages, nappes et linge de maison.', 'à partir de 12€', '🪟'],
+      ['couture',       'Couture et Réparation',    'Retouches, ourlets et petites réparations effectués par nos couturières.',    'à partir de 5€',  '🧵'],
+      ['blanchisserie', 'Blanchisserie',           'Lavage, séchage et pliage de votre linge de tous les jours.',                 'à partir de 3€',  '🫧'],
     ];
     for (const s of services) {
       await db.execute({

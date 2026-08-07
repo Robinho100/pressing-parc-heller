@@ -1,9 +1,10 @@
 /* ============================================
-   PRESSING DU PARC HELLER — STYLE PRINCIPAL
-   Charte graphique basée sur l'enseigne du magasin :
-   - Fond global : Blanc pur (#ffffff) & Bleu glacé ultra-doux (#f0f7ff)
-   - Bleu Enseigne : Bleu Ciel / Cyan Pressing (#0284c7)
-   - Textes & Contrasts : Ardoise / Charbon sobre (#0f172a / #1e293b)
+   PRESSING DU PARC HELLER — STYLE PRINCIPAL & DIRECTION ARTISTIQUE
+   Palette extraite directement de l'enseigne physique du magasin :
+   - Bleu Cobalt Enseigne (#2563eb / #1d4ed8) : Identique au lettrage "PRESSING"
+   - Blanc Pur (#ffffff) : Identique au fond du panneau lumineux
+   - Ardoise / Charbon (#0f172a) : Identique à la structure métallique de la devanture
+   - Fond Glacé Frais (#f4f8fc) : Évoque le linge propre, le soin & la fraîcheur
    ============================================ */
 
 /* -------- RESET & BASE -------- */
@@ -14,15 +15,15 @@
 }
 
 :root {
-  --navy: #0f172a;          /* Ardoise sombre pour titres */
+  --navy: #0f172a;          /* Ardoise Nuit pour les titres */
   --navy-light: #1e293b;    /* Ardoise moyenne */
-  --navy-dark: #090d16;     /* Charbon pour footer uniquement */
-  --accent: #0284c7;        /* Bleu ciel de l'enseigne "PRESSING" */
-  --accent-hover: #0369a1;  /* Survol bleu */
-  --accent-light: #0284c7;  /* Bleu ciel vif pour accents */
-  --blue-soft: #f0f7ff;     /* Teinte bleu glacé douce et lumineuse */
+  --navy-dark: #0a1120;     /* Charbon Nuit pour le footer */
+  --accent: #2563eb;        /* Bleu Cobalt Enseigne Magasin */
+  --accent-hover: #1d4ed8;  /* Bleu cobalt au survol */
+  --accent-light: #60a5fa;  /* Accent lumineux */
+  --blue-soft: #f4f8fc;     /* Fond glacé ultra-frais et propre */
   --white: #ffffff;         /* Blanc pur */
-  --off-white: #f8fafc;     /* Blanc cassé doux */
+  --off-white: #f8fafc;     /* Blanc cassé très doux */
   --gray-100: #f1f5f9;
   --gray-200: #e2e8f0;
   --gray-400: #94a3b8;
@@ -30,8 +31,8 @@
   --gray-800: #0f172a;
   --font-heading: 'Playfair Display', serif;
   --font-body: 'Inter', sans-serif;
-  --shadow-sm: 0 2px 8px rgba(15,23,42,0.05);
-  --shadow-md: 0 6px 20px rgba(15,23,42,0.08);
+  --shadow-sm: 0 2px 8px rgba(37,99,235,0.06);
+  --shadow-md: 0 6px 20px rgba(37,99,235,0.09);
   --shadow-lg: 0 12px 32px rgba(15,23,42,0.12);
   --radius: 8px;
   --radius-lg: 12px;
@@ -134,7 +135,7 @@ a {
   background: var(--accent-hover);
   border-color: var(--accent-hover);
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(2,132,199,0.3);
+  box-shadow: 0 8px 24px rgba(37,99,235,0.3);
 }
 
 .btn-outline {
@@ -159,7 +160,7 @@ a {
   z-index: 1000;
   padding: 0;
   transition: all var(--transition);
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(226, 232, 240, 0.8);
 }
@@ -222,7 +223,7 @@ a {
 
 .nav-link:hover {
   color: var(--accent);
-  background: rgba(2, 132, 199, 0.08);
+  background: rgba(37, 99, 235, 0.08);
 }
 
 .nav-link.nav-cta {
@@ -235,7 +236,7 @@ a {
   background: var(--accent-hover);
   color: var(--white);
   transform: translateY(-1px);
-  box-shadow: 0 4px 16px rgba(2,132,199,0.3);
+  box-shadow: 0 4px 16px rgba(37,99,235,0.3);
 }
 
 .nav-toggle {
@@ -257,14 +258,14 @@ a {
   transition: all var(--transition);
 }
 
-/* -------- HERO -------- */
+/* -------- HERO (Clair, Lumineux & Professionnel) -------- */
 .hero {
   position: relative;
   min-height: 85vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background: linear-gradient(135deg, #e0f2fe 0%, #f0f7ff 50%, #ffffff 100%);
+  background: linear-gradient(135deg, #dbeafe 0%, #eff6ff 50%, #ffffff 100%);
   overflow: hidden;
   padding-top: 72px;
 }
@@ -272,7 +273,7 @@ a {
 .hero-bg {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 80% 20%, rgba(56, 189, 248, 0.15) 0%, transparent 60%);
+  background: radial-gradient(circle at 85% 15%, rgba(37, 99, 235, 0.12) 0%, transparent 60%);
   z-index: 0;
 }
 
@@ -383,7 +384,7 @@ a {
   background: var(--gray-200);
 }
 
-/* -------- SERVICES (Cartes épurées et élégantes) -------- */
+/* -------- SERVICES -------- */
 .services {
   background: var(--blue-soft);
 }
@@ -417,14 +418,14 @@ a {
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(90deg, var(--accent), #38bdf8);
+  background: linear-gradient(90deg, var(--accent), #60a5fa);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform var(--transition);
 }
 
 .service-card:hover {
-  border-color: rgba(2, 132, 199, 0.4);
+  border-color: rgba(37, 99, 235, 0.4);
   box-shadow: var(--shadow-md);
   transform: translateY(-5px);
 }
@@ -442,7 +443,7 @@ a {
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  background: rgba(2, 132, 199, 0.08);
+  background: rgba(37, 99, 235, 0.08);
   transition: all var(--transition);
 }
 
@@ -470,7 +471,7 @@ a {
   margin-bottom: 0;
 }
 
-/* -------- STATS (Design Clair Lumineux & Chiffres Vérifiés) -------- */
+/* -------- STATS (Design Clair Lumineux & Métriques Vérifiées) -------- */
 .stats-section {
   background: var(--white);
   padding: 64px 0;
@@ -595,7 +596,7 @@ a {
 
 .bar-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--accent), #38bdf8);
+  background: linear-gradient(90deg, var(--accent), #60a5fa);
   border-radius: 4px;
   transition: width 1s ease;
 }
@@ -618,7 +619,7 @@ a {
 
 .btn-leave-review:hover {
   border-color: var(--accent);
-  box-shadow: 0 4px 16px rgba(2,132,199,0.15);
+  box-shadow: 0 4px 16px rgba(37,99,235,0.15);
   transform: translateY(-2px);
 }
 
@@ -638,9 +639,9 @@ a {
 }
 
 .google-source {
-  background: rgba(2,132,199,0.08);
+  background: rgba(37,99,235,0.08);
   color: var(--accent);
-  border: 1px solid rgba(2,132,199,0.2);
+  border: 1px solid rgba(37,99,235,0.2);
 }
 
 .pages-source {
@@ -844,7 +845,7 @@ a {
   font-family: var(--font-heading);
   font-size: clamp(5rem, 12vw, 9rem);
   font-weight: 700;
-  color: #38bdf8;
+  color: #60a5fa;
   line-height: 1;
   letter-spacing: -2px;
 }
@@ -874,7 +875,7 @@ a {
   font-family: var(--font-heading);
   font-size: 2.5rem;
   font-weight: 700;
-  color: #38bdf8;
+  color: #60a5fa;
   line-height: 1;
 }
 
@@ -1004,7 +1005,7 @@ a {
 .form-group-home textarea:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
 
 .contact-form-feedback {
@@ -1079,7 +1080,7 @@ a {
 
 .contact-card:hover {
   border-color: var(--accent);
-  background: rgba(2,132,199,0.04);
+  background: rgba(37,99,235,0.04);
   transform: translateX(6px);
   box-shadow: var(--shadow-sm);
 }
@@ -1196,7 +1197,7 @@ a {
 }
 
 .footer-brand .logo-icon {
-  color: #38bdf8;
+  color: #60a5fa;
   font-size: 1.1rem;
   margin-right: 8px;
 }
@@ -1214,7 +1215,7 @@ a {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: #38bdf8;
+  color: #60a5fa;
   margin-bottom: 20px;
 }
 
@@ -1233,7 +1234,7 @@ a {
 }
 
 .footer ul a:hover {
-  color: #38bdf8;
+  color: #60a5fa;
 }
 
 .footer-contact p {
@@ -1249,7 +1250,7 @@ a {
 }
 
 .footer-contact a:hover {
-  color: #38bdf8;
+  color: #60a5fa;
 }
 
 .footer-bottom {

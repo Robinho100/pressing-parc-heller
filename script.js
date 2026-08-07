@@ -70,10 +70,6 @@ document.addEventListener('DOMContentLoaded', () => {
         title.innerHTML = (svc.nom || '').replace(/\s*&\s*/g, ' et ');
         card.appendChild(title);
 
-        const desc = document.createElement('p');
-        desc.innerHTML = svc.description || '';
-        card.appendChild(desc);
-
         grid.appendChild(card);
 
         // Enregistrer la carte avec l'intersection observer pour l'effet de scroll reveal

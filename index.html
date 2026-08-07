@@ -35,11 +35,30 @@
 </head>
 <body>
 
+  <!-- ========== TOP CONTACT BAR ========== -->
+  <div class="top-bar">
+    <div class="top-bar-container">
+      <div class="top-bar-left">
+        <a href="tel:0142374748" class="top-bar-item">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11.5 19.79 19.79 0 01.04 2.83 2 2 0 012 .67h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.19a16 16 0 006.72 6.72l1.06-1.06a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          01 42 37 47 48
+        </a>
+      </div>
+      <div class="top-bar-right">
+        <span class="top-bar-item">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          50 Rue Prosper Legouté, 92160 Antony
+        </span>
+      </div>
+    </div>
+  </div>
+
   <!-- ========== NAVBAR ========== -->
   <header class="navbar" id="navbar">
     <div class="nav-container">
       <a href="#accueil" class="nav-logo">
-        <span class="logo-text">Pressing <span class="logo-accent">du Parc Heller</span></span>
+        <div class="logo-badge">P</div>
+        <span class="logo-text">PRESSING<span class="logo-accent">du Parc Heller</span></span>
       </a>
 
       <button class="nav-toggle" id="navToggle" aria-label="Menu">
@@ -49,10 +68,10 @@
       <nav class="nav-menu" id="navMenu">
         <ul>
           <li><a href="#accueil" class="nav-link">Accueil</a></li>
+          <li><a href="#apropos" class="nav-link">Sur Nous</a></li>
           <li><a href="#services" class="nav-link">Services</a></li>
-          <li><a href="#apropos" class="nav-link">À Propos</a></li>
           <li><a href="#avis" class="nav-link">Avis</a></li>
-          <li><a href="#contact" class="nav-link nav-cta">Contact</a></li>
+          <li><a href="#contact" class="nav-link nav-cta">Contacts</a></li>
         </ul>
       </nav>
     </div>
@@ -61,9 +80,8 @@
   <!-- ========== HERO ========== -->
   <section class="hero" id="accueil">
     <div class="hero-bg"></div>
-    <div class="hero-overlay"></div>
     <div class="hero-content">
-      <h1 class="hero-title">Pressing du<br /><span class="hero-accent">Parc Heller</span></h1>
+      <h1 class="hero-title">LES MEILLEURS SERVICES DE<br /><span class="hero-accent">NETTOYAGE À SEC</span></h1>
       <p class="hero-subtitle">Votre pressing à votre service à Antony depuis 1985 — nettoyage à sec, blanchisserie, retouches et bien plus.</p>
       <div class="hero-actions">
         <a href="tel:0142374748" class="btn btn-primary" id="hero-phone-link">
@@ -75,35 +93,25 @@
     </div>
     <div class="hero-info-bar">
       <div class="info-bar-container">
-        <div class="info-item">
-          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <div class="info-block info-block-1">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11.5 19.79 19.79 0 01.04 2.83 2 2 0 012 .67h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.19a16 16 0 006.72 6.72l1.06-1.06a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
           <div>
-            <strong>Mar, Mer, Ven</strong>
-            <span id="hero-hours-week">9h–12h30 · 14h–19h</span>
+            <strong>Vous avez une question ? Appelez-nous :</strong>
+            <span id="hero-hours-week">01 42 37 47 48</span>
           </div>
         </div>
-        <div class="info-divider"></div>
-        <div class="info-item">
-          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <div class="info-block info-block-2">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           <div>
-            <strong>Jeudi</strong>
-            <span id="hero-hours-thursday">9h–12h30 · 15h–19h</span>
+            <strong>Horaires d'ouverture :</strong>
+            <span id="hero-hours-thursday">Mardi à Vendredi : 9h–12h30 · 14h–19h (Jeu 15h) | Samedi : 9h–13h · 14h–19h</span>
           </div>
         </div>
-        <div class="info-divider"></div>
-        <div class="info-item">
-          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <div class="info-block info-block-3">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
           <div>
-            <strong>Samedi</strong>
-            <span id="hero-hours-sat">9h–13h · 14h–19h</span>
-          </div>
-        </div>
-        <div class="info-divider"></div>
-        <div class="info-item">
-          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          <div>
-            <strong>Adresse</strong>
-            <span id="hero-address">50 Rue Prosper Legouté, Antony</span>
+            <strong>Besoin d'aide ? Retrouvez-nous :</strong>
+            <span id="hero-address">50 Rue Prosper Legouté, 92160 Antony</span>
           </div>
         </div>
       </div>
@@ -115,7 +123,7 @@
     <div class="container">
       <div class="section-header">
         <p class="section-label">Nos prestations</p>
-        <h2 class="section-title">Ce que nous <span class="accent">faisons pour vous</span></h2>
+        <h2 class="section-title">Des services de <span class="accent">haute qualité</span></h2>
         <p class="section-subtitle">Spécialistes du nettoyage à sec et du soin textile à Antony depuis plus de 40 ans.</p>
       </div>
 

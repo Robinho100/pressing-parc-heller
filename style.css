@@ -26,11 +26,11 @@
   --gray-800: #222222;
   --font-heading: 'Playfair Display', serif;
   --font-body: 'Inter', sans-serif;
-  --shadow-sm: 0 2px 8px rgba(15,34,64,0.08);
-  --shadow-md: 0 6px 24px rgba(15,34,64,0.12);
-  --shadow-lg: 0 16px 48px rgba(15,34,64,0.16);
-  --radius: 12px;
-  --radius-lg: 20px;
+  --shadow-sm: 0 1px 4px rgba(15,34,64,0.06);
+  --shadow-md: 0 4px 16px rgba(15,34,64,0.09);
+  --shadow-lg: 0 8px 28px rgba(15,34,64,0.12);
+  --radius: 8px;
+  --radius-lg: 12px;
   --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -263,15 +263,8 @@ a {
 .hero-bg {
   position: absolute;
   inset: 0;
-  background: url('pressing_hero.jpg') center center / cover no-repeat;
+  background: var(--navy-dark);
   z-index: 0;
-  transform: scale(1.05);
-  animation: heroZoom 20s ease-in-out infinite alternate;
-}
-
-@keyframes heroZoom {
-  from { transform: scale(1.05); }
-  to   { transform: scale(1.12); }
 }
 
 .hero-overlay {
@@ -279,9 +272,8 @@ a {
   inset: 0;
   background: linear-gradient(
     135deg,
-    rgba(8,15,31,0.82) 0%,
-    rgba(15,34,64,0.70) 50%,
-    rgba(8,15,31,0.78) 100%
+    rgba(8,15,31,0.55) 0%,
+    rgba(15,34,64,0.40) 100%
   );
   z-index: 1;
 }
@@ -299,21 +291,7 @@ a {
 }
 
 .hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(200,169,110,0.18);
-  border: 1px solid rgba(200,169,110,0.4);
-  color: var(--gold-light);
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  padding: 8px 16px;
-  border-radius: 40px;
-  margin-bottom: 28px;
-  width: fit-content;
-  animation: fadeInUp 0.8s ease both;
+  display: none;
 }
 
 .hero-title {
@@ -585,6 +563,53 @@ a {
   box-shadow: var(--shadow-lg);
 }
 
+/* Placeholder en attendant une vraie photo */
+.about-img-placeholder {
+  background: linear-gradient(160deg, var(--navy) 0%, var(--navy-light) 100%);
+  border-radius: var(--radius-lg);
+  aspect-ratio: 4/5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+}
+
+.about-placeholder-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-align: center;
+}
+
+.about-since {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.55);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.about-year {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: clamp(5rem, 12vw, 9rem);
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+  letter-spacing: -2px;
+}
+
+.about-city {
+  display: block;
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.05em;
+}
+
 .about-badge {
   position: absolute;
   bottom: -24px;
@@ -644,8 +669,11 @@ a {
   gap: 16px;
 }
 
-.value-icon {
-  font-size: 1.5rem;
+.value-line {
+  width: 3px;
+  height: 40px;
+  background: var(--gold);
+  border-radius: 2px;
   flex-shrink: 0;
   margin-top: 2px;
 }
@@ -1196,15 +1224,16 @@ a {
 .map-wrap {
   border-radius: var(--radius-lg);
   overflow: hidden;
-  height: 520px;
-  box-shadow: var(--shadow-lg);
-  border: 3px solid var(--gray-200);
+  height: 100%;
+  min-height: 480px;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--gray-200);
   transition: all var(--transition);
 }
 
 .map-wrap:hover {
   border-color: var(--gold);
-  box-shadow: 0 16px 48px rgba(200,169,110,0.15);
+  box-shadow: var(--shadow-lg);
 }
 
 .map-wrap iframe {

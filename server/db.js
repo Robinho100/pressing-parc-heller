@@ -82,16 +82,15 @@ async function initDb() {
   const countRow = await db.execute('SELECT COUNT(*) as count FROM services');
   if (!countRow.rows[0].count) {
     const services = [
-      ['costumes',      'Costumes & Tailleurs',   'Nettoyage à sec professionnel, rendu impeccable.',          'à partir de 15€', '👔'],
+      ['costumes',      'Costumes et Tailleurs',   'Nettoyage à sec professionnel, rendu impeccable.',          'à partir de 15€', '👔'],
       ['mariage',       'Robe de Mariée',          'Traitement délicat et spécialisé, conservation incluse.',   'à partir de 80€', '👗'],
       ['chemises',      'Chemises à la main',      'Repassage minutieux à la main, résultat parfait.',          'à partir de 4€',  '👕'],
       ['doudounes',     'Doudounes en duvet',      "Nettoyage spécialisé, restitution du volume d'origine.",   'à partir de 18€', '🧥'],
-      ['cuir',          'Cuir & Peaux',            'Nettoyage, nourrissage et protection de vos articles.',     'à partir de 25€', '🧣'],
-      ['rideaux',       'Rideaux & Linge',         'Nettoyage et repassage, rendu soigné et parfumé.',          'à partir de 12€', '🪟'],
-      ['couture',       'Couture & Réparation',    'Retouches et réparations par nos couturières expertes.',    'à partir de 5€',  '🧵'],
+      ['cuir',          'Cuir et Peaux',            'Nettoyage, nourrissage et protection de vos articles.',     'à partir de 25€', '🧣'],
+      ['rideaux',       'Rideaux et Linge',         'Nettoyage et repassage, rendu soigné et parfumé.',          'à partir de 12€', '🪟'],
+      ['couture',       'Couture et Réparation',    'Retouches et réparations par nos couturières expertes.',    'à partir de 5€',  '🧵'],
       ['blanchisserie', 'Blanchisserie',           'Lavage, séchage et repassage de votre linge.',              'à partir de 3€',  '🫧'],
       ['livraison',     'Livraison à domicile',    'Collecte et livraison gratuite pour plus de commodité.',    'Gratuite',        '🚚'],
-      ['colissimo',     'Colissimo',               'Dépôt et retrait de vos colis Colissimo.',                  'Sur place',       '📦'],
     ];
     for (const s of services) {
       await db.execute({
@@ -101,6 +100,9 @@ async function initDb() {
     }
     console.log('✅ Services insérés en base.');
   }
+
+  // Migration : supprimer le service Colissimo s'il existe
+  await db.execute("DELETE FROM services WHERE slug = 'colissimo'");
 
   console.log('✅ Base de données initialisée.');
 }

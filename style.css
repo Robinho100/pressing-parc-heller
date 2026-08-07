@@ -1,9 +1,8 @@
 /* ============================================
-   PRESSING DU PARC HELLER — STYLE ÉPURÉ & COULEURS DU MOCKUP
-   Couleurs tirées du mockup :
-   - Cyan/Sky Blue (#00a8e8) : Accents et boutons
-   - Deep Royal Navy (#0f2942) : Titres et logo
-   - Blanc Pur (#ffffff) & Fond glacé ultra-doux (#f4f8fc)
+   PRESSING DU PARC HELLER — STYLE AVEC TOUCHES DE BLEU ENRICHIES
+   - Navbar : Blanche pure, propre & élégante
+   - Accents : Bleu Ciel (#00a8e8) & Bleu Cerulean (#0284c7)
+   - Sections : Fonds bleutés frais, pastilles d'icônes bleues & cartes enrichies
    ============================================ */
 
 /* -------- RESET & BASE -------- */
@@ -14,25 +13,27 @@
 }
 
 :root {
-  --sky-blue: #00a8e8;       /* Cyan Sky Blue */
+  --sky-blue: #00a8e8;       /* Cyan Sky Blue principal */
   --cerulean-blue: #0284c7;  /* Cerulean Blue */
-  --navy: #0f2942;           /* Deep Royal Navy pour titres et logo */
+  --navy: #0f2942;           /* Deep Royal Navy pour les titres */
   --navy-light: #1e3a8a;     /* Navy moyen */
   --navy-dark: #0a1728;      /* Fond footer */
   --accent: #00a8e8;         /* Cyan accent */
   --accent-hover: #0096c7;
   --white: #ffffff;          /* Blanc pur */
   --off-white: #f8fafc;      /* Blanc cassé très doux */
+  --blue-soft: #e0f2fe;      /* Bleu glacier frais pour les sections */
+  --blue-light: #f0f7ff;     /* Bleu très doux */
   --gray-100: #f1f5f9;
-  --gray-200: #e2e8f0;
+  --gray-200: #cbd5e1;
   --gray-400: #94a3b8;
   --gray-600: #475569;
   --gray-800: #0f2942;
   --font-heading: 'Playfair Display', serif;
   --font-body: 'Inter', sans-serif;
-  --shadow-sm: 0 2px 8px rgba(15,41,66,0.06);
-  --shadow-md: 0 6px 20px rgba(15,41,66,0.09);
-  --shadow-lg: 0 12px 32px rgba(15,41,66,0.12);
+  --shadow-sm: 0 2px 8px rgba(0,168,232,0.08);
+  --shadow-md: 0 6px 20px rgba(0,168,232,0.12);
+  --shadow-lg: 0 12px 32px rgba(15,41,66,0.14);
   --radius: 8px;
   --radius-lg: 12px;
   --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -128,29 +129,30 @@ a {
   background: var(--sky-blue);
   color: var(--white);
   border-color: var(--sky-blue);
+  box-shadow: 0 4px 16px rgba(0,168,232,0.25);
 }
 
 .btn-primary:hover {
   background: var(--accent-hover);
   border-color: var(--accent-hover);
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0,168,232,0.3);
+  box-shadow: 0 8px 24px rgba(0,168,232,0.35);
 }
 
 .btn-outline {
   background: transparent;
   color: var(--navy);
-  border-color: var(--navy);
+  border-color: var(--sky-blue);
 }
 
 .btn-outline:hover {
-  background: var(--navy);
+  background: var(--sky-blue);
   color: var(--white);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(15,23,42,0.15);
+  box-shadow: 0 6px 20px rgba(0,168,232,0.25);
 }
 
-/* -------- NAVBAR -------- */
+/* -------- NAVBAR (Barre Blanche Conservée) -------- */
 .navbar {
   position: fixed;
   top: 0;
@@ -159,14 +161,15 @@ a {
   z-index: 1000;
   padding: 0;
   transition: all var(--transition);
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.98);
   backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+  border-bottom: 1px solid rgba(203, 213, 225, 0.8);
+  box-shadow: 0 2px 12px rgba(15, 41, 66, 0.05);
 }
 
 .navbar.scrolled {
-  background: rgba(255, 255, 255, 0.98);
-  box-shadow: 0 2px 20px rgba(15, 23, 42, 0.08);
+  background: var(--white);
+  box-shadow: 0 4px 20px rgba(15, 41, 66, 0.08);
 }
 
 .nav-container {
@@ -194,9 +197,10 @@ a {
 
 .logo-text {
   font-family: var(--font-heading);
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   font-weight: 700;
   letter-spacing: 0.01em;
+  color: var(--navy);
 }
 
 .logo-accent {
@@ -257,14 +261,14 @@ a {
   transition: all var(--transition);
 }
 
-/* -------- HERO (Lumineux, Grand Titre & Clair) -------- */
+/* -------- HERO (Fond Bleu Ciel Lumineux & Grand Titre) -------- */
 .hero {
   position: relative;
   min-height: 85vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background: linear-gradient(135deg, #e0f2fe 0%, #f0f7ff 50%, #ffffff 100%);
+  background: linear-gradient(135deg, #bae6fd 0%, #e0f2fe 45%, #f0f7ff 100%);
   overflow: hidden;
   padding-top: 72px;
 }
@@ -272,7 +276,7 @@ a {
 .hero-bg {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 85% 15%, rgba(0, 168, 232, 0.12) 0%, transparent 60%);
+  background: radial-gradient(circle at 85% 15%, rgba(0, 168, 232, 0.22) 0%, transparent 60%);
   z-index: 0;
 }
 
@@ -324,13 +328,13 @@ a {
   animation: fadeInUp 0.8s ease 0.45s both;
 }
 
-/* Info bar below hero */
+/* Info bar below hero (Harmonie Bleu Ciel) */
 .hero-info-bar {
   position: relative;
   z-index: 2;
-  background: var(--white);
-  border-top: 1px solid var(--gray-200);
-  border-bottom: 1px solid var(--gray-200);
+  background: var(--blue-light);
+  border-top: 1px solid #bae6fd;
+  border-bottom: 1px solid #bae6fd;
   box-shadow: var(--shadow-sm);
 }
 
@@ -380,12 +384,12 @@ a {
 .info-divider {
   width: 1px;
   height: 40px;
-  background: var(--gray-200);
+  background: #bae6fd;
 }
 
-/* -------- SERVICES -------- */
+/* -------- SERVICES (Cartes avec icônes en pastille Bleu Ciel) -------- */
 .services {
-  background: var(--off-white);
+  background: var(--white);
 }
 
 .services-grid {
@@ -395,10 +399,10 @@ a {
 }
 
 .service-card {
-  background: var(--white);
+  background: var(--blue-light);
   border-radius: var(--radius-lg);
   padding: 40px 24px;
-  border: 1px solid var(--gray-200);
+  border: 1px solid #bae6fd;
   box-shadow: var(--shadow-sm);
   transition: all var(--transition);
   position: relative;
@@ -417,16 +421,17 @@ a {
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(90deg, var(--sky-blue), #60a5fa);
+  background: linear-gradient(90deg, var(--sky-blue), var(--cerulean-blue));
   transform: scaleX(0);
   transform-origin: left;
   transition: transform var(--transition);
 }
 
 .service-card:hover {
-  border-color: rgba(0, 168, 232, 0.4);
+  border-color: var(--sky-blue);
   box-shadow: var(--shadow-md);
   transform: translateY(-5px);
+  background: var(--white);
 }
 
 .service-card:hover::before {
@@ -442,24 +447,21 @@ a {
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  background: rgba(0, 168, 232, 0.08);
+  background: linear-gradient(135deg, var(--sky-blue), var(--cerulean-blue));
+  box-shadow: 0 4px 14px rgba(0, 168, 232, 0.3);
   transition: all var(--transition);
 }
 
 .service-icon svg {
   width: 32px;
   height: 32px;
-  stroke: var(--sky-blue);
+  stroke: var(--white);
   display: block;
 }
 
 .service-card:hover .service-icon {
-  background: var(--sky-blue);
-  transform: scale(1.08);
-}
-
-.service-card:hover .service-icon svg {
-  stroke: var(--white);
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(0, 168, 232, 0.45);
 }
 
 .service-card h3 {
@@ -470,12 +472,12 @@ a {
   margin-bottom: 0;
 }
 
-/* -------- STATS -------- */
+/* -------- STATS (Design Fond Bleu Glacier & Cartes Blanches) -------- */
 .stats-section {
-  background: var(--white);
+  background: linear-gradient(135deg, #e0f2fe 0%, #f0f7ff 100%);
   padding: 64px 0;
-  border-top: 1px solid var(--gray-200);
-  border-bottom: 1px solid var(--gray-200);
+  border-top: 1px solid #bae6fd;
+  border-bottom: 1px solid #bae6fd;
 }
 
 .stats-grid {
@@ -488,14 +490,15 @@ a {
   text-align: center;
   padding: 28px 20px;
   border-radius: var(--radius-lg);
-  background: var(--off-white);
-  border: 1px solid var(--gray-200);
+  background: var(--white);
+  border: 1px solid #bae6fd;
   transition: all var(--transition);
+  box-shadow: var(--shadow-sm);
 }
 
 .stat-card:hover {
   border-color: var(--sky-blue);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-md);
   transform: translateY(-3px);
 }
 
@@ -522,7 +525,7 @@ a {
   font-weight: 600;
 }
 
-/* -------- AVIS -------- */
+/* -------- AVIS (Encart Note Bleu Royal & Cartes Élégantes) -------- */
 .avis {
   background: var(--white);
 }
@@ -531,12 +534,13 @@ a {
   display: flex;
   align-items: center;
   gap: 48px;
-  background: var(--off-white);
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+  color: var(--white);
   border-radius: var(--radius-lg);
   padding: 36px 40px;
   margin-bottom: 52px;
-  border: 1px solid var(--gray-200);
-  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--navy-light);
+  box-shadow: var(--shadow-md);
   flex-wrap: wrap;
 }
 
@@ -550,7 +554,7 @@ a {
   font-family: var(--font-heading);
   font-size: 4rem;
   font-weight: 700;
-  color: var(--navy);
+  color: var(--sky-blue);
   line-height: 1;
 }
 
@@ -563,7 +567,7 @@ a {
 
 .rating-count {
   font-size: 0.8rem;
-  color: var(--gray-400);
+  color: rgba(255,255,255,0.7);
 }
 
 .rating-bars {
@@ -579,23 +583,23 @@ a {
   align-items: center;
   gap: 10px;
   font-size: 0.82rem;
-  color: var(--gray-600);
+  color: rgba(255,255,255,0.85);
 }
 
 .bar-row > span:first-child { width: 24px; text-align: right; flex-shrink: 0; }
-.bar-row > span:last-child  { width: 32px; flex-shrink: 0; color: var(--gray-400); }
+.bar-row > span:last-child  { width: 32px; flex-shrink: 0; color: rgba(255,255,255,0.6); }
 
 .bar-track {
   flex: 1;
   height: 8px;
-  background: var(--gray-200);
+  background: rgba(255,255,255,0.15);
   border-radius: 4px;
   overflow: hidden;
 }
 
 .bar-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--sky-blue), #60a5fa);
+  background: var(--sky-blue);
   border-radius: 4px;
   transition: width 1s ease;
 }
@@ -605,20 +609,21 @@ a {
   align-items: center;
   gap: 10px;
   padding: 13px 22px;
-  background: var(--white);
-  border: 2px solid var(--gray-200);
+  background: var(--sky-blue);
+  border: 2px solid var(--sky-blue);
   border-radius: var(--radius);
   font-size: 0.88rem;
   font-weight: 600;
-  color: var(--gray-800);
+  color: var(--white);
   transition: all var(--transition);
   white-space: nowrap;
   flex-shrink: 0;
 }
 
 .btn-leave-review:hover {
-  border-color: var(--sky-blue);
-  box-shadow: 0 4px 16px rgba(0,168,232,0.15);
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+  box-shadow: 0 4px 16px rgba(0,168,232,0.4);
   transform: translateY(-2px);
 }
 
@@ -677,6 +682,7 @@ a {
 }
 
 .avis-card:hover {
+  border-color: var(--sky-blue);
   box-shadow: var(--shadow-md);
   transform: translateY(-4px);
 }
@@ -705,7 +711,7 @@ a {
 .author-avatar {
   width: 46px;
   height: 46px;
-  background: linear-gradient(135deg, var(--navy), var(--sky-blue));
+  background: linear-gradient(135deg, var(--sky-blue), var(--cerulean-blue));
   color: var(--white);
   border-radius: 50%;
   display: flex;
@@ -714,8 +720,7 @@ a {
   font-weight: 700;
   font-size: 0.85rem;
   flex-shrink: 0;
-  border: 2px solid var(--white);
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 2px 8px rgba(0, 168, 232, 0.3);
 }
 
 .avis-author strong {
@@ -803,14 +808,14 @@ a {
 }
 
 .about-img-placeholder {
-  background: linear-gradient(160deg, #dbeafe 0%, #f4f8fc 100%);
+  background: linear-gradient(160deg, #bae6fd 0%, #e0f2fe 100%);
   border-radius: var(--radius-lg);
   aspect-ratio: 4/5;
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: var(--shadow-md);
-  border: 1px solid var(--gray-200);
+  border: 1px solid #bae6fd;
   position: relative;
 }
 
@@ -935,7 +940,7 @@ a {
 
 /* -------- CONTACT -------- */
 .contact {
-  background: var(--off-white);
+  background: var(--blue-light);
 }
 
 .contact-grid {
@@ -949,7 +954,7 @@ a {
   background: var(--white);
   border-radius: var(--radius-lg);
   padding: 40px;
-  border: 1px solid var(--gray-200);
+  border: 1px solid #bae6fd;
   box-shadow: var(--shadow-md);
 }
 
@@ -1067,14 +1072,14 @@ a {
   padding: 20px 24px;
   background: var(--white);
   border-radius: var(--radius);
-  border: 1px solid var(--gray-200);
+  border: 1px solid #bae6fd;
   transition: all var(--transition);
   cursor: pointer;
 }
 
 .contact-card:hover {
   border-color: var(--sky-blue);
-  background: rgba(0,168,232,0.04);
+  background: rgba(0,168,232,0.06);
   transform: translateX(6px);
   box-shadow: var(--shadow-sm);
 }
@@ -1104,7 +1109,7 @@ a {
   border-radius: var(--radius-lg);
   padding: 32px;
   color: var(--navy);
-  border: 1px solid var(--gray-200);
+  border: 1px solid #bae6fd;
   box-shadow: var(--shadow-sm);
 }
 
@@ -1151,7 +1156,7 @@ a {
   height: 100%;
   min-height: 480px;
   box-shadow: var(--shadow-md);
-  border: 1px solid var(--gray-200);
+  border: 1px solid #bae6fd;
   transition: all var(--transition);
 }
 

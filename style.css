@@ -29,11 +29,11 @@
   --gray-400: #94a3b8;
   --gray-600: #475569;
   --gray-800: #0f172a;
-  --font-heading: 'Plus Jakarta Sans', 'Outfit', sans-serif;
+  --font-heading: 'Outfit', 'Plus Jakarta Sans', sans-serif;
   --font-body: 'Inter', sans-serif;
-  --shadow-sm: 0 2px 8px rgba(37,99,235,0.10);
-  --shadow-md: 0 6px 20px rgba(37,99,235,0.15);
-  --shadow-lg: 0 12px 32px rgba(15,23,42,0.16);
+  --shadow-sm: 0 2px 8px rgba(37,99,235,0.08);
+  --shadow-md: 0 6px 20px rgba(37,99,235,0.12);
+  --shadow-lg: 0 12px 32px rgba(15,23,42,0.14);
   --radius: 8px;
   --radius-lg: 12px;
   --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);

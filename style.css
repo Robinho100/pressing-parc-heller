@@ -29,7 +29,7 @@
   --gray-400: #94a3b8;
   --gray-600: #475569;
   --gray-800: #0f172a;
-  --font-heading: 'Playfair Display', serif;
+  --font-heading: 'Plus Jakarta Sans', 'Outfit', sans-serif;
   --font-body: 'Inter', sans-serif;
   --shadow-sm: 0 2px 8px rgba(37,99,235,0.10);
   --shadow-md: 0 6px 20px rgba(37,99,235,0.15);
@@ -292,21 +292,42 @@ a {
   justify-content: center;
 }
 
+.hero-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: var(--white);
+  font-size: 0.88rem;
+  font-weight: 600;
+  margin-bottom: 24px;
+  width: fit-content;
+  letter-spacing: 0.02em;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  animation: fadeInUp 0.8s ease 0.05s both;
+}
+
 .hero-title {
   font-family: var(--font-heading);
   font-size: clamp(2.8rem, 6.5vw, 5.2rem);
-  font-weight: 700;
+  font-weight: 800;
   color: var(--white);
-  line-height: 1.1;
+  line-height: 1.08;
   margin-bottom: 24px;
-  max-width: 720px;
+  max-width: 780px;
+  letter-spacing: -0.02em;
   animation: fadeInUp 0.8s ease 0.15s both;
-  text-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  text-shadow: 0 4px 16px rgba(0,0,0,0.12);
 }
 
 .hero-accent {
-  color: #bfdbfe;
+  color: #93c5fd;
   display: block;
+  font-weight: 800;
 }
 
 .hero-subtitle {

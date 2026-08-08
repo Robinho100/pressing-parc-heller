@@ -256,16 +256,46 @@ a {
   transition: all var(--transition);
 }
 
-/* -------- HERO (Design Épuré & Authentique) -------- */
+/* -------- HERO (Vivant, Engageant, Vrai Bleu) -------- */
 .hero {
   position: relative;
-  min-height: 75vh;
+  min-height: 85vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background: var(--blue-light);
+  background: linear-gradient(135deg, #1e40af 0%, #2563eb 50%, #3b82f6 100%);
+  color: var(--white);
   overflow: hidden;
   padding-top: 72px;
+}
+
+/* Formes décoratives CSS pures (pas d'images) */
+.hero-deco {
+  position: absolute;
+  border-radius: 50%;
+  z-index: 0;
+  pointer-events: none;
+}
+.hero-deco-1 {
+  width: 400px;
+  height: 400px;
+  top: -80px;
+  right: -100px;
+  background: rgba(255, 255, 255, 0.06);
+}
+.hero-deco-2 {
+  width: 250px;
+  height: 250px;
+  bottom: 120px;
+  right: 15%;
+  background: rgba(255, 255, 255, 0.04);
+}
+.hero-deco-3 {
+  width: 180px;
+  height: 180px;
+  top: 50%;
+  left: -60px;
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .hero-content {
@@ -273,34 +303,35 @@ a {
   z-index: 2;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 90px 24px 70px;
+  padding: 70px 24px 50px;
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 .hero-title {
   font-family: var(--font-heading);
-  font-size: clamp(2.8rem, 6.5vw, 5rem);
+  font-size: clamp(2.8rem, 6.5vw, 4.8rem);
   font-weight: 800;
-  color: var(--navy);
+  color: var(--white);
   line-height: 1.1;
-  margin-bottom: 24px;
-  max-width: 760px;
+  margin-bottom: 20px;
   letter-spacing: -0.02em;
 }
 
 .hero-accent {
-  color: var(--blue-royal);
+  color: #bfdbfe;
   display: block;
 }
 
 .hero-subtitle {
-  font-size: clamp(1.05rem, 2vw, 1.25rem);
-  color: var(--gray-600);
-  max-width: 580px;
-  margin-bottom: 40px;
+  font-size: clamp(1.05rem, 2vw, 1.2rem);
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 560px;
+  margin-bottom: 36px;
   line-height: 1.7;
 }
 
@@ -308,6 +339,97 @@ a {
   display: flex;
   gap: 16px;
   flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 56px;
+}
+
+/* Boutons spécifiques au hero (blancs sur bleu) */
+.btn-hero-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all var(--transition);
+  text-decoration: none;
+  background: var(--white);
+  color: var(--blue-royal);
+  border: 2px solid var(--white);
+}
+.btn-hero-primary:hover {
+  background: #eff6ff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.btn-hero-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all var(--transition);
+  text-decoration: none;
+  background: transparent;
+  color: var(--white);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+}
+.btn-hero-outline:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--white);
+  transform: translateY(-2px);
+}
+
+/* Compteurs stats intégrés dans le hero */
+.hero-stats {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  padding: 28px 40px;
+}
+
+.hero-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.hero-stat-number {
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--white);
+  line-height: 1;
+}
+
+.hero-stat-number sup {
+  font-size: 0.6em;
+}
+
+.hero-stat-label {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.75);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-top: 6px;
+  font-weight: 600;
+}
+
+.hero-stat-sep {
+  width: 1px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.2);
 }
 
 /* Info bar below hero (Barre Blanche & Bleu Royal) */
@@ -1352,6 +1474,21 @@ a {
     font-size: 2.6rem;
   }
 
+  .hero-stats {
+    gap: 20px;
+    padding: 20px 24px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .hero-stat-number {
+    font-size: 1.4rem;
+  }
+
+  .hero-stat-sep {
+    height: 30px;
+  }
+
   .info-bar-container {
     flex-direction: column;
     gap: 20px;
@@ -1392,8 +1529,17 @@ a {
     flex-direction: column;
   }
 
-  .btn {
+  .btn, .btn-hero-primary, .btn-hero-outline {
     width: 100%;
     justify-content: center;
+  }
+
+  .hero-stats {
+    gap: 16px;
+    padding: 18px 16px;
+  }
+
+  .hero-stat-sep:nth-child(4) {
+    display: none;
   }
 }

@@ -69,7 +69,7 @@ async function initDb() {
       ['contact_address',    '50 Rue Prosper Legouté, 92160 Antony'],
       ['hours_week',         '9h–12h30 · 14h–19h'],
       ['hours_thursday',     '9h–12h30 · 15h–19h'],
-      ['hours_sat',          '9h–13h · 14h–19h'],
+      ['hours_sat',          '9h–19h sans interruption'],
       ['google_maps_iframe', 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2636.0!2d2.2996!3d48.7531!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e67172b01f7ce1%3A0x82c3b0f3bef3e2c0!2s50%20Rue%20Prosper%20Legout%C3%A9%2C%2092160%20Antony!5e0!3m2!1sfr!2sfr!4v1718461234567!5m2!1sfr!2sfr'],
     ];
     for (const [k, v] of defaultSettings) {

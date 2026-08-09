@@ -82,14 +82,15 @@ async function initDb() {
   const countRow = await db.execute('SELECT COUNT(*) as count FROM services');
   if (!countRow.rows[0].count) {
     const services = [
-      ['costumes',      'Costumes et Tailleurs',   'Finition main & repassage soigné',  'à partir de 15€', '👔'],
-      ['mariage',       'Robe de Mariée',          'Soin délicat & nettoyage spécialisé',   'à partir de 80€', '👗'],
-      ['chemises',      'Chemises à la main',      'Repassage méticuleux fait main',     'à partir de 4€',  '👕'],
-      ['doudounes',     'Doudounes en duvet',      'Lavage & traitement spécial gonflant',          'à partir de 18€', '🧥'],
-      ['cuir',          'Cuir et Peaux',            'Nettoyage cuir, daim & ameublement','à partir de 25€', '🧣'],
-      ['rideaux',       'Rideaux et Linge',         'Rideaux, voilages & housses de canapé', 'à partir de 12€', '🪟'],
-      ['couture',       'Couture et Réparation',    'Retouches, ourlets & stoppage',    'à partir de 5€',  '🧵'],
-      ['blanchisserie', 'Blanchisserie',           'Lavage, séchage & pliage soigné',                 'à partir de 3€',  '🫧'],
+      ['nettoyage',     'Nettoyage à sec',         'Soin textile & nettoyage à sec',     'Sur devis',       '✨'],
+      ['mariage',       'Robe de Mariée',          'Soin délicat & nettoyage spécialisé', 'Sur devis',       '👗'],
+      ['chemises',      'Chemises à la main',      'Repassage méticuleux fait main',     'Sur devis',       '👕'],
+      ['doudounes',     'Doudounes en duvet',      'Lavage & traitement spécial gonflant','Sur devis',       '🧥'],
+      ['cuir',          'Cuir et Peaux',            'Nettoyage cuir, daim & ameublement', 'Sur devis',       '🧣'],
+      ['rideaux',       'Rideaux et Linge',         'Rideaux, voilages & housses de canapé','Sur devis',      '🪟'],
+      ['couture',       'Couture et Réparation',    'Retouches, ourlets & stoppage',      'Sur devis',       '🧵'],
+      ['blanchisserie', 'Blanchisserie',           'Lavage, séchage & pliage soigné',   'Sur devis',       '🫧'],
+      ['cordonnerie',   'Dépôt de Cordonnerie',    'Réparation & entretien de chaussures','Sur devis',      '👞'],
     ];
     for (const s of services) {
       await db.execute({
@@ -100,9 +101,13 @@ async function initDb() {
     console.log('✅ Services insérés en base.');
   }
 
-  // Migrations : supprimer les anciens services obsolètes
+  // Migrations : synchronisation des services et paramètres
+  await db.execute("DELETE FROM services WHERE slug = 'costumes'");
   await db.execute("DELETE FROM services WHERE slug = 'colissimo'");
   await db.execute("DELETE FROM services WHERE slug = 'livraison'");
+  await db.execute("INSERT OR IGNORE INTO services (slug, nom, description, prix, emoji) VALUES ('nettoyage', 'Nettoyage à sec', 'Soin textile & nettoyage à sec', 'Sur devis', '✨')");
+  await db.execute("INSERT OR IGNORE INTO services (slug, nom, description, prix, emoji) VALUES ('cordonnerie', 'Dépôt de Cordonnerie', 'Réparation & entretien de chaussures', 'Sur devis', '👞')");
+  await db.execute("INSERT OR REPLACE INTO settings (key, value) VALUES ('hours_sat', '9h–19h sans interruption')");
 
   console.log('✅ Base de données initialisée.');
 }

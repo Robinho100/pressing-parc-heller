@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Icon mapping helper (SVGs for premium feel, emojis for fallbacks)
   function getServiceIcon(slug, emojiFallback) {
     const iconMap = {
-      costumes: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3h6a3 3 0 0 0-3-3z"/><path d="M12 5v3"/><path d="M21 16.5A2.5 2.5 0 0 1 18.5 19H5.5A2.5 2.5 0 0 1 3 16.5L12 8l9 8.5z"/></svg>`,
+      nettoyage: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>`,
       mariage: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l-2 5H8L6 3z"/><path d="M8 8l-3 13h14L16 8H8z"/><path d="M12 3v5"/></svg>`,
       chemises: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20.38 3.46L16 6.14V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3.14L3.62 3.46A1 1 0 0 0 2 4.3v15.2a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1V4.3a1 1 0 0 0-1.62-.84z"/><path d="M12 22V6"/><path d="M16 6l-4 4-4-4"/></svg>`,
       doudounes: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 3v18"/><path d="M15 3v18"/><path d="M4 8h16"/><path d="M4 13h16"/><path d="M4 17h16"/></svg>`,
@@ -22,8 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
       rideaux: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/><path d="M15 3v18"/><path d="M3 9h18"/><path d="M3 15h18"/></svg>`,
       couture: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="9.8" y1="8.2" x2="20" y2="17"/><line x1="9.8" y1="15.8" x2="20" y2="7"/></svg>`,
       blanchisserie: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><circle cx="12" cy="12" r="4"/><circle cx="8" cy="7" r="1"/></svg>`,
-      livraison: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>`,
-      colissimo: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>`,
+      cordonnerie: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 18l5-5 3 3 4-4 4 4"/><path d="M18 6l-6 6"/><circle cx="20" cy="4" r="2"/></svg>`,
     };
     return iconMap[slug] || `<span style="font-size: 2.2rem; line-height: 1;">${emojiFallback || '✦'}</span>`;
   }
@@ -58,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       data.services.forEach(svc => {
         const card = document.createElement('div');
-        card.className = 'service-card reveal';
+        card.className = svc.slug === 'nettoyage' ? 'service-card service-card-featured reveal' : 'service-card reveal';
         card.id = `service-${svc.slug}`;
 
         const iconDiv = document.createElement('div');

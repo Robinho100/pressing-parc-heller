@@ -82,7 +82,6 @@ async function initDb() {
   const countRow = await db.execute('SELECT COUNT(*) as count FROM services');
   if (!countRow.rows[0].count) {
     const services = [
-      ['nettoyage',     'Nettoyage à sec',         'Soin textile & nettoyage à sec',     'Sur devis',       '✨'],
       ['mariage',       'Robe de Mariée',          'Soin délicat & nettoyage spécialisé', 'Sur devis',       '👗'],
       ['chemises',      'Chemises à la main',      'Repassage méticuleux fait main',     'Sur devis',       '👕'],
       ['doudounes',     'Doudounes en duvet',      'Lavage & traitement spécial gonflant','Sur devis',       '🧥'],
@@ -102,10 +101,10 @@ async function initDb() {
   }
 
   // Migrations : synchronisation des services et paramètres
+  await db.execute("DELETE FROM services WHERE slug = 'nettoyage'");
   await db.execute("DELETE FROM services WHERE slug = 'costumes'");
   await db.execute("DELETE FROM services WHERE slug = 'colissimo'");
   await db.execute("DELETE FROM services WHERE slug = 'livraison'");
-  await db.execute("INSERT OR IGNORE INTO services (slug, nom, description, prix, emoji) VALUES ('nettoyage', 'Nettoyage à sec', 'Soin textile & nettoyage à sec', 'Sur devis', '✨')");
   await db.execute("INSERT OR IGNORE INTO services (slug, nom, description, prix, emoji) VALUES ('cordonnerie', 'Dépôt de Cordonnerie', 'Réparation & entretien de chaussures', 'Sur devis', '👞')");
   await db.execute("INSERT OR REPLACE INTO settings (key, value) VALUES ('hours_sat', '9h–19h sans interruption')");
 

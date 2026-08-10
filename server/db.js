@@ -82,14 +82,14 @@ async function initDb() {
   const countRow = await db.execute('SELECT COUNT(*) as count FROM services');
   if (!countRow.rows[0].count) {
     const services = [
-      ['mariage',       'Robe de Mariée',          'Soin délicat & nettoyage spécialisé', 'Sur devis',       '👗'],
-      ['chemises',      'Chemises à la main',      'Repassage méticuleux fait main',     'Sur devis',       '👕'],
-      ['doudounes',     'Doudounes en duvet',      'Lavage & traitement spécial gonflant','Sur devis',       '🧥'],
-      ['cuir',          'Cuir et Peaux',            'Nettoyage cuir, daim & ameublement', 'Sur devis',       '🧣'],
-      ['rideaux',       'Rideaux et Linge',         'Rideaux, voilages & housses de canapé','Sur devis',      '🪟'],
-      ['couture',       'Couture et Réparation',    'Retouches, ourlets & stoppage',      'Sur devis',       '🧵'],
-      ['blanchisserie', 'Blanchisserie',           'Lavage, séchage & pliage soigné',   'Sur devis',       '🫧'],
-      ['cordonnerie',   'Dépôt de Cordonnerie',    'Réparation & entretien de chaussures','Sur devis',      '👞'],
+      ['mariage',       'Robe de Mariée',          'Soin délicat & nettoyage spécialisé', 'Sur devis', '-'],
+      ['chemises',      'Chemises à la main',      'Repassage méticuleux fait main',     'Sur devis', '-'],
+      ['doudounes',     'Doudounes en duvet',      'Lavage & traitement spécial gonflant','Sur devis', '-'],
+      ['cuir',          'Cuir et Peaux',            'Nettoyage cuir, daim & ameublement', 'Sur devis', '-'],
+      ['rideaux',       'Rideaux et Linge',         'Rideaux, voilages & housses de canapé','Sur devis','-'],
+      ['couture',       'Couture et Réparation',    'Retouches, ourlets & stoppage',      'Sur devis', '-'],
+      ['blanchisserie', 'Blanchisserie',           'Lavage, séchage & pliage soigné',    'Sur devis', '-'],
+      ['cordonnerie',   'Dépôt de Cordonnerie',    'Réparation & entretien de chaussures','Sur devis', '-'],
     ];
     for (const s of services) {
       await db.execute({

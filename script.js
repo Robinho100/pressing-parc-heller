@@ -14,7 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // Icon mapping helper (SVGs for premium feel, emojis for fallbacks)
   function getServiceIcon(slug, emojiFallback) {
     const iconMap = {
-      nettoyage: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>`,
       mariage: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l-2 5H8L6 3z"/><path d="M8 8l-3 13h14L16 8H8z"/><path d="M12 3v5"/></svg>`,
       chemises: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20.38 3.46L16 6.14V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3.14L3.62 3.46A1 1 0 0 0 2 4.3v15.2a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1V4.3a1 1 0 0 0-1.62-.84z"/><path d="M12 22V6"/><path d="M16 6l-4 4-4-4"/></svg>`,
       doudounes: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 3v18"/><path d="M15 3v18"/><path d="M4 8h16"/><path d="M4 13h16"/><path d="M4 17h16"/></svg>`,
@@ -22,9 +21,9 @@ document.addEventListener('DOMContentLoaded', () => {
       rideaux: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/><path d="M15 3v18"/><path d="M3 9h18"/><path d="M3 15h18"/></svg>`,
       couture: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="9.8" y1="8.2" x2="20" y2="17"/><line x1="9.8" y1="15.8" x2="20" y2="7"/></svg>`,
       blanchisserie: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><circle cx="12" cy="12" r="4"/><circle cx="8" cy="7" r="1"/></svg>`,
-      cordonnerie: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 18l5-5 3 3 4-4 4 4"/><path d="M18 6l-6 6"/><circle cx="20" cy="4" r="2"/></svg>`,
+      cordonnerie: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17c0 0 2-2 5-2s5 2 8 2 4-1 4-1V13c0 0-1-3-4-4L13 7H9L7 9H4l-1 3v5z"/><path d="M3 17v2h18v-2"/><path d="M9 7v2"/></svg>`,
     };
-    return iconMap[slug] || `<span style="font-size: 2.2rem; line-height: 1;">${emojiFallback || '✦'}</span>`;
+    return iconMap[slug] || `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 3"/></svg>`;
   }
 
   // -------- PRIX DYNAMIQUES (API) --------

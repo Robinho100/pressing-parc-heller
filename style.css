@@ -516,12 +516,52 @@ a {
   border: 1.5px solid rgba(37, 99, 235, 0.25);
   box-shadow: 0 4px 16px rgba(37, 99, 235, 0.1);
   margin-bottom: 16px;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
-/* -------- SERVICES (Cartes avec Pastilles Vrai Bleu) -------- */
+/* -------- SERVICES (Cartes avec arrière-plan vivant) -------- */
 .services {
   background: var(--blue-light);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Bulles décoratives CSS pures — aucune image */
+.services-deco {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+.services-deco-1 {
+  width: 500px;
+  height: 500px;
+  top: -150px;
+  right: -100px;
+  background: radial-gradient(circle, rgba(37,99,235,0.07) 0%, transparent 70%);
+  animation: floatDeco 8s ease-in-out infinite;
+}
+.services-deco-2 {
+  width: 320px;
+  height: 320px;
+  bottom: -80px;
+  left: -60px;
+  background: radial-gradient(circle, rgba(96,165,250,0.09) 0%, transparent 70%);
+  animation: floatDeco 11s ease-in-out infinite reverse;
+}
+.services-deco-3 {
+  width: 200px;
+  height: 200px;
+  top: 40%;
+  left: 38%;
+  background: radial-gradient(circle, rgba(37,99,235,0.05) 0%, transparent 70%);
+  animation: floatDeco 14s ease-in-out infinite;
+}
+
+@keyframes floatDeco {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-20px) scale(1.04); }
 }
 
 .services-grid {

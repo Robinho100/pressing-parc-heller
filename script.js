@@ -12,16 +12,16 @@ document.addEventListener('DOMContentLoaded', () => {
   let observer;
 
   // Icon mapping helper (SVGs for premium feel, emojis for fallbacks)
-  function getServiceIcon(slug, emojiFallback) {
+  function getServiceIcon(slug) {
     const iconMap = {
-      mariage: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l-2 5H8L6 3z"/><path d="M8 8l-3 13h14L16 8H8z"/><path d="M12 3v5"/></svg>`,
-      chemises: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20.38 3.46L16 6.14V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3.14L3.62 3.46A1 1 0 0 0 2 4.3v15.2a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1V4.3a1 1 0 0 0-1.62-.84z"/><path d="M12 22V6"/><path d="M16 6l-4 4-4-4"/></svg>`,
-      doudounes: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 3v18"/><path d="M15 3v18"/><path d="M4 8h16"/><path d="M4 13h16"/><path d="M4 17h16"/></svg>`,
-      cuir: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L16 3H8L4 6v2l2 1v11h12V9l2-1V6z"/><path d="M12 3v9"/><path d="M8 3l-2 4"/><path d="M16 3l2 4"/></svg>`,
-      rideaux: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/><path d="M15 3v18"/><path d="M3 9h18"/><path d="M3 15h18"/></svg>`,
-      couture: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="9.8" y1="8.2" x2="20" y2="17"/><line x1="9.8" y1="15.8" x2="20" y2="7"/></svg>`,
-      blanchisserie: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><circle cx="12" cy="12" r="4"/><circle cx="8" cy="7" r="1"/></svg>`,
-      cordonnerie: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17c0 0 2-2 5-2s5 2 8 2 4-1 4-1V13c0 0-1-3-4-4L13 7H9L7 9H4l-1 3v5z"/><path d="M3 17v2h18v-2"/><path d="M9 7v2"/></svg>`,
+      mariage:      `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l-2 5H8L6 3z"/><path d="M8 8l-3 13h14L16 8H8z"/><path d="M12 3v5"/></svg>`,
+      chemises:     `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20.38 3.46L16 6.14V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3.14L3.62 3.46A1 1 0 0 0 2 4.3v15.2a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1V4.3a1 1 0 0 0-1.62-.84z"/><path d="M12 22V6"/><path d="M16 6l-4 4-4-4"/></svg>`,
+      doudounes:    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2L2 6v16h20V6l-6-4"/><path d="M8 2c0 3 1.6 4.5 4 4.5S16 5 16 2"/><line x1="12" y1="6" x2="12" y2="22"/><line x1="2" y1="11" x2="22" y2="11"/><line x1="2" y1="16" x2="22" y2="16"/></svg>`,
+      cuir:         `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L16 3H8L4 6v2l2 1v11h12V9l2-1V6z"/><path d="M12 3v9"/><path d="M8 3l-2 4"/><path d="M16 3l2 4"/></svg>`,
+      rideaux:      `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="2" y1="4" x2="22" y2="4"/><circle cx="4" cy="4" r="1" fill="currentColor"/><circle cx="20" cy="4" r="1" fill="currentColor"/><path d="M5 4c0 5-2 8-2 14"/><path d="M10 4c0 5 2 8 2 14"/><path d="M14 4c0 5-2 8-2 14"/><path d="M19 4c0 5 2 8 2 14"/></svg>`,
+      couture:      `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="9.8" y1="8.2" x2="20" y2="17"/><line x1="9.8" y1="15.8" x2="20" y2="7"/></svg>`,
+      blanchisserie:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><circle cx="12" cy="12" r="4"/><circle cx="8" cy="7" r="1"/></svg>`,
+      cordonnerie:  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 17c0 0 2-3 6-3h4l2 2h5a1 1 0 0 1 0 2H2v-1z"/><path d="M2 18v2h18v-2"/><path d="M8 14v-4h4l3 4"/><path d="M8 10H5l-1 4"/><line x1="9" y1="11" x2="12" y2="11"/><line x1="9" y1="13" x2="12" y2="13"/></svg>`,
     };
     return iconMap[slug] || `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 3"/></svg>`;
   }
@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const iconDiv = document.createElement('div');
         iconDiv.className = 'service-icon';
-        iconDiv.innerHTML = getServiceIcon(svc.slug, svc.emoji);
+        iconDiv.innerHTML = getServiceIcon(svc.slug);
         card.appendChild(iconDiv);
 
         const title = document.createElement('h3');

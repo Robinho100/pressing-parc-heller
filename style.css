@@ -353,45 +353,95 @@ a {
   padding-top: 72px;
 }
 
-/* NOUVEAU FOND HAUTE COUTURE : Rubans de Satin & Gouttes de Pureté */
-.bg-ribbon-wrap, .bg-ribbon-wrap-blue {
+/* NOUVEAU FOND : Bulles de Cristal Glassmorphism & Croix de Diamant */
+.crystal-orb {
   position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  overflow: hidden;
-}
-
-.bg-satin-ribbon {
-  width: 100%;
-  height: 100%;
-  animation: ribbonWave 14s ease-in-out infinite alternate;
-}
-
-@keyframes ribbonWave {
-  0%   { transform: translateY(0) scaleY(1); }
-  50%  { transform: translateY(-25px) scaleY(1.08); }
-  100% { transform: translateY(20px) scaleY(0.94); }
-}
-
-/* Gouttes d'eau filigranes qui flottent doucement */
-.water-drop-bg {
-  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.05) 70%);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(8px);
   pointer-events: none;
   z-index: 1;
-  animation: dropFloat 9s ease-in-out infinite alternate;
 }
 
-.drop-1 { top: 25%; right: 18%; animation-delay: 0s; }
-.drop-2 { bottom: 20%; left: 12%; animation-delay: 3s; }
+.orb-1 {
+  width: 220px; height: 220px;
+  top: 15%; right: 12%;
+  animation: crystalFloat1 10s ease-in-out infinite alternate;
+}
 
-.drop-blue-1 { top: 22%; right: 10%; animation-delay: 1.5s; }
-.drop-blue-2 { bottom: 15%; left: 8%; animation-delay: 4s; }
+.orb-2 {
+  width: 140px; height: 140px;
+  bottom: 18%; left: 8%;
+  animation: crystalFloat2 12s ease-in-out infinite alternate;
+}
 
-@keyframes dropFloat {
-  0%   { transform: translateY(0) rotate(0deg) scale(1); }
-  50%  { transform: translateY(-35px) rotate(8deg) scale(1.12); }
-  100% { transform: translateY(20px) rotate(-6deg) scale(0.92); }
+/* Croix de diamant scintillantes (Hero) */
+.diamond-sparkle {
+  position: absolute;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.4rem;
+  pointer-events: none;
+  z-index: 1;
+  animation: diamondPulse 4s ease-in-out infinite alternate;
+}
+
+.diamond-1 { top: 25%; left: 22%; animation-delay: 0.5s; }
+.diamond-2 { bottom: 30%; right: 28%; animation-delay: 2.2s; }
+
+/* Bulles de cristal bleues (Prestations) */
+.crystal-orb-blue {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(37, 99, 235, 0.2) 0%, rgba(37, 99, 235, 0.03) 70%);
+  border: 1.5px solid rgba(37, 99, 235, 0.25);
+  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.08);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.orb-blue-1 {
+  width: 180px; height: 180px;
+  top: 18%; right: 8%;
+  animation: crystalFloat1 11s ease-in-out infinite alternate;
+}
+
+.orb-blue-2 {
+  width: 120px; height: 120px;
+  bottom: 12%; left: 6%;
+  animation: crystalFloat2 13s ease-in-out infinite alternate;
+}
+
+/* Croix de diamant bleues (Prestations) */
+.diamond-sparkle-blue {
+  position: absolute;
+  color: rgba(37, 99, 235, 0.65);
+  font-size: 1.3rem;
+  pointer-events: none;
+  z-index: 0;
+  animation: diamondPulse 4.5s ease-in-out infinite alternate;
+}
+
+.diamond-blue-1 { top: 35%; left: 14%; animation-delay: 1.2s; }
+.diamond-blue-2 { bottom: 25%; right: 18%; animation-delay: 3s; }
+
+@keyframes crystalFloat1 {
+  0%   { transform: translate(0, 0) scale(1) rotate(0deg); }
+  50%  { transform: translate(30px, -25px) scale(1.06) rotate(6deg); }
+  100% { transform: translate(-20px, 20px) scale(0.94) rotate(-4deg); }
+}
+
+@keyframes crystalFloat2 {
+  0%   { transform: translate(0, 0) scale(1) rotate(0deg); }
+  50%  { transform: translate(-25px, 20px) scale(1.08) rotate(-8deg); }
+  100% { transform: translate(20px, -15px) scale(0.92) rotate(5deg); }
+}
+
+@keyframes diamondPulse {
+  0%   { opacity: 0.3; transform: scale(0.8) rotate(0deg); }
+  50%  { opacity: 0.95; transform: scale(1.3) rotate(45deg); }
+  100% { opacity: 0.3; transform: scale(0.8) rotate(90deg); }
 }
 
 /* -------- SECTIONS CLAIRES (Design Bicolore & Élégant) -------- */

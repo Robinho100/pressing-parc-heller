@@ -352,111 +352,76 @@ a {
   padding-top: 72px;
 }
 
-/* -------- CONVOYEUR DE PRESSING ANIMÉ (VÊTEMENTS SUR CINTRES & VAPEUR) -------- */
-.bg-conveyor-container {
+/* -------- VAGUES DE SOIE & VAPEUR LIQUIDE (MOUVEMENT HAUTE COUTURE 60 FPS) -------- */
+.silk-waves-hero {
   position: absolute;
-  top: 100px;
+  bottom: 0;
   left: 0;
   right: 0;
-  height: 80px;
+  height: 180px;
   pointer-events: none;
   z-index: 1;
   overflow: hidden;
 }
 
-.conveyor-track-line {
+.silk-wave {
+  position: absolute;
+  bottom: 0;
+  left: -5%;
+  width: 110%;
+  height: 100%;
+}
+
+.wave-layer-1 {
+  animation: silkWaveMotion1 14s ease-in-out infinite alternate;
+}
+
+.wave-layer-2 {
+  animation: silkWaveMotion2 9s ease-in-out infinite alternate;
+}
+
+.wave-layer-3 {
+  animation: silkWaveMotion1 16s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes silkWaveMotion1 {
+  0%   { transform: translateX(0) scaleY(1); }
+  50%  { transform: translateX(-50px) scaleY(1.22); }
+  100% { transform: translateX(40px) scaleY(0.88); }
+}
+
+@keyframes silkWaveMotion2 {
+  0%   { transform: translateX(0) scaleY(1); }
+  50%  { transform: translateX(55px) scaleY(0.82); }
+  100% { transform: translateX(-35px) scaleY(1.18); }
+}
+
+/* Vagues de soie liquides dans la section Prestations */
+.silk-waves-services {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, rgba(255,255,255,0.1), rgba(255,255,255,0.6) 50%, rgba(255,255,255,0.1));
-  box-shadow: 0 0 10px rgba(255,255,255,0.4);
-}
-
-.conveyor-track-line-blue {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, rgba(37,99,235,0.1), rgba(37,99,235,0.5) 50%, rgba(37,99,235,0.1));
-  box-shadow: 0 0 10px rgba(37,99,235,0.3);
-}
-
-.conveyor-items-wrap {
-  display: flex;
-  gap: 120px;
-  position: absolute;
-  top: 3px;
-  left: 0;
-  width: 200%;
-  animation: conveyorSlide 20s linear infinite;
-}
-
-.conveyor-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  animation: hangerSway 4s ease-in-out infinite alternate;
-}
-
-@keyframes conveyorSlide {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-@keyframes hangerSway {
-  0%   { transform: rotate(-3deg); }
-  100% { transform: rotate(3deg); }
-}
-
-/* Nuages de vapeur de centrale repassage */
-.iron-steam, .iron-steam-blue {
-  position: absolute;
-  border-radius: 50%;
+  height: 140px;
   pointer-events: none;
-  z-index: 1;
-  filter: blur(20px);
+  z-index: 0;
+  overflow: hidden;
 }
 
-.iron-steam {
-  background: rgba(255, 255, 255, 0.28);
-}
-.steam-cloud-1 {
-  width: 320px; height: 320px;
-  bottom: 80px; left: 15%;
-  animation: steamCloudRise 7s ease-in-out infinite alternate;
-}
-.steam-cloud-2 {
-  width: 260px; height: 260px;
-  bottom: 120px; right: 20%;
-  animation: steamCloudRise 9s ease-in-out infinite alternate-reverse;
-}
-.steam-cloud-3 {
-  width: 200px; height: 200px;
-  top: 30%; left: 45%;
-  animation: steamCloudRise 8s ease-in-out infinite alternate;
+.silk-wave-blue {
+  position: absolute;
+  top: 0;
+  left: -5%;
+  width: 110%;
+  height: 100%;
 }
 
-.iron-steam-blue {
-  background: rgba(37, 99, 235, 0.2);
-}
-.steam-cloud-blue-1 {
-  width: 300px; height: 300px;
-  top: 40px; right: 10%;
-  animation: steamCloudRise 8s ease-in-out infinite alternate;
-}
-.steam-cloud-blue-2 {
-  width: 240px; height: 240px;
-  bottom: 20px; left: 10%;
-  animation: steamCloudRise 10s ease-in-out infinite alternate-reverse;
+.wave-blue-layer-1 {
+  animation: silkWaveMotion1 16s ease-in-out infinite alternate;
 }
 
-@keyframes steamCloudRise {
-  0%   { opacity: 0.2; transform: translate(0, 0) scale(1); }
-  50%  { opacity: 0.7; transform: translate(30px, -45px) scale(1.15); }
-  100% { opacity: 0.25; transform: translate(-25px, 20px) scale(0.9); }
+.wave-blue-layer-2 {
+  animation: silkWaveMotion2 11s ease-in-out infinite alternate;
 }
 
 .steam-particle-blue {

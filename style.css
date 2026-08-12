@@ -346,7 +346,7 @@ a {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 40%, #2563eb 70%, #3b82f6 100%);
+  background: linear-gradient(135deg, #1e40af 0%, #2563eb 50%, #3b82f6 100%);
   background-size: 180% 180%;
   animation: heroGradientPulse 10s ease-in-out infinite alternate;
   color: var(--white);

@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <!-- Fond bleu royal aux coins arrondis élégants -->
-  <rect width="64" height="64" rx="16" fill="#2563eb"/>
-  <!-- Goutte d'eau / bulle de propreté minimaliste -->
-  <path d="M32 14 C32 14 18 31 18 41 C18 48.7 24.3 55 32 55 C39.7 55 46 48.7 46 41 C46 31 32 14 32 14 Z" fill="#ffffff"/>
-  <circle cx="26" cy="38" r="3" fill="#2563eb" opacity="0.3"/>
-</svg>

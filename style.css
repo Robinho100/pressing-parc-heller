@@ -320,7 +320,7 @@ a {
   transition: all var(--transition);
 }
 
-/* -------- HERO (Épuré & Élégant) -------- */
+/* -------- HERO (avec arrière-plan interactif et fluide) -------- */
 .hero {
   position: relative;
   min-height: 85vh;
@@ -331,6 +331,32 @@ a {
   color: var(--white);
   overflow: hidden;
   padding-top: 72px;
+}
+
+/* Bulles décoratives en arrière-plan */
+.hero-deco {
+  position: absolute;
+  border-radius: 50%;
+  z-index: 0;
+  pointer-events: none;
+}
+.hero-deco-1 {
+  width: 520px; height: 520px;
+  top: -120px; right: -120px;
+  background: rgba(255, 255, 255, 0.07);
+  animation: floatDeco 9s ease-in-out infinite;
+}
+.hero-deco-2 {
+  width: 280px; height: 280px;
+  bottom: 100px; right: 12%;
+  background: rgba(255, 255, 255, 0.05);
+  animation: floatDeco 13s ease-in-out infinite reverse;
+}
+.hero-deco-3 {
+  width: 200px; height: 200px;
+  top: 45%; left: -60px;
+  background: rgba(255, 255, 255, 0.05);
+  animation: floatDeco 11s ease-in-out infinite;
 }
 
 .hero-content {

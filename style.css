@@ -1664,11 +1664,11 @@ a {
   margin: 0 auto;
 }
 
-/* -------- ANIMATIONS -------- */
+/* -------- ANIMATIONS DYNAMIQUES & FLUIDES -------- */
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(32px);
   }
   to {
     opacity: 1;
@@ -1676,15 +1676,96 @@ a {
   }
 }
 
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulseGlow {
+  0%   { transform: scale(1); box-shadow: 0 4px 14px rgba(37,99,235,0.35); }
+  50%  { transform: scale(1.04); box-shadow: 0 8px 24px rgba(37,99,235,0.5); }
+  100% { transform: scale(1); box-shadow: 0 4px 14px rgba(37,99,235,0.35); }
+}
+
+/* Animations d'entrée sur le hero à l'ouverture de la page */
+.hero-script {
+  animation: fadeInDown 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+}
+.hero-title {
+  animation: fadeInUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+}
+.hero-subtitle {
+  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.35s both;
+}
+.hero-actions {
+  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.45s both;
+}
+.hero-stats {
+  animation: fadeInUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.6s both;
+}
+
+/* Effet de scroll reveal progressif avec décalage */
 .reveal {
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+  transform: translateY(36px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
 }
 
 .reveal.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* Décalage en cascade pour les cartes de prestations lors du scroll */
+.services-grid .service-card:nth-child(1) { transition-delay: 0.05s; }
+.services-grid .service-card:nth-child(2) { transition-delay: 0.12s; }
+.services-grid .service-card:nth-child(3) { transition-delay: 0.19s; }
+.services-grid .service-card:nth-child(4) { transition-delay: 0.26s; }
+.services-grid .service-card:nth-child(5) { transition-delay: 0.33s; }
+.services-grid .service-card:nth-child(6) { transition-delay: 0.40s; }
+.services-grid .service-card:nth-child(7) { transition-delay: 0.47s; }
+.services-grid .service-card:nth-child(8) { transition-delay: 0.54s; }
+
+/* Bouton flottant Retour en Haut */
+.back-to-top-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--blue-royal);
+  color: var(--white);
+  border: none;
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+  cursor: pointer;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(20px) scale(0.8);
+  pointer-events: none;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.back-to-top-btn.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: all;
+}
+
+.back-to-top-btn:hover {
+  background: #1d4ed8;
+  transform: translateY(-4px) scale(1.08);
+  box-shadow: 0 10px 28px rgba(37, 99, 235, 0.55);
 }
 
 /* -------- RESPONSIVE -------- */

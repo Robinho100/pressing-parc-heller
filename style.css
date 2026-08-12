@@ -339,18 +339,65 @@ a {
   transition: all var(--transition);
 }
 
-/* -------- HERO (Épuré & Lumineux) -------- */
-/* -------- HERO (Lumineux, Soyeux & Épuré) -------- */
+/* -------- HERO (Image de Fond Pressing + Overlay Bleu Royal + Mouvement Vapeur) -------- */
 .hero {
   position: relative;
-  min-height: 85vh;
+  min-height: 88vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 55%, #3b82f6 100%);
   color: var(--white);
   overflow: hidden;
   padding-top: 72px;
+  background: #1e40af;
+}
+
+/* Image de fond avec zoom cinématique lent */
+.hero-bg-image {
+  position: absolute;
+  inset: 0;
+  background: url('pressing-bg.jpg') center/cover no-repeat;
+  z-index: 0;
+  animation: heroBgZoom 22s ease-in-out infinite alternate;
+  filter: brightness(0.9) contrast(1.05);
+}
+
+@keyframes heroBgZoom {
+  0%   { transform: scale(1) translate(0, 0); }
+  50%  { transform: scale(1.08) translate(-15px, -10px); }
+  100% { transform: scale(1.03) translate(10px, 8px); }
+}
+
+/* Overlay bleu royal pour conserver la charte graphique */
+.hero-bg-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(29, 78, 216, 0.86) 0%, rgba(37, 99, 235, 0.82) 50%, rgba(30, 64, 175, 0.88) 100%);
+  z-index: 0;
+}
+
+/* Particules de vapeur qui remontent en continu sur l'image */
+.steam-particle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
+  pointer-events: none;
+  z-index: 1;
+  filter: blur(1px);
+}
+.steam-1 { top: 75%; left: 18%; animation: floatUpSteam 7s linear infinite; }
+.steam-2 { top: 85%; left: 45%; animation: floatUpSteam 10s linear infinite 1.8s; }
+.steam-3 { top: 65%; left: 72%; animation: floatUpSteam 8.5s linear infinite 3.5s; }
+.steam-4 { top: 80%; left: 88%; animation: floatUpSteam 11s linear infinite 5s; }
+
+@keyframes floatUpSteam {
+  0%   { opacity: 0; transform: translateY(0) scale(0.8); }
+  30%  { opacity: 0.7; }
+  80%  { opacity: 0.3; }
+  100% { opacity: 0; transform: translateY(-160px) scale(1.6); }
 }
 
 /* VAGUES FLUIDES ANIMÉES EN MOUVEMENT CONTINU 60 FPS (Eau / Vapeur) */
@@ -393,7 +440,36 @@ a {
   100% { transform: translateX(-30px) scaleY(1.15); }
 }
 
-/* Vagues fluides dans la section Prestations */
+/* -------- SECTION PRESTATONS (Image de Fond Filigrane + Vapeur Bleue) -------- */
+.services {
+  position: relative;
+  background: #eff6ff;
+  overflow: hidden;
+}
+
+.services-bg-image {
+  position: absolute;
+  inset: 0;
+  background: url('pressing-bg.jpg') center/cover fixed no-repeat;
+  opacity: 0.12;
+  z-index: 0;
+}
+
+.steam-particle-blue {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(37, 99, 235, 0.4);
+  box-shadow: 0 0 10px rgba(37, 99, 235, 0.3);
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(1px);
+}
+.steam-blue-1 { top: 70%; left: 12%; animation: floatUpSteam 9s linear infinite; }
+.steam-blue-2 { top: 80%; left: 52%; animation: floatUpSteam 12s linear infinite 2s; }
+.steam-blue-3 { top: 60%; left: 84%; animation: floatUpSteam 10s linear infinite 4.5s; }
+
 .fluid-services-waves {
   position: absolute;
   top: 0;
@@ -412,12 +488,6 @@ a {
   width: 110%;
   height: 100%;
   animation: waveMotion1 14s ease-in-out infinite alternate;
-}
-
-/* -------- SECTIONS CLAIRES (Design Bicolore & Élégant) -------- */
-.services {
-  background: linear-gradient(180deg, #eff6ff 0%, #ffffff 100%);
-  position: relative;
 }
 
 .about {

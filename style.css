@@ -339,20 +339,28 @@ a {
   transition: all var(--transition);
 }
 
-/* -------- HERO (avec arrière-plan interactif et fluide) -------- */
+/* -------- HERO (avec mouvements d'arrière-plan bien visibles) -------- */
 .hero {
   position: relative;
   min-height: 85vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background: linear-gradient(135deg, #1e40af 0%, #2563eb 60%, #3b82f6 100%);
+  background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 40%, #2563eb 70%, #3b82f6 100%);
+  background-size: 180% 180%;
+  animation: heroGradientPulse 10s ease-in-out infinite alternate;
   color: var(--white);
   overflow: hidden;
   padding-top: 72px;
 }
 
-/* Bulles décoratives en arrière-plan */
+@keyframes heroGradientPulse {
+  0%   { background-position: 0% 0%; }
+  50%  { background-position: 100% 100%; }
+  100% { background-position: 0% 0%; }
+}
+
+/* Bulles décoratives dynamiques en arrière-plan */
 .hero-deco {
   position: absolute;
   border-radius: 50%;
@@ -361,21 +369,21 @@ a {
 }
 .hero-deco-1 {
   width: 520px; height: 520px;
-  top: -120px; right: -120px;
-  background: rgba(255, 255, 255, 0.07);
-  animation: floatDeco 9s ease-in-out infinite;
+  top: -100px; right: -100px;
+  background: radial-gradient(circle, rgba(255,255,255,0.14) 0%, transparent 70%);
+  animation: floatDeco 7s ease-in-out infinite alternate;
 }
 .hero-deco-2 {
-  width: 280px; height: 280px;
-  bottom: 100px; right: 12%;
-  background: rgba(255, 255, 255, 0.05);
-  animation: floatDeco 13s ease-in-out infinite reverse;
+  width: 320px; height: 320px;
+  bottom: 60px; right: 10%;
+  background: radial-gradient(circle, rgba(147,197,253,0.18) 0%, transparent 70%);
+  animation: floatDeco 10s ease-in-out infinite alternate-reverse;
 }
 .hero-deco-3 {
-  width: 200px; height: 200px;
-  top: 45%; left: -60px;
-  background: rgba(255, 255, 255, 0.05);
-  animation: floatDeco 11s ease-in-out infinite;
+  width: 240px; height: 240px;
+  top: 40%; left: -40px;
+  background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 70%);
+  animation: floatDeco 8s ease-in-out infinite alternate;
 }
 
 .hero-content {

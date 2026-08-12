@@ -616,18 +616,7 @@ a {
   margin-top: -2px;
 }
 
-/* Halo lumineux doux derriere le titre hero */
-.hero-title-wrap {
-  position: relative;
-}
-.hero-title-wrap::before {
-  content: '';
-  position: absolute;
-  inset: -40px -60px;
-  background: radial-gradient(ellipse at center, rgba(255,255,255,0.08) 0%, transparent 70%);
-  pointer-events: none;
-  z-index: -1;
-}
+/* Halo/encadré retiré */
 
 /* Pastille mise en valeur au début de section */
 .section-badge-pill {

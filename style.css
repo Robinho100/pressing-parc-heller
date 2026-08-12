@@ -339,65 +339,84 @@ a {
   transition: all var(--transition);
 }
 
-/* -------- HERO (Image de Fond Pressing + Overlay Bleu Royal + Mouvement Vapeur) -------- */
+/* -------- HERO (FOND PRESSING DYNAMIQUE - 100% VISIBLE & SANS PHOTO) -------- */
 .hero {
   position: relative;
-  min-height: 88vh;
+  min-height: 85vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 50%, #1e40af 100%);
   color: var(--white);
   overflow: hidden;
   padding-top: 72px;
-  background: #1e40af;
 }
 
-/* Image de fond avec zoom cinématique lent */
-.hero-bg-image {
+/* Bulles de Savon & Vapeur Pressing (Très bien visibles) */
+.pressing-bubble {
   position: absolute;
-  inset: 0;
-  background: url('pressing-bg.jpg') center/cover no-repeat;
-  z-index: 0;
-  animation: heroBgZoom 22s ease-in-out infinite alternate;
-  filter: brightness(0.9) contrast(1.05);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
 }
 
-@keyframes heroBgZoom {
-  0%   { transform: scale(1) translate(0, 0); }
-  50%  { transform: scale(1.08) translate(-15px, -10px); }
-  100% { transform: scale(1.03) translate(10px, 8px); }
+.bubble-1 {
+  width: 520px; height: 520px;
+  top: -80px; right: -60px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.38) 0%, rgba(147, 197, 253, 0.22) 55%, transparent 75%);
+  border: 2px solid rgba(255, 255, 255, 0.45);
+  animation: floatBubble1 8s ease-in-out infinite alternate;
 }
 
-/* Overlay bleu royal pour conserver la charte graphique */
-.hero-bg-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(29, 78, 216, 0.86) 0%, rgba(37, 99, 235, 0.82) 50%, rgba(30, 64, 175, 0.88) 100%);
-  z-index: 0;
+.bubble-2 {
+  width: 380px; height: 380px;
+  bottom: 20px; left: -50px;
+  background: radial-gradient(circle, rgba(147, 197, 253, 0.48) 0%, rgba(255, 255, 255, 0.18) 60%, transparent 75%);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  animation: floatBubble2 10s ease-in-out infinite alternate;
 }
 
-/* Particules de vapeur qui remontent en continu sur l'image */
+.bubble-3 {
+  width: 260px; height: 260px;
+  top: 25%; right: 22%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.42) 0%, transparent 70%);
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
+  animation: floatBubble1 12s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes floatBubble1 {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(65px, -70px) scale(1.15); }
+  100% { transform: translate(-45px, 35px) scale(0.9); }
+}
+
+@keyframes floatBubble2 {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(-55px, 60px) scale(1.2); }
+  100% { transform: translate(50px, -45px) scale(0.85); }
+}
+
+/* Particules de vapeur qui remontent en continu */
 .steam-particle {
   position: absolute;
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.4);
-  box-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.55);
+  box-shadow: 0 0 14px rgba(255, 255, 255, 0.8);
   pointer-events: none;
   z-index: 1;
   filter: blur(1px);
 }
 .steam-1 { top: 75%; left: 18%; animation: floatUpSteam 7s linear infinite; }
-.steam-2 { top: 85%; left: 45%; animation: floatUpSteam 10s linear infinite 1.8s; }
-.steam-3 { top: 65%; left: 72%; animation: floatUpSteam 8.5s linear infinite 3.5s; }
-.steam-4 { top: 80%; left: 88%; animation: floatUpSteam 11s linear infinite 5s; }
+.steam-2 { top: 85%; left: 48%; animation: floatUpSteam 10s linear infinite 1.8s; }
+.steam-3 { top: 65%; left: 78%; animation: floatUpSteam 8.5s linear infinite 3.5s; }
 
 @keyframes floatUpSteam {
   0%   { opacity: 0; transform: translateY(0) scale(0.8); }
-  30%  { opacity: 0.7; }
-  80%  { opacity: 0.3; }
-  100% { opacity: 0; transform: translateY(-160px) scale(1.6); }
+  30%  { opacity: 0.85; }
+  80%  { opacity: 0.4; }
+  100% { opacity: 0; transform: translateY(-170px) scale(1.7); }
 }
 
 /* VAGUES FLUIDES ANIMÉES EN MOUVEMENT CONTINU 60 FPS (Eau / Vapeur) */
@@ -440,31 +459,54 @@ a {
   100% { transform: translateX(-30px) scaleY(1.15); }
 }
 
-/* -------- SECTION PRESTATONS (Image de Fond Filigrane + Vapeur Bleue) -------- */
+/* -------- SECTION PRESTATONS (FOND ANIMÉ BLEU 100% VISIBLE) -------- */
 .services {
   position: relative;
-  background: #eff6ff;
+  background: linear-gradient(180deg, #eff6ff 0%, #e0f2fe 50%, #ffffff 100%);
   overflow: hidden;
 }
 
-.services-bg-image {
+.pressing-bubble-blue {
   position: absolute;
-  inset: 0;
-  background: url('pressing-bg.jpg') center/cover fixed no-repeat;
-  opacity: 0.12;
+  border-radius: 50%;
+  pointer-events: none;
   z-index: 0;
+}
+
+.bubble-blue-1 {
+  width: 480px; height: 480px;
+  top: -60px; right: -60px;
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.28) 0%, rgba(147, 197, 253, 0.38) 55%, transparent 75%);
+  border: 2px solid rgba(37, 99, 235, 0.4);
+  animation: floatBubble1 9s ease-in-out infinite alternate;
+}
+
+.bubble-blue-2 {
+  width: 360px; height: 360px;
+  bottom: 30px; left: -40px;
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.32) 0%, transparent 70%);
+  border: 2px solid rgba(37, 99, 235, 0.45);
+  animation: floatBubble2 11s ease-in-out infinite alternate;
+}
+
+.bubble-blue-3 {
+  width: 240px; height: 240px;
+  top: 35%; right: 22%;
+  background: radial-gradient(circle, rgba(96, 165, 250, 0.35) 0%, transparent 70%);
+  border: 1.5px solid rgba(37, 99, 235, 0.35);
+  animation: floatBubble1 13s ease-in-out infinite alternate-reverse;
 }
 
 .steam-particle-blue {
   position: absolute;
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
-  background: rgba(37, 99, 235, 0.4);
-  box-shadow: 0 0 10px rgba(37, 99, 235, 0.3);
+  background: rgba(37, 99, 235, 0.55);
+  box-shadow: 0 0 14px rgba(37, 99, 235, 0.45);
   pointer-events: none;
   z-index: 0;
-  filter: blur(1px);
+  filter: blur(1.5px);
 }
 .steam-blue-1 { top: 70%; left: 12%; animation: floatUpSteam 9s linear infinite; }
 .steam-blue-2 { top: 80%; left: 52%; animation: floatUpSteam 12s linear infinite 2s; }

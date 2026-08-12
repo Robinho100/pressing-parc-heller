@@ -361,15 +361,52 @@ a {
   z-index: 0;
 }
 .hero-ring-1 {
-  width: 680px; height: 680px;
-  top: -150px; right: -120px;
+  width: 720px; height: 720px;
+  top: -160px; right: -120px;
   animation: ringFloat1 16s ease-in-out infinite alternate;
 }
 .hero-ring-2 {
-  width: 480px; height: 480px;
+  width: 520px; height: 520px;
   bottom: -100px; left: -80px;
   border-color: rgba(255, 255, 255, 0.08);
   animation: ringFloat2 20s ease-in-out infinite alternate;
+}
+.hero-ring-3 {
+  width: 320px; height: 320px;
+  top: 20%; left: 35%;
+  border-color: rgba(255, 255, 255, 0.06);
+  animation: ringFloat1 24s ease-in-out infinite alternate-reverse;
+}
+
+/* Micro-particules filigranes d'élévation de vapeur */
+.steam-particle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  pointer-events: none;
+  z-index: 1;
+  filter: blur(1px);
+}
+.steam-1 {
+  top: 60%; left: 20%;
+  animation: floatUpSteam 8s linear infinite;
+}
+.steam-2 {
+  top: 80%; left: 65%;
+  animation: floatUpSteam 11s linear infinite 2s;
+}
+.steam-3 {
+  top: 40%; left: 80%;
+  animation: floatUpSteam 9s linear infinite 4s;
+}
+
+@keyframes floatUpSteam {
+  0%   { opacity: 0; transform: translateY(0) scale(0.8); }
+  30%  { opacity: 0.6; }
+  80%  { opacity: 0.3; }
+  100% { opacity: 0; transform: translateY(-120px) scale(1.4); }
 }
 
 .section-ring {
@@ -379,16 +416,22 @@ a {
   z-index: 0;
 }
 .section-ring-1 {
-  width: 580px; height: 580px;
+  width: 620px; height: 620px;
   top: -120px; right: -120px;
   border: 1px solid rgba(37, 99, 235, 0.09);
   animation: ringFloat1 18s ease-in-out infinite alternate;
 }
 .section-ring-2 {
-  width: 420px; height: 420px;
+  width: 440px; height: 440px;
   bottom: -80px; left: -80px;
   border: 1px solid rgba(96, 165, 250, 0.11);
   animation: ringFloat2 22s ease-in-out infinite alternate;
+}
+.section-ring-3 {
+  width: 280px; height: 280px;
+  top: 40%; right: 25%;
+  border: 1px solid rgba(37, 99, 235, 0.05);
+  animation: ringFloat1 26s ease-in-out infinite alternate-reverse;
 }
 
 @keyframes ringFloat1 {

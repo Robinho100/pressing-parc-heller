@@ -94,7 +94,26 @@ a {
   font-weight: 700;
   color: var(--navy);
   line-height: 1.2;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
+  position: relative;
+  display: inline-block;
+}
+
+/* Ligne d'accent bleue sous chaque titre de section */
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 3px;
+  width: 50px;
+  background: var(--blue-royal);
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+.section-header:hover .section-title::after {
+  width: 80px;
 }
 
 .section-subtitle {

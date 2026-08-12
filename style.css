@@ -403,18 +403,20 @@ a {
 }
 
 .hero-title {
-  font-family: var(--font-heading);
+  font-family: 'Plus Jakarta Sans', var(--font-heading);
   font-size: clamp(2.8rem, 6.5vw, 4.8rem);
   font-weight: 800;
   color: var(--white);
   line-height: 1.1;
   margin-bottom: 20px;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
+  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
 }
 
 .hero-accent {
-  color: #bfdbfe;
+  color: #dbeafe;
   display: block;
+  font-weight: 800;
 }
 
 .hero-subtitle {
@@ -476,16 +478,15 @@ a {
   transform: translateY(-2px);
 }
 
-/* Compteurs stats intégrés dans le hero */
+/* Compteurs stats intégrés dans le hero (épurés, sans encadrement lourd) */
 .hero-stats {
   display: flex;
   align-items: center;
   gap: 36px;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 16px;
-  padding: 28px 40px;
+  background: transparent;
+  backdrop-filter: none;
+  border: none;
+  padding: 10px 0;
 }
 
 .hero-stat {
@@ -644,6 +645,20 @@ a {
   margin-bottom: 16px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+}
+
+/* -------- SÉPARATEUR VAGUE FLUIDE -------- */
+.wave-divider {
+  position: relative;
+  margin-top: -48px;
+  line-height: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+.wave-divider svg {
+  display: block;
+  width: 100%;
+  height: 48px;
 }
 
 /* -------- SERVICES (Cartes avec arrière-plan vivant) -------- */

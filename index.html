@@ -57,21 +57,37 @@
 
   <!-- ========== HERO ========== -->
   <section class="hero" id="accueil">
-    <!-- FOND PRESSING 100% ANIMÉ : Bulles de Savon & Vapeur à Haute Visibilité -->
-    <div class="pressing-bubble bubble-1"></div>
-    <div class="pressing-bubble bubble-2"></div>
-    <div class="pressing-bubble bubble-3"></div>
-    <div class="steam-particle steam-1"></div>
-    <div class="steam-particle steam-2"></div>
-    <div class="steam-particle steam-3"></div>
-    <div class="fluid-waves-container">
-      <svg class="fluid-wave fluid-wave-1" viewBox="0 0 1440 160" preserveAspectRatio="none">
-        <path d="M0,80 C320,140 640,20 960,100 C1280,180 1440,40 1440,40 L1440,160 L0,160 Z" fill="rgba(255, 255, 255, 0.28)"/>
-      </svg>
-      <svg class="fluid-wave fluid-wave-2" viewBox="0 0 1440 160" preserveAspectRatio="none">
-        <path d="M0,40 C360,120 720,20 1080,120 C1260,170 1440,80 1440,80 L1440,160 L0,160 Z" fill="rgba(239, 246, 255, 0.35)"/>
-      </svg>
+    <!-- THÈME PRESSING ANIMÉ : Convoyeur de vêtements sur cintres & Vapeur de repassage -->
+    <div class="bg-conveyor-container">
+      <div class="conveyor-track-line"></div>
+      <div class="conveyor-items-wrap">
+        <div class="conveyor-item">
+          <svg width="34" height="42" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"><path d="M12 2a2 2 0 0 0-2 2c0 1 1 1.5 2 2"/><path d="M7 6h10l3 3.5v11.5H4V9.5L7 6z"/><line x1="12" y1="6" x2="12" y2="21"/></svg>
+        </div>
+        <div class="conveyor-item">
+          <svg width="34" height="42" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"><path d="M12 2a2 2 0 0 0-2 2c0 1 1 1.5 2 2"/><path d="M6 6h12l-2 5H8L6 6z"/><path d="M8 8l-3 13h14L16 8H8z"/></svg>
+        </div>
+        <div class="conveyor-item">
+          <svg width="34" height="42" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"><path d="M12 2a2 2 0 0 0-2 2c0 1 1 1.5 2 2"/><path d="M20.38 3.46L16 6.14V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3.14L3.62 3.46A1 1 0 0 0 2 4.3v15.2a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1V4.3a1 1 0 0 0-1.62-.84z"/></svg>
+        </div>
+        <div class="conveyor-item">
+          <svg width="34" height="42" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"><path d="M12 2a2 2 0 0 0-2 2c0 1 1 1.5 2 2"/><path d="M12 6c-2 0-3.5 1.5-4 1.5S6.5 6 4.5 6C3 6 2.5 7.5 3 9c.5 1.5 2 3 2 6s-1.5 4.5-2 6c-.5 1.5 0 3 1.5 3 2 0 3.5-1.5 4-1.5s2 1.5 4 1.5 3.5-1.5 4-1.5 2 1.5 3.5 1.5c1.5 0 2-.5 1.5-3-.5-1.5-2-3-2-6s1.5-4.5 2-6c.5-1.5 0-3-1.5-3-2 0-3.5 1.5-4 1.5S14 6 12 6z"/></svg>
+        </div>
+        <!-- Doublon pour boucle infinie du convoyeur -->
+        <div class="conveyor-item">
+          <svg width="34" height="42" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"><path d="M12 2a2 2 0 0 0-2 2c0 1 1 1.5 2 2"/><path d="M7 6h10l3 3.5v11.5H4V9.5L7 6z"/><line x1="12" y1="6" x2="12" y2="21"/></svg>
+        </div>
+        <div class="conveyor-item">
+          <svg width="34" height="42" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"><path d="M12 2a2 2 0 0 0-2 2c0 1 1 1.5 2 2"/><path d="M6 6h12l-2 5H8L6 6z"/><path d="M8 8l-3 13h14L16 8H8z"/></svg>
+        </div>
+      </div>
     </div>
+
+    <!-- Bouffées de vapeur de centrale repassage -->
+    <div class="iron-steam steam-cloud-1"></div>
+    <div class="iron-steam steam-cloud-2"></div>
+    <div class="iron-steam steam-cloud-3"></div>
+
     <div class="hero-content">
       <p class="hero-script">Travail haute qualité</p>
       <h1 class="hero-title">Pressing du<br /><span class="hero-accent">Parc Heller</span></h1>
@@ -151,18 +167,31 @@
 
   <!-- ========== SERVICES ========== -->
   <section class="section services" id="services">
-    <!-- FOND PRESTATIONS 100% ANIMÉ : Bulles Bleues & Vapeur Haute Visibilité -->
-    <div class="pressing-bubble-blue bubble-blue-1"></div>
-    <div class="pressing-bubble-blue bubble-blue-2"></div>
-    <div class="pressing-bubble-blue bubble-blue-3"></div>
-    <div class="steam-particle-blue steam-blue-1"></div>
-    <div class="steam-particle-blue steam-blue-2"></div>
-    <div class="steam-particle-blue steam-blue-3"></div>
-    <div class="fluid-services-waves">
-      <svg class="fluid-wave-blue" viewBox="0 0 1440 160" preserveAspectRatio="none">
-        <path d="M0,40 C360,120 720,20 1080,120 C1260,170 1440,80 1440,80 L1440,160 L0,160 Z" fill="rgba(37, 99, 235, 0.14)"/>
-      </svg>
+    <!-- THÈME PRESSING ANIMÉ BLEU : Convoyeur de vêtements & Vapeur -->
+    <div class="bg-conveyor-container conveyor-blue">
+      <div class="conveyor-track-line-blue"></div>
+      <div class="conveyor-items-wrap">
+        <div class="conveyor-item">
+          <svg width="34" height="42" viewBox="0 0 24 24" fill="none" stroke="rgba(37,99,235,0.35)" stroke-width="1.5"><path d="M12 2a2 2 0 0 0-2 2c0 1 1 1.5 2 2"/><path d="M7 6h10l3 3.5v11.5H4V9.5L7 6z"/><line x1="12" y1="6" x2="12" y2="21"/></svg>
+        </div>
+        <div class="conveyor-item">
+          <svg width="34" height="42" viewBox="0 0 24 24" fill="none" stroke="rgba(37,99,235,0.35)" stroke-width="1.5"><path d="M12 2a2 2 0 0 0-2 2c0 1 1 1.5 2 2"/><path d="M6 6h12l-2 5H8L6 6z"/><path d="M8 8l-3 13h14L16 8H8z"/></svg>
+        </div>
+        <div class="conveyor-item">
+          <svg width="34" height="42" viewBox="0 0 24 24" fill="none" stroke="rgba(37,99,235,0.35)" stroke-width="1.5"><path d="M12 2a2 2 0 0 0-2 2c0 1 1 1.5 2 2"/><path d="M20.38 3.46L16 6.14V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3.14L3.62 3.46A1 1 0 0 0 2 4.3v15.2a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1V4.3a1 1 0 0 0-1.62-.84z"/></svg>
+        </div>
+        <div class="conveyor-item">
+          <svg width="34" height="42" viewBox="0 0 24 24" fill="none" stroke="rgba(37,99,235,0.35)" stroke-width="1.5"><path d="M12 2a2 2 0 0 0-2 2c0 1 1 1.5 2 2"/><path d="M12 6c-2 0-3.5 1.5-4 1.5S6.5 6 4.5 6C3 6 2.5 7.5 3 9c.5 1.5 2 3 2 6s-1.5 4.5-2 6c-.5 1.5 0 3 1.5 3 2 0 3.5-1.5 4-1.5s2 1.5 4 1.5 3.5-1.5 4-1.5 2 1.5 3.5 1.5c1.5 0 2-.5 1.5-3-.5-1.5-2-3-2-6s1.5-4.5 2-6c.5-1.5 0-3-1.5-3-2 0-3.5 1.5-4 1.5S14 6 12 6z"/></svg>
+        </div>
+        <div class="conveyor-item">
+          <svg width="34" height="42" viewBox="0 0 24 24" fill="none" stroke="rgba(37,99,235,0.35)" stroke-width="1.5"><path d="M12 2a2 2 0 0 0-2 2c0 1 1 1.5 2 2"/><path d="M7 6h10l3 3.5v11.5H4V9.5L7 6z"/><line x1="12" y1="6" x2="12" y2="21"/></svg>
+        </div>
+      </div>
     </div>
+
+    <!-- Vapeur de repassage bleue -->
+    <div class="iron-steam-blue steam-cloud-blue-1"></div>
+    <div class="iron-steam-blue steam-cloud-blue-2"></div>
     <div class="container">
       <div class="section-header">
         <h2 class="section-title">Nos <span class="accent">Prestations</span></h2>

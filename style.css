@@ -352,149 +352,111 @@ a {
   padding-top: 72px;
 }
 
-/* Bulles de Savon & Vapeur Pressing (Très bien visibles) */
-.pressing-bubble {
+/* -------- CONVOYEUR DE PRESSING ANIMÉ (VÊTEMENTS SUR CINTRES & VAPEUR) -------- */
+.bg-conveyor-container {
   position: absolute;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.bubble-1 {
-  width: 520px; height: 520px;
-  top: -80px; right: -60px;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.38) 0%, rgba(147, 197, 253, 0.22) 55%, transparent 75%);
-  border: 2px solid rgba(255, 255, 255, 0.45);
-  animation: floatBubble1 8s ease-in-out infinite alternate;
-}
-
-.bubble-2 {
-  width: 380px; height: 380px;
-  bottom: 20px; left: -50px;
-  background: radial-gradient(circle, rgba(147, 197, 253, 0.48) 0%, rgba(255, 255, 255, 0.18) 60%, transparent 75%);
-  border: 2px solid rgba(255, 255, 255, 0.4);
-  animation: floatBubble2 10s ease-in-out infinite alternate;
-}
-
-.bubble-3 {
-  width: 260px; height: 260px;
-  top: 25%; right: 22%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.42) 0%, transparent 70%);
-  border: 1.5px solid rgba(255, 255, 255, 0.5);
-  animation: floatBubble1 12s ease-in-out infinite alternate-reverse;
-}
-
-@keyframes floatBubble1 {
-  0%   { transform: translate(0, 0) scale(1); }
-  50%  { transform: translate(65px, -70px) scale(1.15); }
-  100% { transform: translate(-45px, 35px) scale(0.9); }
-}
-
-@keyframes floatBubble2 {
-  0%   { transform: translate(0, 0) scale(1); }
-  50%  { transform: translate(-55px, 60px) scale(1.2); }
-  100% { transform: translate(50px, -45px) scale(0.85); }
-}
-
-/* Particules de vapeur qui remontent en continu */
-.steam-particle {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.55);
-  box-shadow: 0 0 14px rgba(255, 255, 255, 0.8);
-  pointer-events: none;
-  z-index: 1;
-  filter: blur(1px);
-}
-.steam-1 { top: 75%; left: 18%; animation: floatUpSteam 7s linear infinite; }
-.steam-2 { top: 85%; left: 48%; animation: floatUpSteam 10s linear infinite 1.8s; }
-.steam-3 { top: 65%; left: 78%; animation: floatUpSteam 8.5s linear infinite 3.5s; }
-
-@keyframes floatUpSteam {
-  0%   { opacity: 0; transform: translateY(0) scale(0.8); }
-  30%  { opacity: 0.85; }
-  80%  { opacity: 0.4; }
-  100% { opacity: 0; transform: translateY(-170px) scale(1.7); }
-}
-
-/* VAGUES FLUIDES ANIMÉES EN MOUVEMENT CONTINU 60 FPS (Eau / Vapeur) */
-.fluid-waves-container {
-  position: absolute;
-  bottom: 0;
+  top: 100px;
   left: 0;
   right: 0;
-  height: 160px;
+  height: 80px;
   pointer-events: none;
   z-index: 1;
   overflow: hidden;
 }
 
-.fluid-wave {
+.conveyor-track-line {
   position: absolute;
-  bottom: 0;
-  left: -5%;
-  width: 110%;
-  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.1), rgba(255,255,255,0.6) 50%, rgba(255,255,255,0.1));
+  box-shadow: 0 0 10px rgba(255,255,255,0.4);
 }
 
-.fluid-wave-1 {
-  animation: waveMotion1 12s ease-in-out infinite alternate;
+.conveyor-track-line-blue {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, rgba(37,99,235,0.1), rgba(37,99,235,0.5) 50%, rgba(37,99,235,0.1));
+  box-shadow: 0 0 10px rgba(37,99,235,0.3);
 }
 
-.fluid-wave-2 {
-  animation: waveMotion2 8s ease-in-out infinite alternate;
+.conveyor-items-wrap {
+  display: flex;
+  gap: 120px;
+  position: absolute;
+  top: 3px;
+  left: 0;
+  width: 200%;
+  animation: conveyorSlide 20s linear infinite;
 }
 
-@keyframes waveMotion1 {
-  0%   { transform: translateX(0) scaleY(1); }
-  50%  { transform: translateX(-40px) scaleY(1.18); }
-  100% { transform: translateX(35px) scaleY(0.92); }
+.conveyor-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: hangerSway 4s ease-in-out infinite alternate;
 }
 
-@keyframes waveMotion2 {
-  0%   { transform: translateX(0) scaleY(1); }
-  50%  { transform: translateX(45px) scaleY(0.88); }
-  100% { transform: translateX(-30px) scaleY(1.15); }
+@keyframes conveyorSlide {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
-/* -------- SECTION PRESTATONS (FOND ANIMÉ BLEU 100% VISIBLE) -------- */
-.services {
-  position: relative;
-  background: linear-gradient(180deg, #eff6ff 0%, #e0f2fe 50%, #ffffff 100%);
-  overflow: hidden;
+@keyframes hangerSway {
+  0%   { transform: rotate(-3deg); }
+  100% { transform: rotate(3deg); }
 }
 
-.pressing-bubble-blue {
+/* Nuages de vapeur de centrale repassage */
+.iron-steam, .iron-steam-blue {
   position: absolute;
   border-radius: 50%;
   pointer-events: none;
-  z-index: 0;
+  z-index: 1;
+  filter: blur(20px);
 }
 
-.bubble-blue-1 {
-  width: 480px; height: 480px;
-  top: -60px; right: -60px;
-  background: radial-gradient(circle, rgba(37, 99, 235, 0.28) 0%, rgba(147, 197, 253, 0.38) 55%, transparent 75%);
-  border: 2px solid rgba(37, 99, 235, 0.4);
-  animation: floatBubble1 9s ease-in-out infinite alternate;
+.iron-steam {
+  background: rgba(255, 255, 255, 0.28);
+}
+.steam-cloud-1 {
+  width: 320px; height: 320px;
+  bottom: 80px; left: 15%;
+  animation: steamCloudRise 7s ease-in-out infinite alternate;
+}
+.steam-cloud-2 {
+  width: 260px; height: 260px;
+  bottom: 120px; right: 20%;
+  animation: steamCloudRise 9s ease-in-out infinite alternate-reverse;
+}
+.steam-cloud-3 {
+  width: 200px; height: 200px;
+  top: 30%; left: 45%;
+  animation: steamCloudRise 8s ease-in-out infinite alternate;
 }
 
-.bubble-blue-2 {
-  width: 360px; height: 360px;
-  bottom: 30px; left: -40px;
-  background: radial-gradient(circle, rgba(37, 99, 235, 0.32) 0%, transparent 70%);
-  border: 2px solid rgba(37, 99, 235, 0.45);
-  animation: floatBubble2 11s ease-in-out infinite alternate;
+.iron-steam-blue {
+  background: rgba(37, 99, 235, 0.2);
 }
-
-.bubble-blue-3 {
+.steam-cloud-blue-1 {
+  width: 300px; height: 300px;
+  top: 40px; right: 10%;
+  animation: steamCloudRise 8s ease-in-out infinite alternate;
+}
+.steam-cloud-blue-2 {
   width: 240px; height: 240px;
-  top: 35%; right: 22%;
-  background: radial-gradient(circle, rgba(96, 165, 250, 0.35) 0%, transparent 70%);
-  border: 1.5px solid rgba(37, 99, 235, 0.35);
-  animation: floatBubble1 13s ease-in-out infinite alternate-reverse;
+  bottom: 20px; left: 10%;
+  animation: steamCloudRise 10s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes steamCloudRise {
+  0%   { opacity: 0.2; transform: translate(0, 0) scale(1); }
+  50%  { opacity: 0.7; transform: translate(30px, -45px) scale(1.15); }
+  100% { opacity: 0.25; transform: translate(-25px, 20px) scale(0.9); }
 }
 
 .steam-particle-blue {

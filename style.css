@@ -352,23 +352,23 @@ a {
   padding-top: 72px;
 }
 
-/* Reflet de lumière satinée glissant doucement de gauche à droite */
+/* Reflet de lumière satinée bien visible glissant doucement de gauche à droite */
 .satin-shimmer {
   position: absolute;
   top: -50%;
   left: -50%;
   width: 200%;
   height: 200%;
-  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.12) 0%, transparent 60%);
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.28) 0%, rgba(147, 197, 253, 0.18) 45%, transparent 70%);
   pointer-events: none;
   z-index: 1;
-  animation: shimmerDrift 14s ease-in-out infinite alternate;
+  animation: shimmerDrift 9s ease-in-out infinite alternate;
 }
 
 @keyframes shimmerDrift {
-  0%   { transform: translate(-10%, -10%) scale(1); }
-  50%  { transform: translate(15%, 10%) scale(1.1); }
-  100% { transform: translate(-5%, 15%) scale(0.95); }
+  0%   { transform: translate(-15%, -15%) scale(1); }
+  50%  { transform: translate(18%, 12%) scale(1.15); }
+  100% { transform: translate(-8%, 18%) scale(0.92); }
 }
 
 /* Vague inférieure épurée avec respiration douce */
@@ -386,32 +386,39 @@ a {
   width: 100%;
   height: 100%;
   display: block;
-  animation: waveBreath 7s ease-in-out infinite alternate;
+  animation: waveBreath 6s ease-in-out infinite alternate;
 }
 
 @keyframes waveBreath {
   0%   { transform: translateY(0); }
-  100% { transform: translateY(8px); }
+  100% { transform: translateY(10px); }
 }
 
-/* Ambiance et mouvement discret d'aura bleue dans Prestations */
+/* -------- SECTIONS CLAIRES (Design Bicolore & Élégant) -------- */
+.services {
+  position: relative;
+  background: linear-gradient(180deg, #dbeafe 0%, #eff6ff 45%, #ffffff 100%);
+  overflow: hidden;
+}
+
+/* Ambiance et mouvement bien visible d'aura bleue dans Prestations */
 .services-ambient-glow {
   position: absolute;
-  top: 30%;
+  top: 25%;
   left: 50%;
-  width: 700px;
-  height: 450px;
-  background: radial-gradient(ellipse at center, rgba(37, 99, 235, 0.07) 0%, transparent 70%);
+  width: 850px;
+  height: 520px;
+  background: radial-gradient(ellipse at center, rgba(37, 99, 235, 0.2) 0%, rgba(147, 197, 253, 0.25) 55%, transparent 75%);
   transform: translate(-50%, -50%);
   pointer-events: none;
   z-index: 0;
-  animation: subtleGlowDrift 14s ease-in-out infinite alternate;
+  animation: subtleGlowDrift 9s ease-in-out infinite alternate;
 }
 
 @keyframes subtleGlowDrift {
-  0%   { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
-  50%  { transform: translate(-46%, -48%) scale(1.12); opacity: 0.8; }
-  100% { transform: translate(-54%, -52%) scale(0.92); opacity: 0.5; }
+  0%   { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+  50%  { transform: translate(-44%, -46%) scale(1.18); opacity: 0.95; }
+  100% { transform: translate(-56%, -54%) scale(0.9); opacity: 0.6; }
 }
 
 .fluid-services-waves {

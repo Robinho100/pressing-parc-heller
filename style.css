@@ -51,10 +51,6 @@ body {
   background: var(--white);
   line-height: 1.6;
   overflow-x: hidden;
-  /* Motif de fond subtil : losanges tissés très discrets */
-  background-image:
-    radial-gradient(circle at 1px 1px, rgba(37,99,235,0.06) 1px, transparent 0);
-  background-size: 32px 32px;
 }
 
 img {
@@ -98,30 +94,7 @@ a {
   font-weight: 700;
   color: var(--navy);
   line-height: 1.2;
-  margin-bottom: 24px;
-  position: relative;
-  display: inline-block;
-}
-
-/* Ligne bleue pulsée sous chaque titre de section */
-.section-title::after {
-  content: '';
-  position: absolute;
-  bottom: -8px;
-  left: 50%;
-  transform: translateX(-50%);
-  height: 3px;
-  width: 48px;
-  background: linear-gradient(90deg, var(--blue-royal), #60a5fa, var(--blue-royal));
-  background-size: 200% 100%;
-  border-radius: 3px;
-  animation: shimmerLine 3s ease-in-out infinite;
-}
-
-@keyframes shimmerLine {
-  0%   { background-position: 0% 50%;   width: 48px; }
-  50%  { background-position: 100% 50%; width: 96px; }
-  100% { background-position: 0% 50%;   width: 48px; }
+  margin-bottom: 16px;
 }
 
 .section-subtitle {
@@ -347,145 +320,17 @@ a {
   transition: all var(--transition);
 }
 
-/* -------- HERO : AURORA + PARTICULES FLOTTANTES -------- */
+/* -------- HERO (Épuré & Élégant) -------- */
 .hero {
   position: relative;
   min-height: 85vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 40%, #2563eb 70%, #3b82f6 100%);
+  background: linear-gradient(135deg, #1e40af 0%, #2563eb 60%, #3b82f6 100%);
   color: var(--white);
   overflow: hidden;
   padding-top: 72px;
-}
-
-/* Aurora : effet lumière mouvante en arrière-plan */
-.hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 80% 60% at 20% 40%, rgba(96,165,250,0.18) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 80% at 80% 70%, rgba(30,64,175,0.25) 0%, transparent 55%),
-    radial-gradient(ellipse 50% 50% at 50% 10%, rgba(255,255,255,0.06) 0%, transparent 60%);
-  animation: auroraShift 12s ease-in-out infinite alternate;
-  z-index: 0;
-}
-
-@keyframes auroraShift {
-  0%   { opacity: 0.8; transform: scale(1) translateY(0); }
-  50%  { opacity: 1;   transform: scale(1.04) translateY(-10px); }
-  100% { opacity: 0.7; transform: scale(0.98) translateY(8px); }
-}
-
-/* Motif textile en superposition */
-.hero::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image:
-    repeating-linear-gradient(
-      45deg,
-      rgba(255,255,255,0.035) 0px,
-      rgba(255,255,255,0.035) 1px,
-      transparent 1px,
-      transparent 18px
-    ),
-    repeating-linear-gradient(
-      -45deg,
-      rgba(255,255,255,0.035) 0px,
-      rgba(255,255,255,0.035) 1px,
-      transparent 1px,
-      transparent 18px
-    );
-  z-index: 1;
-  pointer-events: none;
-}
-
-/* Bulles déco originales */
-.hero-deco {
-  position: absolute;
-  border-radius: 50%;
-  z-index: 0;
-  pointer-events: none;
-}
-.hero-deco-1 {
-  width: 520px; height: 520px;
-  top: -120px; right: -120px;
-  background: rgba(255,255,255,0.06);
-  animation: floatDeco 9s ease-in-out infinite;
-}
-.hero-deco-2 {
-  width: 280px; height: 280px;
-  bottom: 100px; right: 12%;
-  background: rgba(255,255,255,0.05);
-  animation: floatDeco 13s ease-in-out infinite reverse;
-}
-.hero-deco-3 {
-  width: 200px; height: 200px;
-  top: 45%; left: -60px;
-  background: rgba(255,255,255,0.05);
-  animation: floatDeco 11s ease-in-out infinite;
-}
-
-/* === PARTICULES FLOTTANTES ARTISTIQUES === */
-.hero-particle {
-  position: absolute;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 1;
-}
-.hp1 {
-  width: 90px; height: 90px;
-  top: 18%; left: 12%;
-  background: radial-gradient(circle, rgba(147,197,253,0.22) 0%, transparent 70%);
-  animation: floatP1 8s ease-in-out infinite;
-}
-.hp2 {
-  width: 50px; height: 50px;
-  top: 55%; left: 22%;
-  background: radial-gradient(circle, rgba(255,255,255,0.18) 0%, transparent 70%);
-  animation: floatP2 11s ease-in-out infinite;
-}
-.hp3 {
-  width: 130px; height: 130px;
-  top: 12%; right: 28%;
-  background: radial-gradient(circle, rgba(96,165,250,0.12) 0%, transparent 70%);
-  animation: floatP3 14s ease-in-out infinite;
-}
-.hp4 {
-  width: 22px; height: 22px;
-  top: 72%; right: 18%;
-  background: rgba(255,255,255,0.22);
-  animation: floatP1 6s ease-in-out infinite reverse;
-}
-.hp5 {
-  width: 70px; height: 70px;
-  bottom: 28%; left: 42%;
-  background: radial-gradient(circle, rgba(59,130,246,0.15) 0%, transparent 70%);
-  animation: floatP2 9s ease-in-out infinite reverse;
-}
-.hp6 {
-  width: 35px; height: 35px;
-  top: 38%; right: 8%;
-  background: rgba(255,255,255,0.13);
-  animation: floatP3 7s ease-in-out infinite;
-}
-
-@keyframes floatP1 {
-  0%, 100% { transform: translate(0, 0); }
-  40%       { transform: translate(18px, -22px) scale(1.07); }
-  70%       { transform: translate(-8px, 12px) scale(0.94); }
-}
-@keyframes floatP2 {
-  0%, 100% { transform: translate(0, 0); }
-  35%       { transform: translate(-20px, -15px) scale(1.05); }
-  65%       { transform: translate(14px, 18px) scale(0.96); }
-}
-@keyframes floatP3 {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); }
-  50%       { transform: translate(10px, -25px) rotate(8deg) scale(1.03); }
 }
 
 .hero-content {

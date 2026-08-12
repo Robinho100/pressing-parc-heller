@@ -1,6 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <!-- Fond bleu royal avec coins arrondis élégants -->
+  <!-- Fond bleu royal aux coins arrondis élégants -->
   <rect width="64" height="64" rx="16" fill="#2563eb"/>
-  <!-- Silhouette de Cintre blanc pro (aucun doute avec un panneau parking) -->
-  <path d="M32 14 C35 14 37 16 37 18.5 C37 20 36 21 34.5 21.8 L48 38 C49.5 40 48.5 42 46.5 42 H17.5 C15.5 42 14.5 40 16 38 L29.5 21.8 C28 21 27 20 27 18.5 C27 16 29 14 32 14 Z M32 18 C30.5 18 29.5 18.8 29.5 19.8 C29.5 20.8 30.5 21.5 32 21.5 C33.5 21.5 34.5 20.8 34.5 19.8 C34.5 18.8 33.5 18 32 18 Z" fill="#ffffff"/>
+  <!-- Goutte d'eau / bulle de propreté minimaliste -->
+  <path d="M32 14 C32 14 18 31 18 41 C18 48.7 24.3 55 32 55 C39.7 55 46 48.7 46 41 C46 31 32 14 32 14 Z" fill="#ffffff"/>
+  <circle cx="26" cy="38" r="3" fill="#2563eb" opacity="0.3"/>
 </svg>

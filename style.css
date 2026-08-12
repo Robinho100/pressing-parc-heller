@@ -394,36 +394,25 @@ a {
   100% { transform: translateY(8px); }
 }
 
-.silk-wave-blue {
+/* Ambiance et mouvement discret d'aura bleue dans Prestations */
+.services-ambient-glow {
   position: absolute;
-  top: 0;
-  left: -5%;
-  width: 110%;
-  height: 100%;
-}
-
-.wave-blue-layer-1 {
-  animation: silkWaveMotion1 16s ease-in-out infinite alternate;
-}
-
-.wave-blue-layer-2 {
-  animation: silkWaveMotion2 11s ease-in-out infinite alternate;
-}
-
-.steam-particle-blue {
-  position: absolute;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: rgba(37, 99, 235, 0.55);
-  box-shadow: 0 0 14px rgba(37, 99, 235, 0.45);
+  top: 30%;
+  left: 50%;
+  width: 700px;
+  height: 450px;
+  background: radial-gradient(ellipse at center, rgba(37, 99, 235, 0.07) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
   pointer-events: none;
   z-index: 0;
-  filter: blur(1.5px);
+  animation: subtleGlowDrift 14s ease-in-out infinite alternate;
 }
-.steam-blue-1 { top: 70%; left: 12%; animation: floatUpSteam 9s linear infinite; }
-.steam-blue-2 { top: 80%; left: 52%; animation: floatUpSteam 12s linear infinite 2s; }
-.steam-blue-3 { top: 60%; left: 84%; animation: floatUpSteam 10s linear infinite 4.5s; }
+
+@keyframes subtleGlowDrift {
+  0%   { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+  50%  { transform: translate(-46%, -48%) scale(1.12); opacity: 0.8; }
+  100% { transform: translate(-54%, -52%) scale(0.92); opacity: 0.5; }
+}
 
 .fluid-services-waves {
   position: absolute;

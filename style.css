@@ -371,6 +371,46 @@ a {
   100% { transform: translate(-8%, 18%) scale(0.92); }
 }
 
+/* Ondes de soie fluides en mouvement continu dans l'arrière-plan de l'Accueil */
+.hero-bg-silk-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 200px;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.hero-silk-wave {
+  position: absolute;
+  bottom: 0;
+  left: -5%;
+  width: 110%;
+  height: 100%;
+}
+
+.silk-layer-1 {
+  animation: heroSilkDrift1 11s ease-in-out infinite alternate;
+}
+
+.silk-layer-2 {
+  animation: heroSilkDrift2 8s ease-in-out infinite alternate;
+}
+
+@keyframes heroSilkDrift1 {
+  0%   { transform: translateX(0) scaleY(1); }
+  50%  { transform: translateX(-48px) scaleY(1.22); }
+  100% { transform: translateX(38px) scaleY(0.88); }
+}
+
+@keyframes heroSilkDrift2 {
+  0%   { transform: translateX(0) scaleY(1); }
+  50%  { transform: translateX(52px) scaleY(0.84); }
+  100% { transform: translateX(-32px) scaleY(1.16); }
+}
+
 /* Vague inférieure épurée avec respiration douce */
 .hero-bottom-wave {
   position: absolute;

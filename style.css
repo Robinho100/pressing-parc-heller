@@ -632,24 +632,24 @@ a {
   background: rgba(255, 255, 255, 0.2);
 }
 
-/* Info bar below hero (Barre Blanche & Bleu Royal) */
+/* Info bar below hero (Barre Blanche & Bleu Royal dynamique et interactive) */
 .hero-info-bar {
   position: relative;
   z-index: 2;
   background: var(--white);
-  border-top: 1px solid var(--gray-200);
-  border-bottom: 1px solid var(--gray-200);
-  box-shadow: var(--shadow-sm);
+  border-top: 1px solid rgba(37, 99, 235, 0.12);
+  border-bottom: 1px solid rgba(37, 99, 235, 0.12);
+  box-shadow: 0 4px 20px rgba(37, 99, 235, 0.08);
 }
 
 .info-bar-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 22px 24px;
+  padding: 16px 24px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 40px;
+  gap: 20px;
   flex-wrap: wrap;
 }
 
@@ -658,11 +658,29 @@ a {
   align-items: center;
   gap: 12px;
   color: var(--navy);
+  padding: 10px 18px;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.info-item:hover {
+  background: rgba(37, 99, 235, 0.06);
+  border-color: rgba(37, 99, 235, 0.2);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.12);
 }
 
 .info-item svg {
   color: var(--blue-royal);
   flex-shrink: 0;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.info-item:hover svg {
+  transform: scale(1.2) rotate(-8deg);
+  color: #1d4ed8;
 }
 
 .info-item div {
@@ -687,8 +705,8 @@ a {
 
 .info-divider {
   width: 1px;
-  height: 40px;
-  background: var(--gray-200);
+  height: 36px;
+  background: rgba(37, 99, 235, 0.15);
 }
 
 /* -------- S\u00c9PARATEURS VAGUES ENTRE SECTIONS -------- */

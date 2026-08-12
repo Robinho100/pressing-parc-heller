@@ -402,12 +402,48 @@ a {
   animation: floatUpSteam 9s linear infinite 4s;
 }
 
-@keyframes floatUpSteam {
-  0%   { opacity: 0; transform: translateY(0) scale(0.8); }
-  30%  { opacity: 0.6; }
-  80%  { opacity: 0.3; }
-  100% { opacity: 0; transform: translateY(-120px) scale(1.4); }
+/* Étoiles scintillantes filigranes en arrière-plan */
+.shine-sparkle {
+  position: absolute;
+  color: rgba(255, 255, 255, 0.45);
+  pointer-events: none;
+  z-index: 1;
+  animation: sparkleTwinkle 4s ease-in-out infinite alternate;
 }
+.sparkle-1 { top: 28%; right: 22%; animation-delay: 0.5s; }
+.sparkle-2 { top: 68%; left: 14%; animation-delay: 2s; }
+
+@keyframes sparkleTwinkle {
+  0%   { opacity: 0.2; transform: scale(0.8) rotate(0deg); }
+  50%  { opacity: 0.85; transform: scale(1.2) rotate(45deg); }
+  100% { opacity: 0.2; transform: scale(0.8) rotate(90deg); }
+}
+
+/* Micro-particules de vapeur bleues (Prestations) */
+.steam-particle-blue {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(37, 99, 235, 0.25);
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(1px);
+}
+.steam-blue-1 { top: 75%; left: 15%; animation: floatUpSteam 9s linear infinite; }
+.steam-blue-2 { top: 85%; left: 55%; animation: floatUpSteam 12s linear infinite 2.5s; }
+.steam-blue-3 { top: 65%; left: 82%; animation: floatUpSteam 10s linear infinite 5s; }
+
+/* Étoiles scintillantes bleues (Prestations) */
+.shine-sparkle-blue {
+  position: absolute;
+  color: rgba(37, 99, 235, 0.35);
+  pointer-events: none;
+  z-index: 0;
+  animation: sparkleTwinkle 5s ease-in-out infinite alternate;
+}
+.sparkle-blue-1 { top: 20%; right: 15%; animation-delay: 1s; }
+.sparkle-blue-2 { top: 60%; left: 8%; animation-delay: 3s; }
 
 .section-ring {
   position: absolute;

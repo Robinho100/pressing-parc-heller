@@ -353,6 +353,47 @@ a {
   padding-top: 72px;
 }
 
+/* NOUVEAU FOND HAUTE COUTURE : Rubans de Satin & Gouttes de Pureté */
+.bg-ribbon-wrap, .bg-ribbon-wrap-blue {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.bg-satin-ribbon {
+  width: 100%;
+  height: 100%;
+  animation: ribbonWave 14s ease-in-out infinite alternate;
+}
+
+@keyframes ribbonWave {
+  0%   { transform: translateY(0) scaleY(1); }
+  50%  { transform: translateY(-25px) scaleY(1.08); }
+  100% { transform: translateY(20px) scaleY(0.94); }
+}
+
+/* Gouttes d'eau filigranes qui flottent doucement */
+.water-drop-bg {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+  animation: dropFloat 9s ease-in-out infinite alternate;
+}
+
+.drop-1 { top: 25%; right: 18%; animation-delay: 0s; }
+.drop-2 { bottom: 20%; left: 12%; animation-delay: 3s; }
+
+.drop-blue-1 { top: 22%; right: 10%; animation-delay: 1.5s; }
+.drop-blue-2 { bottom: 15%; left: 8%; animation-delay: 4s; }
+
+@keyframes dropFloat {
+  0%   { transform: translateY(0) rotate(0deg) scale(1); }
+  50%  { transform: translateY(-35px) rotate(8deg) scale(1.12); }
+  100% { transform: translateY(20px) rotate(-6deg) scale(0.92); }
+}
+
 /* -------- SECTIONS CLAIRES (Design Bicolore & Élégant) -------- */
 .services {
   background: linear-gradient(180deg, #eff6ff 0%, #ffffff 100%);

@@ -1,4 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <circle cx="32" cy="32" r="32" fill="#0f2240"/>
-  <path d="M32 10 C34 22, 42 30, 54 32 C42 34, 34 42, 32 54 C30 42, 22 34, 10 32 C22 30, 30 22, 32 10Z" fill="#c8a96e"/>
+  <!-- Fond bleu royal avec coins arrondis élégants -->
+  <rect width="64" height="64" rx="16" fill="#2563eb"/>
+  <!-- Monogramme 'P' blanc épuré pour Pressing -->
+  <path d="M20 14 H34 C41 14 45 18 45 24 C45 30 41 34 34 34 H27 V50 H20 V14 Z M27 20 V28 H34 C37 28 39 26.5 39 24 C39 21.5 37 20 34 20 H27 Z" fill="#ffffff"/>
 </svg>

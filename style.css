@@ -526,7 +526,7 @@ a {
 /* Info bar below hero (Barre Blanche & Bleu Royal dynamique et interactive) */
 .hero-info-bar {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   background: var(--white);
   border-top: 1px solid rgba(37, 99, 235, 0.12);
   border-bottom: 1px solid rgba(37, 99, 235, 0.12);
@@ -536,7 +536,7 @@ a {
 .info-bar-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 16px 24px;
+  padding: 22px 24px 52px; /* Marge inférieure accrue pour que la vague ne s'approche pas des textes */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -650,15 +650,15 @@ a {
 /* -------- SÉPARATEUR VAGUE FLUIDE -------- */
 .wave-divider {
   position: relative;
-  margin-top: -48px;
+  margin-top: -32px;
   line-height: 0;
-  z-index: 2;
+  z-index: 1;
   pointer-events: none;
 }
 .wave-divider svg {
   display: block;
   width: 100%;
-  height: 48px;
+  height: 32px;
 }
 
 /* -------- SERVICES (Cartes avec arrière-plan vivant) -------- */

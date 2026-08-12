@@ -352,6 +352,57 @@ a {
   padding-top: 72px;
 }
 
+/* Anneaux concentriques filigranes d'arrière-plan (Ondes d'eau et vapeur de pressing) */
+.hero-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  pointer-events: none;
+  z-index: 0;
+}
+.hero-ring-1 {
+  width: 680px; height: 680px;
+  top: -150px; right: -120px;
+  animation: ringFloat1 16s ease-in-out infinite alternate;
+}
+.hero-ring-2 {
+  width: 480px; height: 480px;
+  bottom: -100px; left: -80px;
+  border-color: rgba(255, 255, 255, 0.08);
+  animation: ringFloat2 20s ease-in-out infinite alternate;
+}
+
+.section-ring {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+.section-ring-1 {
+  width: 580px; height: 580px;
+  top: -120px; right: -120px;
+  border: 1px solid rgba(37, 99, 235, 0.09);
+  animation: ringFloat1 18s ease-in-out infinite alternate;
+}
+.section-ring-2 {
+  width: 420px; height: 420px;
+  bottom: -80px; left: -80px;
+  border: 1px solid rgba(96, 165, 250, 0.11);
+  animation: ringFloat2 22s ease-in-out infinite alternate;
+}
+
+@keyframes ringFloat1 {
+  0%   { transform: translate(0, 0) scale(1) rotate(0deg); }
+  50%  { transform: translate(40px, -30px) scale(1.05) rotate(5deg); }
+  100% { transform: translate(-25px, 20px) scale(0.95) rotate(-4deg); }
+}
+
+@keyframes ringFloat2 {
+  0%   { transform: translate(0, 0) scale(1) rotate(0deg); }
+  50%  { transform: translate(-35px, 25px) scale(1.08) rotate(-6deg); }
+  100% { transform: translate(30px, -20px) scale(0.92) rotate(4deg); }
+}
+
 /* -------- SECTIONS CLAIRES (Lisses & Soyeuses) -------- */
 .services, .about, .avis, .contact {
   position: relative;

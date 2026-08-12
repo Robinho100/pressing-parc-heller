@@ -360,7 +360,7 @@ a {
   100% { background-position: 0% 0%; }
 }
 
-/* Bulles décoratives dynamiques en arrière-plan */
+/* Bulles décoratives dynamiques en arrière-plan (Hero) */
 .hero-deco {
   position: absolute;
   border-radius: 50%;
@@ -368,22 +368,119 @@ a {
   pointer-events: none;
 }
 .hero-deco-1 {
-  width: 520px; height: 520px;
+  width: 550px; height: 550px;
   top: -100px; right: -100px;
-  background: radial-gradient(circle, rgba(255,255,255,0.14) 0%, transparent 70%);
-  animation: floatDeco 7s ease-in-out infinite alternate;
+  background: radial-gradient(circle, rgba(255,255,255,0.16) 0%, transparent 70%);
+  animation: floatDeco1 9s ease-in-out infinite alternate;
 }
 .hero-deco-2 {
-  width: 320px; height: 320px;
-  bottom: 60px; right: 10%;
-  background: radial-gradient(circle, rgba(147,197,253,0.18) 0%, transparent 70%);
-  animation: floatDeco 10s ease-in-out infinite alternate-reverse;
+  width: 380px; height: 380px;
+  bottom: 40px; right: 8%;
+  background: radial-gradient(circle, rgba(147,197,253,0.22) 0%, transparent 70%);
+  animation: floatDeco2 12s ease-in-out infinite alternate;
 }
 .hero-deco-3 {
-  width: 240px; height: 240px;
-  top: 40%; left: -40px;
-  background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 70%);
-  animation: floatDeco 8s ease-in-out infinite alternate;
+  width: 280px; height: 280px;
+  top: 35%; left: -60px;
+  background: radial-gradient(circle, rgba(255,255,255,0.14) 0%, transparent 70%);
+  animation: floatDeco3 10s ease-in-out infinite alternate;
+}
+.hero-deco-4 {
+  width: 180px; height: 180px;
+  top: 15%; left: 25%;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+  animation: floatDeco1 14s ease-in-out infinite alternate-reverse;
+}
+
+/* Animations de flottement fluide multidirectionnel */
+@keyframes floatDeco1 {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(30px, -40px) scale(1.08); }
+  100% { transform: translate(-20px, 20px) scale(0.95); }
+}
+
+@keyframes floatDeco2 {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(-35px, 25px) scale(1.12); }
+  100% { transform: translate(25px, -30px) scale(0.92); }
+}
+
+@keyframes floatDeco3 {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(20px, 30px) scale(1.06); }
+  100% { transform: translate(-25px, -15px) scale(0.98); }
+}
+
+/* Bulles d'arrière-plan À Propos */
+.about {
+  position: relative;
+  overflow: hidden;
+}
+.about-deco {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+.about-deco-1 {
+  width: 480px; height: 480px;
+  top: -100px; left: -100px;
+  background: radial-gradient(circle, rgba(37,99,235,0.06) 0%, transparent 70%);
+  animation: floatDeco1 11s ease-in-out infinite alternate;
+}
+.about-deco-2 {
+  width: 360px; height: 360px;
+  bottom: -60px; right: -60px;
+  background: radial-gradient(circle, rgba(96,165,250,0.08) 0%, transparent 70%);
+  animation: floatDeco2 13s ease-in-out infinite alternate;
+}
+
+/* Bulles d'arrière-plan Avis */
+.avis {
+  position: relative;
+  overflow: hidden;
+}
+.avis-deco {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+.avis-deco-1 {
+  width: 500px; height: 500px;
+  top: -120px; right: -80px;
+  background: radial-gradient(circle, rgba(37,99,235,0.05) 0%, transparent 70%);
+  animation: floatDeco2 12s ease-in-out infinite alternate;
+}
+.avis-deco-2 {
+  width: 320px; height: 320px;
+  bottom: -50px; left: -50px;
+  background: radial-gradient(circle, rgba(96,165,250,0.07) 0%, transparent 70%);
+  animation: floatDeco3 10s ease-in-out infinite alternate;
+}
+
+/* Bulles d'arrière-plan Contact */
+.contact {
+  position: relative;
+  overflow: hidden;
+}
+.contact-deco {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+.contact-deco-1 {
+  width: 450px; height: 450px;
+  top: -80px; left: -80px;
+  background: radial-gradient(circle, rgba(37,99,235,0.06) 0%, transparent 70%);
+  animation: floatDeco1 10s ease-in-out infinite alternate;
+}
+.contact-deco-2 {
+  width: 350px; height: 350px;
+  bottom: -60px; right: -60px;
+  background: radial-gradient(circle, rgba(96,165,250,0.08) 0%, transparent 70%);
+  animation: floatDeco2 14s ease-in-out infinite alternate;
 }
 
 .hero-content {

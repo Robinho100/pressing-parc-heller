@@ -339,73 +339,59 @@ a {
   transition: all var(--transition);
 }
 
-/* -------- HERO (FOND PRESSING DYNAMIQUE - 100% VISIBLE & SANS PHOTO) -------- */
+/* -------- HERO (FOND BLEU ROYAL AVEC REFLET SATINÉ ET MOUVEMENT DISCRET) -------- */
 .hero {
   position: relative;
   min-height: 85vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 50%, #1e40af 100%);
+  background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 55%, #1d4ed8 100%);
   color: var(--white);
   overflow: hidden;
   padding-top: 72px;
 }
 
-/* -------- VAGUES DE SOIE & VAPEUR LIQUIDE (MOUVEMENT HAUTE COUTURE 60 FPS) -------- */
-.silk-waves-hero {
+/* Reflet de lumière satinée glissant doucement de gauche à droite */
+.satin-shimmer {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 180px;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.12) 0%, transparent 60%);
   pointer-events: none;
   z-index: 1;
-  overflow: hidden;
+  animation: shimmerDrift 14s ease-in-out infinite alternate;
 }
 
-.silk-wave {
+@keyframes shimmerDrift {
+  0%   { transform: translate(-10%, -10%) scale(1); }
+  50%  { transform: translate(15%, 10%) scale(1.1); }
+  100% { transform: translate(-5%, 15%) scale(0.95); }
+}
+
+/* Vague inférieure épurée avec respiration douce */
+.hero-bottom-wave {
   position: absolute;
   bottom: 0;
-  left: -5%;
-  width: 110%;
-  height: 100%;
-}
-
-.wave-layer-1 {
-  animation: silkWaveMotion1 14s ease-in-out infinite alternate;
-}
-
-.wave-layer-2 {
-  animation: silkWaveMotion2 9s ease-in-out infinite alternate;
-}
-
-.wave-layer-3 {
-  animation: silkWaveMotion1 16s ease-in-out infinite alternate-reverse;
-}
-
-@keyframes silkWaveMotion1 {
-  0%   { transform: translateX(0) scaleY(1); }
-  50%  { transform: translateX(-50px) scaleY(1.22); }
-  100% { transform: translateX(40px) scaleY(0.88); }
-}
-
-@keyframes silkWaveMotion2 {
-  0%   { transform: translateX(0) scaleY(1); }
-  50%  { transform: translateX(55px) scaleY(0.82); }
-  100% { transform: translateX(-35px) scaleY(1.18); }
-}
-
-/* Vagues de soie liquides dans la section Prestations */
-.silk-waves-services {
-  position: absolute;
-  top: 0;
   left: 0;
   right: 0;
-  height: 140px;
+  height: 100px;
   pointer-events: none;
-  z-index: 0;
-  overflow: hidden;
+  z-index: 1;
+}
+
+.hero-bottom-wave svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  animation: waveBreath 7s ease-in-out infinite alternate;
+}
+
+@keyframes waveBreath {
+  0%   { transform: translateY(0); }
+  100% { transform: translateY(8px); }
 }
 
 .silk-wave-blue {

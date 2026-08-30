@@ -11,72 +11,48 @@
 document.addEventListener('DOMContentLoaded', () => {
   let observer;
 
-  // Icon mapping helper (SVGs for premium feel, emojis for fallbacks)
-  function getServiceIcon(slug) {
-    const iconMap = {
-      mariage:      `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l-2 5H8L6 3z"/><path d="M8 8l-3 13h14L16 8H8z"/><path d="M12 3v5"/></svg>`,
-      chemises:     `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20.38 3.46L16 6.14V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3.14L3.62 3.46A1 1 0 0 0 2 4.3v15.2a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1V4.3a1 1 0 0 0-1.62-.84z"/><path d="M12 12V6"/><path d="M15 6l-3 3-3-3"/></svg>`,
-      doudounes:    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5C9.5 2.5 8 4 8 6v1h8V6c0-2-1.5-3.5-4-3.5z"/><path d="M5 7h14l2 4.5v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-9L5 7z"/><line x1="12" y1="7" x2="12" y2="21.5"/><line x1="7" y1="10.5" x2="17" y2="10.5"/><line x1="7" y1="14" x2="17" y2="14"/><line x1="7" y1="17.5" x2="17" y2="17.5"/><line x1="3.5" y1="11.5" x2="7" y2="11.5"/><line x1="17" y1="11.5" x2="20.5" y2="11.5"/><line x1="3.5" y1="15.5" x2="7" y2="15.5"/><line x1="17" y1="15.5" x2="20.5" y2="15.5"/></svg>`,
-      cuir:         `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-2 0-3.5 1.5-4 1.5S6.5 3 4.5 3C3 3 2.5 4.5 3 6c.5 1.5 2 3 2 6s-1.5 4.5-2 6c-.5 1.5 0 3 1.5 3 2 0 3.5-1.5 4-1.5s2 1.5 4.5 1.5 3-1.5 4.5-1.5 2.5 1.5 4 1.5 1.5 0 2-.5 1.5-3-.5-1.5-2-3-2-6s1.5-4.5 2-6c.5-1.5 0-3-1.5-3-2 0-3.5 1.5-4 1.5S14 3 12 3z"/><path d="M12 5.5c-1.3 0-2.3 1-2.7 1s-1.5-.7-2.5-.7c-.7 0-1 1-.7 2 .3 1 1.3 2 1.3 4.2s-1 3.2-1.3 4.2c-.3 1 0 2 .7 2 1 0 1.5-.7 2.5-.7s1.3 1 2.7 1 1.7-1 2.7-1 1.5.7 2.5.7c.7 0 1-1 .7-2-.3-1-1.3-2-1.3-4.2s1-3.2 1.3-4.2c.3-1 0-2-.7-2-1 0-1.5.7-2.5.7s-1.4-1-2.7-1z" stroke-dasharray="2 2"/></svg>`,
-      rideaux:      `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="2" y1="3.5" x2="22" y2="3.5"/><circle cx="2" cy="3.5" r="0.75" fill="currentColor"/><circle cx="22" cy="3.5" r="0.75" fill="currentColor"/><path d="M5 3.5v17"/><path d="M10 3.5c0 4.5-4 6.5-5 8.5"/><path d="M7.5 4.5c0 3-1.5 5-2.5 6.5"/><line x1="4" y1="12" x2="8.5" y2="12"/><path d="M5 12c2 2 3 5 3 8.5"/><path d="M19 3.5v17"/><path d="M14 3.5c0 4.5 4 6.5 5 8.5"/><path d="M16.5 4.5c0 3 1.5 5 2.5 6.5"/><line x1="15.5" y1="12" x2="20" y2="12"/><path d="M19 12c-2 2-3 5-3 8.5"/></svg>`,
-      couture:      `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="9.8" y1="8.2" x2="20" y2="17"/><line x1="9.8" y1="15.8" x2="20" y2="7"/></svg>`,
-      blanchisserie:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><circle cx="12" cy="12" r="4"/><circle cx="8" cy="7" r="1"/></svg>`,
-      cordonnerie:  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 16.5c0 0 1-4 4-4.5l4.5 1.5L16 11c2.5 0 5.5 2 5.5 4.5v1H2.5v-0.5z"/><path d="M2.5 16.5v2.5h19v-2.5"/><path d="M6.5 16.5v2.5"/><path d="M11 13.5l3-2.5"/></svg>`,
-    };
-    return iconMap[slug] || `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 3"/></svg>`;
-  }
-
   // -------- PRIX DYNAMIQUES (API) --------
   async function loadPrices() {
-    const grid = document.querySelector('.services-grid');
-    if (!grid) return;
+    const list = document.querySelector('.service-list');
+    if (!list) return;
 
-    const originalHTML = grid.innerHTML;
-
-    // Afficher des skeleton loaders pendant le chargement
-    grid.innerHTML = Array(6).fill(0).map(() => `
-      <div class="service-card skeleton">
-        <div class="skeleton-box skeleton-icon"></div>
-        <div class="skeleton-box skeleton-title"></div>
-        <div class="skeleton-box skeleton-desc"></div>
-        <div class="skeleton-box skeleton-desc-short"></div>
-      </div>
-    `).join('');
+    const originalHTML = list.innerHTML;
 
     try {
       const res  = await fetch('/api/prices');
-      if (!res.ok) {
-        grid.innerHTML = originalHTML;
-        return;
-      }
+      if (!res.ok) return;
       const data = await res.json();
+      if (!data.services || !data.services.length) return;
 
-      // Vider les skeletons et insérer les vrais services
-      grid.innerHTML = '';
+      list.innerHTML = '';
 
-      data.services.forEach(svc => {
-        const card = document.createElement('div');
-        card.className = svc.slug === 'nettoyage' ? 'service-card service-card-featured reveal' : 'service-card reveal';
-        card.id = `service-${svc.slug}`;
+      data.services.forEach((svc, i) => {
+        const row = document.createElement('li');
+        row.className = 'service-row reveal';
+        row.id = `service-${svc.slug}`;
 
-        const iconDiv = document.createElement('div');
-        iconDiv.className = 'service-icon';
-        iconDiv.innerHTML = getServiceIcon(svc.slug);
-        card.appendChild(iconDiv);
+        const index = document.createElement('span');
+        index.className = 'service-index';
+        index.textContent = String(i + 1).padStart(2, '0');
+        row.appendChild(index);
+
+        const body = document.createElement('div');
+        body.className = 'service-body';
 
         const title = document.createElement('h3');
-        title.innerHTML = (svc.nom || '').replace(/\s*&\s*/g, ' et ');
-        card.appendChild(title);
+        title.textContent = (svc.nom || '').replace(/\s*&\s*/g, ' et ');
+        body.appendChild(title);
 
-        grid.appendChild(card);
+        row.appendChild(body);
+        list.appendChild(row);
 
-        // Enregistrer la carte avec l'intersection observer pour l'effet de scroll reveal
+        // Enregistrer la ligne avec l'intersection observer pour l'effet de scroll reveal
         if (observer) {
-          observer.observe(card);
+          observer.observe(row);
         }
       });
     } catch (e) {
-      // Silencieux — en cas d'erreur on laisse le HTML statique de secours
+      list.innerHTML = originalHTML;
     }
   }
 
@@ -108,22 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
 
-      // 2. Email
-      if (settings.contact_email) {
-        const contactEmail = document.getElementById('contact-email');
-        const contactEmailText = document.getElementById('contact-email-text');
-        const footerEmail = document.getElementById('footer-email');
-
-        const mailtoLink = `mailto:${settings.contact_email}`;
-        if (contactEmail) contactEmail.href = mailtoLink;
-        if (contactEmailText) contactEmailText.textContent = settings.contact_email;
-        if (footerEmail) {
-          footerEmail.href = mailtoLink;
-          footerEmail.textContent = settings.contact_email;
-        }
-      }
-
-      // 3. Adresse
+      // 2. Adresse
       if (settings.contact_address) {
         const heroAddress = document.getElementById('hero-address');
         const contactAddressText = document.getElementById('contact-address-text');
@@ -167,6 +128,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
   loadPrices();
   loadSettings();
+
+  // -------- CARROUSEL PHOTOS "À PROPOS" --------
+  const aboutTrack = document.getElementById('aboutPhotos');
+  const aboutPrev  = document.getElementById('aboutPhotosPrev');
+  const aboutNext  = document.getElementById('aboutPhotosNext');
+
+  if (aboutTrack && aboutPrev && aboutNext) {
+    const stepSize = () => {
+      const first = aboutTrack.querySelector('.about-photo');
+      if (!first) return aboutTrack.clientWidth;
+      const gap = parseFloat(getComputedStyle(aboutTrack).columnGap) || 12;
+      return first.getBoundingClientRect().width + gap;
+    };
+
+    const syncButtons = () => {
+      const maxScroll = aboutTrack.scrollWidth - aboutTrack.clientWidth - 1;
+      aboutPrev.disabled = aboutTrack.scrollLeft <= 0;
+      aboutNext.disabled = aboutTrack.scrollLeft >= maxScroll;
+    };
+
+    aboutPrev.addEventListener('click', () => {
+      aboutTrack.scrollBy({ left: -stepSize(), behavior: 'smooth' });
+    });
+    aboutNext.addEventListener('click', () => {
+      aboutTrack.scrollBy({ left: stepSize(), behavior: 'smooth' });
+    });
+    aboutTrack.addEventListener('scroll', syncButtons, { passive: true });
+    window.addEventListener('resize', syncButtons);
+    syncButtons();
+  }
 
   // -------- NAVBAR SCROLL --------
   const navbar = document.getElementById('navbar');
@@ -314,7 +305,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // -------- INTERSECTION OBSERVER (reveal + stats) --------
   const revealEls = document.querySelectorAll(
-    '.service-card, .about-container, .stat-card, .avis-card, .contact-card, .horaires-box, .map-wrap, .footer-container > div'
+    '.service-row, .about-container, .stat-card, .avis-card, .contact-card, .horaires-box, .map-wrap, .footer-container > div'
   );
 
   revealEls.forEach(el => el.classList.add('reveal'));

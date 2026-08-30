@@ -21,7 +21,6 @@ router.put(
   '/',
   authMiddleware,
   [
-    body('contact_email').trim().isEmail().withMessage('Email de contact invalide.').isLength({ max: 100 }).normalizeEmail(),
     body('contact_phone').trim().isLength({ min: 5, max: 25 }).withMessage('Téléphone invalide.').escape(),
     body('contact_address').trim().isLength({ min: 5, max: 200 }).withMessage('Adresse invalide.').escape(),
     body('hours_week').trim().isLength({ min: 1, max: 100 }).withMessage('Horaires semaine invalides.').escape(),
@@ -39,10 +38,9 @@ router.put(
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.status(400).json({ error: errors.array()[0].msg });
 
-    const { contact_email, contact_phone, contact_address, hours_week, hours_thursday, hours_sat, google_maps_iframe } = req.body;
+    const { contact_phone, contact_address, hours_week, hours_thursday, hours_sat, google_maps_iframe } = req.body;
 
     try {
-      await run('UPDATE settings SET value = ? WHERE key = "contact_email"', [contact_email]);
       await run('UPDATE settings SET value = ? WHERE key = "contact_phone"', [contact_phone]);
       await run('UPDATE settings SET value = ? WHERE key = "contact_address"', [contact_address]);
       await run('UPDATE settings SET value = ? WHERE key = "hours_week"', [hours_week]);

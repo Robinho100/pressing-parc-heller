@@ -2,6 +2,8 @@ const express    = require('express');
 const helmet     = require('helmet');
 const cookieParser = require('cookie-parser');
 const path       = require('path');
+const http       = require('http');
+const fs         = require('fs');
 const { initDb } = require('./db');
 
 const app  = express();
@@ -68,3 +70,22 @@ initDb().then(() => {
   console.error('❌ Erreur initialisation DB :', err);
   process.exit(1);
 });
+
+// ============================================================
+//   SITE V2 (comparaison design) — serveur statique séparé
+//   sur le même process pour éviter les kills du sandbox
+// ============================================================
+const V2_PORT = 3001;
+const V2_ROOT = path.join(__dirname, '..', '..', 'pressing-parc-heller-v2');
+const V2_TYPES = { '.html': 'text/html', '.css': 'text/css', '.js': 'application/javascript', '.svg': 'image/svg+xml', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.png': 'image/png' };
+
+http.createServer((req, res) => {
+  const reqPath = req.url === '/' ? '/index.html' : req.url.split('?')[0];
+  const filePath = path.join(V2_ROOT, reqPath);
+  if (!filePath.startsWith(V2_ROOT)) { res.writeHead(403); res.end('Forbidden'); return; }
+  fs.readFile(filePath, (err, data) => {
+    if (err) { res.writeHead(404); res.end('Not found'); return; }
+    res.writeHead(200, { 'Content-Type': V2_TYPES[path.extname(filePath)] || 'application/octet-stream' });
+    res.end(data);
+  });
+}).listen(V2_PORT, () => console.log(`   Site v2      → http://localhost:${V2_PORT}\n`));

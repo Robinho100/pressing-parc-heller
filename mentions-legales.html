@@ -338,7 +338,6 @@
         <li><strong>N° TVA Intracommunautaire :</strong> <span class="placeholder">[À COMPLÉTER]</span></li>
         <li><strong>Directeur de la publication :</strong> <span class="placeholder">[À COMPLÉTER — Nom du responsable]</span></li>
         <li><strong>Téléphone :</strong> <a href="tel:0142374748" id="legal-phone">01 42 37 47 48</a></li>
-        <li><strong>Email :</strong> <a href="mailto:pressingparcheller@yahoo.fr" id="legal-email">pressingparcheller@yahoo.fr</a></li>
       </ul>
     </article>
 
@@ -386,7 +385,7 @@
       <h3>Responsable du traitement</h3>
       <p>
         Le responsable du traitement des données est : <span class="placeholder">[À COMPLÉTER — Nom du responsable]</span>,
-        joignable à l'adresse <a href="mailto:pressingparcheller@yahoo.fr" id="legal-rgpd-email">pressingparcheller@yahoo.fr</a>.
+        joignable par téléphone au <a href="tel:0142374748" id="legal-rgpd-phone">01 42 37 47 48</a> ou par courrier à l'adresse du siège social.
       </p>
 
       <h3>Données collectées</h3>
@@ -423,7 +422,7 @@
         <li><strong>Droit d'opposition</strong> — vous opposer au traitement de vos données</li>
       </ul>
       <p>
-        Pour exercer ces droits, contactez-nous à : <a href="mailto:pressingparcheller@yahoo.fr" id="legal-rgpd-email2">pressingparcheller@yahoo.fr</a>
+        Pour exercer ces droits, contactez-nous par téléphone au <a href="tel:0142374748" id="legal-rgpd-phone2">01 42 37 47 48</a>
         ou par courrier à l'adresse du siège social. En cas de litige, vous pouvez introduire une réclamation auprès de la
         <a href="https://www.cnil.fr" target="_blank" rel="noopener noreferrer">CNIL</a>.
       </p>
@@ -513,16 +512,6 @@
                 phoneEl.href = telLink;
                 phoneEl.textContent = settings.contact_phone;
               }
-            }
-            if (settings.contact_email) {
-              const mailtoLink = 'mailto:' + settings.contact_email;
-              ['legal-email', 'legal-rgpd-email', 'legal-rgpd-email2'].forEach(id => {
-                const el = document.getElementById(id);
-                if (el) {
-                  el.href = mailtoLink;
-                  el.textContent = settings.contact_email;
-                }
-              });
             }
           }
         }

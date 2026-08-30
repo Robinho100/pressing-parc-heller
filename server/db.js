@@ -64,7 +64,6 @@ async function initDb() {
   const settingsCount = await db.execute('SELECT COUNT(*) as count FROM settings');
   if (!settingsCount.rows[0].count) {
     const defaultSettings = [
-      ['contact_email',      'pressingparcheller@yahoo.fr'],
       ['contact_phone',      '01 42 37 47 48'],
       ['contact_address',    '50 Rue Prosper Legouté, 92160 Antony'],
       ['hours_week',         '9h–12h30 · 14h–19h'],

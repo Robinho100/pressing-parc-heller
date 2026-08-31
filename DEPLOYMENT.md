@@ -73,4 +73,11 @@ Le serveur ne sert que `public/`. Ne jamais remettre `express.static` sur la rac
 2. Se connecter à `/admin`, changer le mot de passe, supprimer `ADMIN_INITIAL_PASSWORD`.
 3. Onglet **Coordonnées & Horaires** : renseigner les informations réelles + la carte Google Maps.
 4. Vérifier les **Mentions légales** (`/mentions-legales.html`).
-5. Sauvegarde : exporter régulièrement les données depuis le dashboard Turso.
+5. **Sauvegarde de la base** (déploiement Alwaysdata avec SQLite local) :
+   Panneau Alwaysdata → *Advanced → Tasks → Add a task*
+   - Command : `bash /home/pressing-parc-heller/pressing-parc-heller/scripts/backup-db.sh`
+   - Fréquence : quotidienne (ex. 03:30)
+   Le script écrit des copies horodatées dans `~/backups/` (hors web, permissions 600),
+   et conserve les 14 dernières. Pour rapatrier une copie sur son poste :
+   `scp pressing-parc-heller@ssh-pressing-parc-heller.alwaysdata.net:~/backups/pressing_*.db .`
+   (Sur Turso : exporter depuis le dashboard Turso à la place.)

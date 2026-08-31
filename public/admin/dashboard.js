@@ -112,7 +112,7 @@ function getServiceIcon(slug, emojiFallback) {
     blanchisserie: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><circle cx="12" cy="12" r="4"/><circle cx="8" cy="7" r="1"/></svg>`,
     livraison: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>`,
   };
-  return iconMap[slug] || `<span style="font-size: 1.2rem; line-height: 1;">${emojiFallback || '✦'}</span>`;
+  return iconMap[slug] || `<span style="font-size: 1.2rem; line-height: 1;">${emojiFallback || '•'}</span>`;
 }
 
 function renderTable(services) {

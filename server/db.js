@@ -33,7 +33,7 @@ async function initDb() {
       nom         TEXT NOT NULL,
       description TEXT NOT NULL DEFAULT '',
       prix        TEXT NOT NULL DEFAULT 'Sur devis',
-      emoji       TEXT NOT NULL DEFAULT '✦',
+      emoji       TEXT NOT NULL DEFAULT '•',
       visible     INTEGER NOT NULL DEFAULT 1,
       updated_at  DATETIME DEFAULT CURRENT_TIMESTAMP
     );

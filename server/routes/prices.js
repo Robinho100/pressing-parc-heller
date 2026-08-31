@@ -79,7 +79,7 @@ router.post(
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.status(400).json({ error: errors.array()[0].msg });
 
-    const { nom, prix, description = '', emoji = '✦' } = req.body;
+    const { nom, prix, description = '', emoji = '•' } = req.body;
 
     try {
       let baseSlug = slugify(nom) || 'service';

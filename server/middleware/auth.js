@@ -19,9 +19,12 @@ if (!JWT_SECRET) {
 function authMiddleware(req, res, next) {
   const token = req.cookies?.token;
 
+  // req.path vaut le chemin RELATIF au routeur monté (ex. "/all"), pas "/api/...".
+  // On teste l'URL d'origine pour distinguer un appel API d'une navigation.
+  const isApiRequest = req.originalUrl.startsWith('/api/');
+
   if (!token) {
-    // API → JSON, sinon redirect
-    if (req.path.startsWith('/api/')) {
+    if (isApiRequest) {
       return res.status(401).json({ error: 'Non authentifié. Veuillez vous connecter.' });
     }
     return res.redirect('/admin/');
@@ -33,7 +36,7 @@ function authMiddleware(req, res, next) {
     next();
   } catch (err) {
     res.clearCookie('token');
-    if (req.path.startsWith('/api/')) {
+    if (isApiRequest) {
       return res.status(401).json({ error: 'Session expirée. Veuillez vous reconnecter.' });
     }
     return res.redirect('/admin/');

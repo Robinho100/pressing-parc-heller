@@ -100,44 +100,28 @@ async function loadUnreadCount() {
   } catch (e) {}
 }
 
-function getServiceIcon(slug, emojiFallback) {
-  const iconMap = {
-    costumes: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3h6a3 3 0 0 0-3-3z"/><path d="M12 5v3"/><path d="M21 16.5A2.5 2.5 0 0 1 18.5 19H5.5A2.5 2.5 0 0 1 3 16.5L12 8l9 8.5z"/></svg>`,
-    mariage: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l-2 5H8L6 3z"/><path d="M8 8l-3 13h14L16 8H8z"/><path d="M12 3v5"/></svg>`,
-    chemises: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20.38 3.46L16 6.14V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3.14L3.62 3.46A1 1 0 0 0 2 4.3v15.2a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1V4.3a1 1 0 0 0-1.62-.84z"/><path d="M12 22V6"/><path d="M16 6l-4 4-4-4"/></svg>`,
-    doudounes: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 3v18"/><path d="M15 3v18"/><path d="M4 8h16"/><path d="M4 13h16"/><path d="M4 17h16"/></svg>`,
-    cuir: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
-    rideaux: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/><path d="M15 3v18"/><path d="M3 9h18"/><path d="M3 15h18"/></svg>`,
-    couture: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="9.8" y1="8.2" x2="20" y2="17"/><line x1="9.8" y1="15.8" x2="20" y2="7"/></svg>`,
-    blanchisserie: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><circle cx="12" cy="12" r="4"/><circle cx="8" cy="7" r="1"/></svg>`,
-    livraison: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>`,
-  };
-  return iconMap[slug] || `<span style="font-size: 1.2rem; line-height: 1;">${emojiFallback || '•'}</span>`;
-}
-
 function renderTable(services) {
   const tbody = document.getElementById('servicesBody');
   if (!services.length) {
-    tbody.innerHTML = '<tr><td colspan="6" class="loading-row">Aucun service.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="5" class="loading-row">Aucun service.</td></tr>';
     return;
   }
 
   tbody.innerHTML = services.map(s => `
     <tr data-slug="${esc(s.slug)}">
-      <td class="emoji-cell">${getServiceIcon(s.slug, s.emoji)}</td>
-      <td><strong>${esc(s.nom)}</strong></td>
-      <td style="max-width:240px;color:#6b7280;font-size:0.83rem">${esc(s.description)}</td>
-      <td><span class="prix-badge">${esc(s.prix)}</span></td>
-      <td>
+      <td class="col-name">${esc(s.nom)}</td>
+      <td class="col-desc" title="${esc(s.description)}">${esc(s.description) || '—'}</td>
+      <td>${s.prix ? `<span class="prix-badge">${esc(s.prix)}</span>` : '—'}</td>
+      <td class="col-center">
         <label class="switch" title="${s.visible ? 'Masquer sur le site' : 'Afficher sur le site'}">
           <input type="checkbox" class="toggle-vis" data-slug="${esc(s.slug)}" ${s.visible ? 'checked' : ''} />
           <span class="switch-slider"></span>
         </label>
       </td>
-      <td>
-        <div style="display:flex; gap:8px;">
+      <td class="col-actions">
+        <div class="row-actions">
           <button class="btn-edit btn-modify-svc" data-slug="${esc(s.slug)}">Modifier</button>
-          <button class="btn-edit btn-delete-svc" data-slug="${esc(s.slug)}" style="background:#ef4444; border-color:#ef4444;">Supprimer</button>
+          <button class="btn-edit btn-danger btn-delete-svc" data-slug="${esc(s.slug)}">Supprimer</button>
         </div>
       </td>
     </tr>
@@ -469,7 +453,6 @@ async function deleteService(slug) {
 // ============================================================
 const addServiceModal = document.getElementById('addServiceModal');
 const addServiceForm  = document.getElementById('addServiceForm');
-const addEmoji         = document.getElementById('addEmoji');
 const addNom           = document.getElementById('addNom');
 const addDesc          = document.getElementById('addDescription');
 const addPrix          = document.getElementById('addPrix');
@@ -482,7 +465,7 @@ document.getElementById('btnOpenAddServiceModal').addEventListener('click', () =
   addServiceForm.reset();
   addDescCount.textContent = '0 / 300';
   addServiceModal.style.display = '';
-  addEmoji.focus();
+  addNom.focus();
 });
 
 function closeAddServiceModal() {
@@ -501,13 +484,12 @@ addServiceForm.addEventListener('submit', async (e) => {
   e.preventDefault();
   addServiceError.textContent = '';
 
-  const emoji = addEmoji.value.trim();
   const nom = addNom.value.trim();
   const desc = addDesc.value.trim();
   const prix = addPrix.value.trim();
 
-  if (!emoji || !nom || !prix) {
-    addServiceError.textContent = 'L\'emoji, le nom et le prix sont requis.';
+  if (!nom || !prix) {
+    addServiceError.textContent = 'Le nom et le prix sont requis.';
     return;
   }
 
@@ -519,7 +501,7 @@ addServiceForm.addEventListener('submit', async (e) => {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'same-origin',
-      body: JSON.stringify({ emoji, nom, description: desc, prix }),
+      body: JSON.stringify({ nom, description: desc, prix }),
     });
     const data = await res.json();
 
@@ -573,7 +555,7 @@ function renderMessages(messages) {
         <td><span style="font-size:0.83rem; color:#6b7280;">${esc(dateStr)}</span></td>
         <td>
           <strong>${esc(m.nom)}</strong><br/>
-          <a href="mailto:${esc(m.email)}" style="font-size:0.8rem; color:var(--gold); text-decoration:underline;">${esc(m.email)}</a>
+          <a href="mailto:${esc(m.email)}" style="font-size:0.8rem; color:var(--blue); text-decoration:underline;">${esc(m.email)}</a>
         </td>
         <td><strong>${esc(m.sujet)}</strong></td>
         <td><div style="max-height:100px; overflow-y:auto; font-size:0.88rem; white-space:pre-wrap;">${esc(m.message)}</div></td>
@@ -627,13 +609,6 @@ async function deleteMessage(id) {
     }
   } catch (e) {}
 }
-
-// ============================================================
-//  SAUVEGARDE DB
-// ============================================================
-document.getElementById('btnBackupDb').addEventListener('click', () => {
-  window.location.href = '/api/settings/backup';
-});
 
 // ============================================================
 //  INIT

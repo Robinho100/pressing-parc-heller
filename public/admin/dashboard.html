@@ -5,9 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard — Pressing du Parc Heller</title>
   <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/admin/admin.css" />
 </head>
 <body class="dashboard-page">
@@ -59,8 +60,8 @@
           <h2>Gestion des tarifs</h2>
           <p>Modifiez les prix affichés sur le site public en temps réel.</p>
         </div>
-        <div class="header-actions" style="display:flex; gap:12px; align-items:center;">
-          <button class="btn-save" id="btnOpenAddServiceModal" style="background:var(--gold); color:var(--navy); font-weight:700;">
+        <div class="header-actions">
+          <button class="btn-save" id="btnOpenAddServiceModal">
             + Ajouter un service
           </button>
           <a href="/" target="_blank" class="btn-view-site">
@@ -76,16 +77,15 @@
         <table class="services-table">
           <thead>
             <tr>
-              <th>Emoji</th>
               <th>Service</th>
               <th>Description</th>
               <th>Prix</th>
-              <th>Visible</th>
-              <th>Actions</th>
+              <th class="col-center">Visible</th>
+              <th class="col-actions">Actions</th>
             </tr>
           </thead>
           <tbody id="servicesBody">
-            <tr><td colspan="6" class="loading-row">Chargement...</td></tr>
+            <tr><td colspan="5" class="loading-row">Chargement…</td></tr>
           </tbody>
         </table>
       </div>
@@ -129,14 +129,6 @@
         <div class="form-error" id="settingsError" role="alert" aria-live="polite"></div>
         <button type="submit" class="btn-save" id="btnSaveSettings">Enregistrer les paramètres</button>
       </form>
-
-      <div style="margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border);">
-        <h3 style="font-size:1.1rem; color:var(--navy); margin-bottom:6px;">Sauvegarde du système</h3>
-        <p style="color:var(--muted); font-size:0.85rem; margin-bottom:16px; max-width:540px;">Téléchargez une copie de sauvegarde de votre base de données locale (.db) contenant tous vos tarifs et paramètres.</p>
-        <button type="button" class="btn-save" id="btnBackupDb" style="background:var(--gold); color:var(--navy); font-weight:700;">
-          📥 Télécharger la sauvegarde (pressing.db)
-        </button>
-      </div>
     </section>
 
     <!-- SECTION MESSAGES -->
@@ -241,10 +233,6 @@
         <button class="modal-close" id="addServiceClose" aria-label="Fermer">✕</button>
       </div>
       <form class="modal-form" id="addServiceForm" novalidate>
-        <div class="form-group">
-          <label for="addEmoji">Emoji (icône)</label>
-          <input type="text" id="addEmoji" maxlength="10" placeholder="ex: 👔, 🧥, 👞" required />
-        </div>
         <div class="form-group">
           <label for="addNom">Nom du service</label>
           <input type="text" id="addNom" maxlength="100" placeholder="ex: Nettoyage Tapis" required />

@@ -1442,6 +1442,7 @@ a {
 
 .about-photo-trio {
   display: flex;
+  align-items: flex-start; /* ne pas étirer les vignettes : laisse aspect-ratio définir la hauteur (fix iOS/Safari) */
   gap: 12px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
@@ -2256,5 +2257,13 @@ a {
 
   .hero-stat-sep:nth-child(4) {
     display: none;
+  }
+
+  /* Carrousel photos "À propos" : une grande photo par vue sur mobile, glissable */
+  .about-image-wrap {
+    max-width: none;
+  }
+  .about-photo-trio .about-photo {
+    flex: 0 0 80%;
   }
 }

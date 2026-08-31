@@ -152,6 +152,11 @@ function renderTable(services) {
   tbody.querySelectorAll('.btn-modify-svc').forEach(btn => {
     btn.addEventListener('click', () => openModal(btn.dataset.slug));
   });
+
+  // Events bouton supprimer
+  tbody.querySelectorAll('.btn-delete-svc').forEach(btn => {
+    btn.addEventListener('click', () => deleteService(btn.dataset.slug));
+  });
 }
 
 function esc(str) {
@@ -435,11 +440,6 @@ settingsForm.addEventListener('submit', async (e) => {
     btnSaveSettings.disabled = false;
     btnSaveSettings.textContent = 'Enregistrer les paramètres';
   }
-});
-
-  tbody.querySelectorAll('.btn-delete-svc').forEach(btn => {
-    btn.addEventListener('click', () => deleteService(btn.dataset.slug));
-  });
 });
 
 async function deleteService(slug) {

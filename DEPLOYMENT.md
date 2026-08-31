@@ -1,77 +1,76 @@
-# Guide de Déploiement en Production — Pressing du Parc Heller
+# Guide de déploiement — Pressing du Parc Heller
 
-Ce document décrit les étapes nécessaires pour déployer l'application Node.js + SQLite du Pressing du Parc Heller sur un serveur de production ou sur une plateforme cloud, en garantissant la persistance des données et la sécurité.
+Application Node.js (Express) + base de données libSQL/SQLite.
 
 ---
 
-## 1. Choix de l'Hébergement & Persistance SQLite
+## 1. Architecture des fichiers
 
-Comme l'application utilise **SQLite** (une base de données locale dans un fichier `data/pressing.db`), il est crucial de s'assurer que le système de fichiers de l'hébergeur ne détruit pas les données locales lors d'un redémarrage.
+- `public/` — **seul dossier exposé publiquement** (site, images, `mentions-legales.html`, `404.html`, espace `admin/`).
+- `server/` — code serveur : **jamais** servi via HTTP.
+- `data/` — base SQLite locale de développement (`data/pressing.db`, ignorée par git).
+- En production, la base est **Turso** (cloud) : aucun fichier local, aucun volume à monter.
 
-### Option A : Hébergement Cloud (Recommandé - Simple)
-Des plateformes comme **Render.com** ou **Railway.app** permettent de déployer des applications Node.js très facilement.
-* **Volume Persistant** : Vous devez attacher un **Volume Persistant** (ex: taille de 1 Go) et le monter sur le dossier `data/` du projet.
-* **Variables d'environnement** :
-  * `NODE_ENV=production` (active automatiquement les cookies sécurisés `Secure`).
-  * `PORT=3000` (ou le port imposé par le service).
-  * `JWT_SECRET=une-cle-secrete-tres-longue-et-aleatoire` (changez la clé par défaut !).
+Le serveur ne sert que `public/`. Ne jamais remettre `express.static` sur la racine du projet
+(cela exposerait le code, la base, `.git` et la configuration).
 
-### Option B : VPS (Serveur Dédié Virtuel - OVH, Hostinger, Scaleway)
-C'est l'option offrant le contrôle total et la persistance native de la base de données.
-1. Installer Node.js (v18+) et Git sur le VPS.
-2. Cloner le projet : `git clone https://github.com/Robinho100/pressing-parc-heller.git`.
-3. Installer les dépendances : `npm install --omit=dev`.
-4. Utiliser **PM2** pour exécuter le serveur en tâche de fond et le relancer automatiquement en cas de crash :
+---
+
+## 2. Variables d'environnement
+
+| Variable | Obligatoire | Rôle |
+|---|---|---|
+| `NODE_ENV` | oui | `production` en ligne (active cookies `Secure`, HSTS, contrôles stricts). |
+| `JWT_SECRET` | **oui en prod** | Clé de signature des sessions admin. Le serveur refuse de démarrer sans elle en production. Sur Render : `generateValue: true`. |
+| `ADMIN_EMAIL` | recommandé | Email de connexion à l'espace admin (défaut : `pressingparcheller@yahoo.fr`). |
+| `ADMIN_INITIAL_PASSWORD` | **oui en prod** | Mot de passe du compte admin, utilisé **une seule fois** à la création du compte. Le serveur refuse de démarrer sans elle en production si le compte n'existe pas encore. |
+| `TURSO_DATABASE_URL` | oui en prod | URL de la base Turso. |
+| `TURSO_AUTH_TOKEN` | oui en prod | Jeton d'accès Turso. |
+
+> **Aucun identifiant par défaut n'est présent dans le code.** En développement local, si
+> `ADMIN_INITIAL_PASSWORD` n'est pas défini, un mot de passe temporaire aléatoire est généré
+> et affiché **une seule fois** dans la console au premier démarrage.
+
+---
+
+## 3. Déploiement sur Render (recommandé)
+
+1. Créer une base **Turso** (offre gratuite) et récupérer `Database URL` + `Auth Token`.
+2. Sur Render : **New → Blueprint**, connecter le dépôt GitHub. Render lit `render.yaml`.
+3. Renseigner les variables `sync: false` : `TURSO_DATABASE_URL`, `TURSO_AUTH_TOKEN`,
+   `ADMIN_EMAIL`, `ADMIN_INITIAL_PASSWORD`. `JWT_SECRET` est généré automatiquement.
+4. Déployer. Render fournit le HTTPS et l'URL `*.onrender.com`.
+5. **Se connecter à `/admin`, aller dans « Mon compte », changer le mot de passe**,
+   puis **supprimer la variable `ADMIN_INITIAL_PASSWORD`** dans le dashboard Render.
+6. Ajouter le domaine personnalisé (`pressing-parc-heller.fr`) dans *Settings → Custom Domain*
+   et poser les enregistrements DNS indiqués chez le registrar.
+
+---
+
+## 4. Déploiement sur VPS (alternative)
+
+1. Node.js v18+ et Git installés.
+2. `git clone` du dépôt, puis `npm ci --omit=dev`.
+3. Définir les variables d'environnement (fichier `.env` non commité, ou service systemd).
+4. Lancer avec **PM2** :
    ```bash
    npm install -g pm2
-   NODE_ENV=production JWT_SECRET=VotreCleSecrete pm2 start server/index.js --name "pressing-heller"
-   pm2 startup
-   pm2 save
+   pm2 start server/index.js --name pressing-heller
+   pm2 startup && pm2 save
    ```
-
----
-
-## 2. Configuration du Nom de Domaine & HTTPS
-
-Pour des raisons de sécurité, **le site doit impérativement tourner en HTTPS**. Le cookie d'administration JWT est configuré pour n'être transmis que sur des connexions sécurisées en mode production.
-
-### Option Cloud (Render/Railway)
-* Ces plateformes gèrent l'attribution du SSL automatiquement. 
-* Il suffit d'ajouter votre domaine personnalisé (ex: `pressing-parc-heller.fr`) dans les paramètres de la plateforme et de configurer vos enregistrements CNAME/A chez votre bureau d'enregistrement DNS (OVH, Gandi, etc.).
-
-### Option VPS (Nginx + Let's Encrypt)
-Configurez un proxy inverse avec **Nginx** et installez un certificat SSL gratuit avec **Certbot / Let's Encrypt** :
-1. Installer Nginx : `sudo apt install nginx`
-2. Créer une configuration de site dans `/etc/nginx/sites-available/pressing-heller` :
-   ```nginx
-   server {
-       listen 80;
-       server_name pressing-parc-heller.fr www.pressing-parc-heller.fr;
-
-       location / {
-           proxy_pass http://localhost:3000;
-           proxy_http_version 1.1;
-           proxy_set_header Upgrade $http_upgrade;
-           proxy_set_header Connection 'upgrade';
-           proxy_set_header Host $host;
-           proxy_cache_bypass $http_upgrade;
-       }
-   }
-   ```
-3. Activer le site : `sudo ln -s /etc/nginx/sites-available/pressing-heller /etc/nginx/sites-enabled/` et redémarrer Nginx (`sudo systemctl restart nginx`).
-4. Installer le SSL : 
+5. **Nginx** en proxy inverse vers `http://localhost:3000` + **Certbot / Let's Encrypt** pour le TLS :
    ```bash
-   sudo apt install certbot python3-certbot-nginx
    sudo certbot --nginx -d pressing-parc-heller.fr -d www.pressing-parc-heller.fr
    ```
+   Le proxy doit transmettre `X-Forwarded-*` (l'application fait confiance à 1 hop de proxy).
 
 ---
 
-## 3. Liste des Tâches post-déploiement
+## 5. Checklist post-déploiement
 
-Une fois le site en ligne sur internet :
-1. **Accéder à l'Admin** : Allez sur `https://votre-domaine.fr/admin` et connectez-vous avec l'email du client et le mot de passe temporaire (`Admin2025!`).
-2. **Modifier le profil** : Rendez-vous dans l'onglet **Mon compte** et modifiez le mot de passe pour en définir un très fort et personnel.
-3. **Vérifier les coordonnées** : Allez dans l'onglet **Coordonnées & Horaires**, entrez les informations finales réelles du pressing et mettez à jour la carte Google Maps.
-4. **Vérifier le formulaire de contact** : Faites un envoi d'essai depuis le site public et vérifiez qu'il apparaît bien en haut de la liste dans l'onglet **Messages** de l'admin.
-5. **Sauvegarde** : Configurez une sauvegarde régulière du fichier `data/pressing.db` ou utilisez périodiquement le bouton **Sauvegarder la base de données** depuis l'administration.
+1. Vérifier que `https://<domaine>/server/index.js`, `/data/pressing.db`, `/.git/config`,
+   `/package.json`, `/DEPLOYMENT.md` renvoient **404** (rien d'autre que `public/` ne doit sortir).
+2. Se connecter à `/admin`, changer le mot de passe, supprimer `ADMIN_INITIAL_PASSWORD`.
+3. Onglet **Coordonnées & Horaires** : renseigner les informations réelles + la carte Google Maps.
+4. Vérifier les **Mentions légales** (`/mentions-legales.html`).
+5. Sauvegarde : exporter régulièrement les données depuis le dashboard Turso.

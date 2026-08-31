@@ -1,5 +1,6 @@
 const { createClient } = require('@libsql/client');
 const bcrypt = require('bcryptjs');
+const crypto = require('crypto');
 
 // Connexion Turso (cloud) ou SQLite local en dev
 const db = createClient({
@@ -50,14 +51,43 @@ async function initDb() {
   `);
 
   // -------- SEED ADMIN --------
+  // Aucun mot de passe par défaut dans le code.
+  //  - En production : ADMIN_INITIAL_PASSWORD (et éventuellement ADMIN_EMAIL) sont obligatoires.
+  //  - En développement : un mot de passe temporaire aléatoire est généré et affiché une seule fois.
+  // Le compte n'est créé qu'une fois ; changez ce mot de passe via « Mon compte » dès la 1re connexion.
   const adminRow = await db.execute('SELECT id, email FROM admin');
   if (!adminRow.rows.length) {
-    const hash = await bcrypt.hash('Admin2025!', 12);
+    const email = (process.env.ADMIN_EMAIL || 'pressingparcheller@yahoo.fr').trim().toLowerCase();
+    let password = process.env.ADMIN_INITIAL_PASSWORD;
+    let generated = false;
+
+    if (!password) {
+      if (process.env.NODE_ENV === 'production') {
+        throw new Error(
+          'ADMIN_INITIAL_PASSWORD manquant : définissez-le pour créer le compte administrateur en production.'
+        );
+      }
+      password = crypto.randomBytes(9).toString('base64').replace(/[^A-Za-z0-9]/g, '') + 'Aa1!';
+      generated = true;
+    }
+
+    const hash = await bcrypt.hash(password, 12);
     await db.execute({
       sql: 'INSERT INTO admin (email, password) VALUES (?, ?)',
-      args: ['pressingparcheller@yahoo.fr', hash],
+      args: [email, hash],
     });
-    console.log('✅ Compte admin créé : pressingparcheller@yahoo.fr / Admin2025!');
+
+    console.log('\n============================================');
+    console.log('  COMPTE ADMINISTRATEUR CRÉÉ');
+    console.log('  Email : ' + email);
+    if (generated) {
+      console.log('  Mot de passe temporaire (dev) : ' + password);
+      console.log('  → Changez-le immédiatement dans « Mon compte ».');
+    } else {
+      console.log('  Mot de passe : défini via ADMIN_INITIAL_PASSWORD');
+      console.log('  → Changez-le dès la 1re connexion, puis supprimez la variable.');
+    }
+    console.log('============================================\n');
   }
 
   // -------- SEED SETTINGS --------

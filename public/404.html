@@ -255,26 +255,10 @@
 
   <!-- ========== FOOTER MINIMAL ========== -->
   <footer class="footer-404">
-    <p>© 2025 Pressing du Parc Heller. Tous droits réservés.</p>
+    <p>© 2026 Pressing du Parc Heller. Tous droits réservés.</p>
   </footer>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', async () => {
-      try {
-        const res = await fetch('/api/settings');
-        if (res.ok) {
-          const data = await res.json();
-          const settings = data.settings;
-          if (settings && settings.contact_phone) {
-            const btn = document.getElementById('call-btn');
-            const txt = document.getElementById('call-btn-text');
-            if (btn) btn.href = 'tel:' + settings.contact_phone.replace(/\s+/g, '');
-            if (txt) txt.textContent = settings.contact_phone;
-          }
-        }
-      } catch (e) {}
-    });
-  </script>
+  <script src="404.js"></script>
 
 </body>
 </html>

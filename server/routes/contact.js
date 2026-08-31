@@ -14,7 +14,18 @@ const contactLimiter = rateLimit({
   legacyHeaders: false,
 });
 
-// -------- POST /api/contact — PUBLIC --------
+// -------- POST /api/contact — DÉSACTIVÉ --------
+// Le site ne comporte plus de formulaire de contact : aucune donnée personnelle
+// n'est collectée en ligne (cf. mentions légales, section 4). L'endpoint est
+// neutralisé pour rester cohérent avec la politique de confidentialité.
+// Pour le réactiver : restaurer le handler ci-dessous ET remettre le paragraphe
+// « formulaire de contact » dans mentions-legales.html avec une mention RGPD au
+// point de collecte (case à cocher / lien vers la politique de confidentialité).
+router.post('/', contactLimiter, (req, res) => {
+  return res.status(410).json({ error: "Le formulaire de contact n'est pas disponible. Merci de nous joindre par téléphone." });
+});
+
+/* Handler d'origine, à restaurer si un formulaire est réintroduit :
 router.post(
   '/',
   contactLimiter,
@@ -38,6 +49,7 @@ router.post(
     }
   }
 );
+*/
 
 // -------- GET /api/contact/messages — ADMIN ONLY --------
 router.get('/messages', authMiddleware, async (req, res) => {

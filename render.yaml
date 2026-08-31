@@ -2,14 +2,19 @@ services:
   - type: web
     name: pressing-parc-heller
     runtime: node
+    plan: free
     buildCommand: npm install
     startCommand: node server/index.js
     envVars:
       - key: NODE_ENV
         value: production
       - key: JWT_SECRET
-        generateValue: true
+        generateValue: true          # clé de signature des sessions admin, générée par Render
       - key: TURSO_DATABASE_URL
-        sync: false
+        sync: false                   # à renseigner dans le dashboard Render
       - key: TURSO_AUTH_TOKEN
-        sync: false
+        sync: false                   # idem
+      - key: ADMIN_EMAIL
+        sync: false                   # email de connexion à l'espace admin
+      - key: ADMIN_INITIAL_PASSWORD
+        sync: false                   # mot de passe initial (à changer à la 1re connexion, puis supprimer cette variable)

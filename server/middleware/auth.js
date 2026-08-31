@@ -1,6 +1,20 @@
 const jwt = require('jsonwebtoken');
 
-const JWT_SECRET = process.env.JWT_SECRET || 'pressing-heller-super-secret-key-2025-change-me';
+// La clé de signature JWT DOIT venir de l'environnement.
+// En production, on refuse de démarrer sans elle (jamais de secret par défaut
+// dans le code : le dépôt est public, un secret en dur = comptes falsifiables).
+let JWT_SECRET = process.env.JWT_SECRET;
+
+if (!JWT_SECRET) {
+  if (process.env.NODE_ENV === 'production') {
+    throw new Error(
+      'JWT_SECRET manquant : définissez la variable d\'environnement JWT_SECRET avant de démarrer en production.'
+    );
+  }
+  // Développement local uniquement — non sécurisé, jamais utilisé en production.
+  JWT_SECRET = 'dev-only-insecure-secret-ne-pas-utiliser-en-production';
+  console.warn('⚠️  JWT_SECRET non défini : utilisation d\'une clé de développement non sécurisée.');
+}
 
 function authMiddleware(req, res, next) {
   const token = req.cookies?.token;

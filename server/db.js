@@ -1,10 +1,18 @@
 const { createClient } = require('@libsql/client');
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
+const fs = require('fs');
+const path = require('path');
 
-// Connexion Turso (cloud) ou SQLite local en dev
+// Connexion Turso (cloud) si configurée, sinon fichier SQLite local.
+const LOCAL_DB_PATH = path.join(__dirname, '..', 'data', 'pressing.db');
+if (!process.env.TURSO_DATABASE_URL) {
+  // S'assurer que le dossier data/ existe (absent après un git clone : il est gitignoré).
+  fs.mkdirSync(path.dirname(LOCAL_DB_PATH), { recursive: true });
+}
+
 const db = createClient({
-  url: process.env.TURSO_DATABASE_URL || 'file:data/pressing.db',
+  url: process.env.TURSO_DATABASE_URL || `file:${LOCAL_DB_PATH}`,
   authToken: process.env.TURSO_AUTH_TOKEN,
 });
 

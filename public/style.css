@@ -1425,6 +1425,8 @@ a {
   transition: transform var(--transition);
 }
 
+.about-photo picture { display: contents; }
+
 .about-photo img {
   width: 100%;
   height: auto;
@@ -1860,6 +1862,8 @@ a {
   grid-template-columns: 2fr 1fr 1fr 1.5fr;
   gap: 48px;
 }
+
+.footer-brand picture { display: contents; }
 
 .footer-mascot {
   width: 56px;

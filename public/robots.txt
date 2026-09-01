@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /admin/
 
-Sitemap: https://pressing-parc-heller.fr/sitemap.xml
+Sitemap: https://pressing-parc-heller.alwaysdata.net/sitemap.xml

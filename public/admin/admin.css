@@ -103,7 +103,8 @@ h1, h2, h3, h4 { font-family: var(--font-heading); color: var(--navy); line-heig
   margin-bottom: 7px;
 }
 .form-group input,
-.form-group textarea {
+.form-group textarea,
+.form-group select {
   width: 100%;
   padding: 11px 13px;
   font-size: 0.95rem;
@@ -116,7 +117,8 @@ h1, h2, h3, h4 { font-family: var(--font-heading); color: var(--navy); line-heig
 .form-group input::placeholder,
 .form-group textarea::placeholder { color: var(--muted-2); }
 .form-group input:focus,
-.form-group textarea:focus {
+.form-group textarea:focus,
+.form-group select:focus {
   outline: none;
   border-color: var(--blue);
   box-shadow: 0 0 0 3px rgba(38,132,200,0.14);

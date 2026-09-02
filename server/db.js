@@ -58,6 +58,20 @@ async function initDb() {
     );
   `);
 
+  await db.execute(`
+    CREATE TABLE IF NOT EXISTS reviews (
+      id         INTEGER PRIMARY KEY AUTOINCREMENT,
+      auteur     TEXT NOT NULL,
+      localite   TEXT NOT NULL DEFAULT '',
+      texte      TEXT NOT NULL,
+      note       INTEGER NOT NULL DEFAULT 5,
+      source     TEXT NOT NULL DEFAULT 'Google',
+      visible    INTEGER NOT NULL DEFAULT 1,
+      position   INTEGER NOT NULL DEFAULT 0,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    );
+  `);
+
   // -------- SEED ADMIN --------
   // Aucun mot de passe par défaut dans le code.
   //  - En production : ADMIN_INITIAL_PASSWORD (et éventuellement ADMIN_EMAIL) sont obligatoires.
@@ -118,15 +132,17 @@ async function initDb() {
   // -------- SEED SERVICES --------
   const countRow = await db.execute('SELECT COUNT(*) as count FROM services');
   if (!countRow.rows[0].count) {
+    // Pas de description par défaut : elle ne s'affiche sur le site que si
+    // l'admin en saisit une explicitement.
     const services = [
-      ['mariage',       'Robe de Mariée',          'Soin délicat & nettoyage spécialisé', 'Sur devis', '-'],
-      ['chemises',      'Chemises à la main',      'Repassage méticuleux fait main',     'Sur devis', '-'],
-      ['doudounes',     'Doudounes en duvet',      'Lavage & traitement spécial gonflant','Sur devis', '-'],
-      ['cuir',          'Cuir et Peaux',            'Nettoyage cuir, daim & ameublement', 'Sur devis', '-'],
-      ['rideaux',       'Rideaux et Linge',         'Rideaux, voilages & housses de canapé','Sur devis','-'],
-      ['couture',       'Couture et Réparation',    'Retouches, ourlets & stoppage',      'Sur devis', '-'],
-      ['blanchisserie', 'Blanchisserie',           'Lavage, séchage & pliage soigné',    'Sur devis', '-'],
-      ['cordonnerie',   'Dépôt de Cordonnerie',    'Réparation & entretien de chaussures','Sur devis', '-'],
+      ['mariage',       'Robe de Mariée',          '', 'Sur devis', '-'],
+      ['chemises',      'Chemises à la main',      '', 'Sur devis', '-'],
+      ['doudounes',     'Doudounes en duvet',      '', 'Sur devis', '-'],
+      ['cuir',          'Cuir et Peaux',           '', 'Sur devis', '-'],
+      ['rideaux',       'Rideaux et Linge',        '', 'Sur devis', '-'],
+      ['couture',       'Couture et Réparation',   '', 'Sur devis', '-'],
+      ['blanchisserie', 'Blanchisserie',           '', 'Sur devis', '-'],
+      ['cordonnerie',   'Dépôt de Cordonnerie',    '', 'Sur devis', '-'],
     ];
     for (const s of services) {
       await db.execute({
@@ -137,13 +153,50 @@ async function initDb() {
     console.log('✅ Services insérés en base.');
   }
 
+  // -------- SEED AVIS --------
+  const reviewsCount = await db.execute('SELECT COUNT(*) as count FROM reviews');
+  if (!reviewsCount.rows[0].count) {
+    const reviews = [
+      ['Paul', 'Paris · client fidèle depuis 10 ans', 'Très bon pressing. Des gens sympathiques et professionnels qui connaissent leur métier. 10 ans que je fais nettoyer mes costumes dans cet établissement. De loin le meilleur pressing des alentours.', 5, 'Google', 1],
+      ['Bénédicte', 'Antony', "Un travail de grande qualité. Si vous cherchez un bon pressing c'est la bonne adresse ! Mon manteau taché de peinture et couvert de bouloches est revenu comme neuf ! C'est un peu plus cher mais on s'y retrouve largement en rapport qualité/prix.", 5, 'Google', 2],
+      ['Jacques Brossard', 'Antony', "Venant d'être victime d'un incendie qui a ravagé notre appartement, nous avons trouvé auprès du Pressing du Parc Heller une aide technique des plus efficaces dans les délais les plus courts. Grâce à leur compétence, un grand nombre de vêtements ont pu être sauvés. Merci très sincèrement.", 5, 'Pages Jaunes', 3],
+      ['JM Paceux', 'Saint-Germain-en-Laye', "Je cherchais un bon pressing depuis longtemps et je vous recommande celui-ci. Travail très bien fait par des professionnels. Si vous avez des vêtements de qualité je vous le conseille, de plus l'accueil est agréable. Parking facile, rue en sens unique.", 5, 'Google', 4],
+      ['Sophie', 'Antony', "Très bon travail. Ils ont sauvé ma robe fétiche. Je la croyais fichue car après deux passages dans deux pressings ils n'ont rien pu faire, mais eux ils ont réussi — alors Merci !", 5, 'Google', 5],
+      ['M. Dupra', 'Antony', "J'ai trouvé dans ce pressing un très bon accueil et de très bons professionnels. Ayant subi un sinistre, ma garde-robe paraissait fichue. Ce pressing a fait preuve d'un grand professionnalisme et m'a sauvé la plupart de mes vêtements ! Merci à eux.", 5, 'Pages Jaunes', 6],
+      ['Christine', 'Antony', "Matériel à l'ancienne qui fonctionne très bien. Personnel accueillant et professionnel. Mes vêtements sont toujours rendus dans un état impeccable. Je recommande vivement cet établissement familial.", 5, 'Google', 7],
+    ];
+    for (const r of reviews) {
+      await db.execute({
+        sql: 'INSERT INTO reviews (auteur, localite, texte, note, source, position) VALUES (?, ?, ?, ?, ?, ?)',
+        args: r,
+      });
+    }
+    console.log('✅ Avis clients insérés en base.');
+  }
+
   // Migrations : synchronisation des services et paramètres
   await db.execute("DELETE FROM services WHERE slug = 'nettoyage'");
   await db.execute("DELETE FROM services WHERE slug = 'costumes'");
   await db.execute("DELETE FROM services WHERE slug = 'colissimo'");
   await db.execute("DELETE FROM services WHERE slug = 'livraison'");
-  await db.execute("INSERT OR IGNORE INTO services (slug, nom, description, prix, emoji) VALUES ('cordonnerie', 'Dépôt de Cordonnerie', 'Réparation & entretien de chaussures', 'Sur devis', '👞')");
+  await db.execute("INSERT OR IGNORE INTO services (slug, nom, description, prix, emoji) VALUES ('cordonnerie', 'Dépôt de Cordonnerie', '', 'Sur devis', '👞')");
   await db.execute("INSERT OR REPLACE INTO settings (key, value) VALUES ('hours_sat', '9h–19h sans interruption')");
+
+  // Descriptions : on repart de zéro. On efface UNIQUEMENT les descriptions
+  // par défaut historiques (jamais une description saisie par l'admin ensuite,
+  // qui ne correspondra pas à ces chaînes) → migration idempotente.
+  await db.execute(`
+    UPDATE services SET description = '' WHERE description IN (
+      'Soin délicat & nettoyage spécialisé',
+      'Repassage méticuleux fait main',
+      'Lavage & traitement spécial gonflant',
+      'Nettoyage cuir, daim & ameublement',
+      'Rideaux, voilages & housses de canapé',
+      'Retouches, ourlets & stoppage',
+      'Lavage, séchage & pliage soigné',
+      'Réparation & entretien de chaussures'
+    )
+  `);
 
   console.log('✅ Base de données initialisée.');
 }

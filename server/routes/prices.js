@@ -32,7 +32,9 @@ router.put(
     param('slug').trim().isAlphanumeric('fr-FR', { ignore: '-' }).withMessage('Slug invalide.'),
     body('prix').optional().trim().isLength({ min: 1, max: 100 }).withMessage('Prix invalide.').escape(),
     body('nom').optional().trim().isLength({ min: 1, max: 100 }).withMessage('Nom invalide.').escape(),
-    body('description').optional().trim().isLength({ max: 300 }).withMessage('Description trop longue.').escape(),
+    // Pas de .escape() : le rendu se fait via textContent (aucun risque XSS) et
+    // .escape() transformerait les apostrophes/accents en entités illisibles.
+    body('description').optional().trim().isLength({ max: 300 }).withMessage('Description trop longue.'),
     body('visible').optional().isBoolean().withMessage('Visible doit être un booléen.'),
   ],
   async (req, res) => {
@@ -72,7 +74,7 @@ router.post(
   [
     body('nom').trim().isLength({ min: 1, max: 100 }).withMessage('Le nom est requis.').escape(),
     body('prix').trim().isLength({ min: 1, max: 100 }).withMessage('Le prix est requis.').escape(),
-    body('description').optional().trim().isLength({ max: 300 }).withMessage('Description trop longue.').escape(),
+    body('description').optional().trim().isLength({ max: 300 }).withMessage('Description trop longue.'),
     body('emoji').optional().trim().escape(),
   ],
   async (req, res) => {

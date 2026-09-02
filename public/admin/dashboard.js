@@ -5,13 +5,13 @@
 // ============================================================
 const navLinks = {
   prices: document.getElementById('navPrices'),
-  messages: document.getElementById('navMessages'),
+  reviews: document.getElementById('navReviews'),
   settings: document.getElementById('navSettings'),
   password: document.getElementById('navPassword')
 };
 const sections = {
   prices: document.getElementById('sectionPrices'),
-  messages: document.getElementById('sectionMessages'),
+  reviews: document.getElementById('sectionReviews'),
   settings: document.getElementById('sectionSettings'),
   password: document.getElementById('sectionPassword')
 };
@@ -24,7 +24,7 @@ function showSection(key) {
 }
 
 navLinks.prices.addEventListener('click',   () => showSection('prices'));
-navLinks.messages.addEventListener('click', () => { showSection('messages'); loadMessages(); });
+navLinks.reviews.addEventListener('click',  () => { showSection('reviews'); loadReviews(); });
 navLinks.settings.addEventListener('click', () => { showSection('settings'); loadSettingsForm(); });
 navLinks.password.addEventListener('click', () => showSection('password'));
 
@@ -74,30 +74,9 @@ async function loadServices() {
       const profileEmailInput = document.getElementById('profileEmail');
       if (profileEmailInput) profileEmailInput.value = me.email;
     }
-
-    // Charger le compteur de messages non lus
-    await loadUnreadCount();
   } catch (err) {
     tbody.innerHTML = '<tr><td colspan="6" class="loading-row" style="color:#ef4444">Erreur de chargement.</td></tr>';
   }
-}
-
-async function loadUnreadCount() {
-  try {
-    const res = await fetch('/api/contact/messages/unread-count', { credentials: 'same-origin' });
-    if (res.ok) {
-      const data = await res.json();
-      const badge = document.getElementById('unreadBadge');
-      if (badge) {
-        if (data.count > 0) {
-          badge.textContent = data.count;
-          badge.style.display = 'inline-block';
-        } else {
-          badge.style.display = 'none';
-        }
-      }
-    }
-  } catch (e) {}
 }
 
 function renderTable(services) {
@@ -521,93 +500,212 @@ addServiceForm.addEventListener('submit', async (e) => {
 });
 
 // ============================================================
-//  GESTION DES MESSAGES
+//  GESTION DES AVIS CLIENTS
 // ============================================================
-async function loadMessages() {
-  const tbody = document.getElementById('messagesBody');
-  tbody.innerHTML = '<tr><td colspan="5" class="loading-row">Chargement...</td></tr>';
+let allReviews = [];
+
+const reviewModal   = document.getElementById('reviewModal');
+const reviewForm    = document.getElementById('reviewForm');
+const reviewId      = document.getElementById('reviewId');
+const reviewAuteur  = document.getElementById('reviewAuteur');
+const reviewLocalite = document.getElementById('reviewLocalite');
+const reviewTexte   = document.getElementById('reviewTexte');
+const reviewTexteCount = document.getElementById('reviewTexteCount');
+const reviewNote    = document.getElementById('reviewNote');
+const reviewSource  = document.getElementById('reviewSource');
+const reviewVisible = document.getElementById('reviewVisible');
+const reviewError   = document.getElementById('reviewError');
+const btnSaveReview = document.getElementById('btnSaveReview');
+const reviewModalTitle = document.getElementById('reviewModalTitle');
+
+async function loadReviews() {
+  const tbody = document.getElementById('reviewsBody');
+  tbody.innerHTML = '<tr><td colspan="6" class="loading-row">Chargement…</td></tr>';
 
   try {
-    const res = await fetch('/api/contact/messages', { credentials: 'same-origin' });
+    const res = await fetch('/api/reviews/all', { credentials: 'same-origin' });
     if (res.status === 401) { window.location.href = '/admin/'; return; }
     const data = await res.json();
-    renderMessages(data.messages);
-    await loadUnreadCount(); // rafraîchir le badge
+    allReviews = data.reviews || [];
+    renderReviews(allReviews);
   } catch (err) {
-    tbody.innerHTML = '<tr><td colspan="5" class="loading-row" style="color:#ef4444">Erreur lors de la récupération des messages.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="6" class="loading-row" style="color:#ef4444">Erreur de chargement.</td></tr>';
   }
 }
 
-function renderMessages(messages) {
-  const tbody = document.getElementById('messagesBody');
-  if (!messages || !messages.length) {
-    tbody.innerHTML = '<tr><td colspan="5" class="loading-row">Aucun message reçu.</td></tr>';
+function renderReviews(reviews) {
+  const tbody = document.getElementById('reviewsBody');
+  if (!reviews.length) {
+    tbody.innerHTML = '<tr><td colspan="6" class="loading-row">Aucun avis. Cliquez sur « Ajouter un avis ».</td></tr>';
     return;
   }
 
-  tbody.innerHTML = messages.map(m => {
-    const dateStr = new Date(m.created_at).toLocaleDateString('fr-FR', {
-      day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit'
-    });
-    const rowClass = m.lu ? 'msg-read' : 'msg-unread';
+  tbody.innerHTML = reviews.map(r => {
+    const note = Math.max(1, Math.min(5, Number(r.note) || 5));
+    const stars = '★'.repeat(note) + '☆'.repeat(5 - note);
+    const extrait = r.texte.length > 140 ? r.texte.slice(0, 140) + '…' : r.texte;
     return `
-      <tr class="${rowClass}" data-id="${m.id}">
-        <td><span style="font-size:0.83rem; color:#6b7280;">${esc(dateStr)}</span></td>
-        <td>
-          <strong>${esc(m.nom)}</strong><br/>
-          <a href="mailto:${esc(m.email)}" style="font-size:0.8rem; color:var(--blue); text-decoration:underline;">${esc(m.email)}</a>
+      <tr data-id="${r.id}">
+        <td class="col-name">${esc(r.auteur)}${r.localite ? `<br/><span style="font-size:0.8rem;color:#64748b;font-weight:400">${esc(r.localite)}</span>` : ''}</td>
+        <td><div style="max-width:340px;font-size:0.86rem;color:#475569;">${esc(extrait)}</div></td>
+        <td><span style="color:#f5a623;letter-spacing:1px;">${stars}</span></td>
+        <td><span class="prix-badge">${esc(r.source)}</span></td>
+        <td class="col-center">
+          <label class="switch" title="${r.visible ? 'Masquer du site' : 'Afficher sur le site'}">
+            <input type="checkbox" class="toggle-review-vis" data-id="${r.id}" ${r.visible ? 'checked' : ''} />
+            <span class="switch-slider"></span>
+          </label>
         </td>
-        <td><strong>${esc(m.sujet)}</strong></td>
-        <td><div style="max-height:100px; overflow-y:auto; font-size:0.88rem; white-space:pre-wrap;">${esc(m.message)}</div></td>
-        <td>
-          <div style="display:flex; gap:8px;">
-            <button class="btn-read-toggle btn-edit" data-id="${m.id}" data-lu="${m.lu}" style="font-size:0.75rem; padding:6px 10px;">
-              ${m.lu ? 'Non lu' : 'Lu'}
-            </button>
-            <button class="btn-delete-msg btn-edit" data-id="${m.id}" style="background:#ef4444; border-color:#ef4444; font-size:0.75rem; padding:6px 10px;">
-              Supprimer
-            </button>
+        <td class="col-actions">
+          <div class="row-actions">
+            <button class="btn-edit btn-modify-review" data-id="${r.id}">Modifier</button>
+            <button class="btn-edit btn-danger btn-delete-review" data-id="${r.id}">Supprimer</button>
           </div>
         </td>
       </tr>
     `;
   }).join('');
 
-  tbody.querySelectorAll('.btn-read-toggle').forEach(btn => {
-    btn.addEventListener('click', () => toggleMessageRead(btn.dataset.id, btn.dataset.lu !== '1'));
+  tbody.querySelectorAll('.toggle-review-vis').forEach(chk => {
+    chk.addEventListener('change', () => toggleReviewVisible(chk.dataset.id, chk.checked));
   });
-
-  tbody.querySelectorAll('.btn-delete-msg').forEach(btn => {
-    btn.addEventListener('click', () => deleteMessage(btn.dataset.id));
+  tbody.querySelectorAll('.btn-modify-review').forEach(btn => {
+    btn.addEventListener('click', () => openReviewModal(btn.dataset.id));
+  });
+  tbody.querySelectorAll('.btn-delete-review').forEach(btn => {
+    btn.addEventListener('click', () => deleteReview(btn.dataset.id));
   });
 }
 
-async function toggleMessageRead(id, shouldBeRead) {
+function openReviewModal(id) {
+  reviewError.textContent = '';
+  reviewForm.reset();
+
+  if (id) {
+    const r = allReviews.find(x => String(x.id) === String(id));
+    if (!r) return;
+    reviewModalTitle.textContent = 'Modifier un avis';
+    reviewId.value = r.id;
+    reviewAuteur.value = r.auteur;
+    reviewLocalite.value = r.localite || '';
+    reviewTexte.value = r.texte;
+    reviewNote.value = String(Math.max(1, Math.min(5, Number(r.note) || 5)));
+    reviewSource.value = r.source || 'Google';
+    reviewVisible.checked = !!r.visible;
+  } else {
+    reviewModalTitle.textContent = 'Ajouter un avis';
+    reviewId.value = '';
+    reviewVisible.checked = true;
+    reviewNote.value = '5';
+    reviewSource.value = 'Google';
+  }
+
+  reviewTexteCount.textContent = `${reviewTexte.value.length} / 1000`;
+  reviewModal.style.display = '';
+  reviewAuteur.focus();
+}
+
+function closeReviewModal() {
+  reviewModal.style.display = 'none';
+}
+
+document.getElementById('btnOpenAddReviewModal').addEventListener('click', () => openReviewModal(null));
+document.getElementById('reviewModalClose').addEventListener('click', closeReviewModal);
+document.getElementById('reviewCancel').addEventListener('click', closeReviewModal);
+reviewModal.addEventListener('click', e => { if (e.target === reviewModal) closeReviewModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeReviewModal(); });
+
+reviewTexte.addEventListener('input', () => {
+  reviewTexteCount.textContent = `${reviewTexte.value.length} / 1000`;
+});
+
+reviewForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  reviewError.textContent = '';
+
+  const payload = {
+    auteur: reviewAuteur.value.trim(),
+    localite: reviewLocalite.value.trim(),
+    texte: reviewTexte.value.trim(),
+    note: parseInt(reviewNote.value, 10),
+    source: reviewSource.value,
+    visible: reviewVisible.checked,
+  };
+
+  if (!payload.auteur || !payload.texte) {
+    reviewError.textContent = "L'auteur et le texte de l'avis sont obligatoires.";
+    return;
+  }
+
+  const id = reviewId.value;
+  const isEdit = !!id;
+
+  btnSaveReview.disabled = true;
+  btnSaveReview.textContent = 'Enregistrement…';
+
   try {
-    const res = await fetch(`/api/contact/messages/${id}/read`, {
+    const res = await fetch(isEdit ? `/api/reviews/${id}` : '/api/reviews', {
+      method: isEdit ? 'PUT' : 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
+      body: JSON.stringify(payload),
+    });
+    const data = await res.json();
+
+    if (res.ok) {
+      closeReviewModal();
+      showToast(isEdit ? 'Avis mis à jour.' : 'Avis ajouté.');
+      await loadReviews();
+    } else {
+      reviewError.textContent = data.error || 'Erreur lors de la sauvegarde.';
+    }
+  } catch {
+    reviewError.textContent = 'Erreur réseau. Réessayez.';
+  } finally {
+    btnSaveReview.disabled = false;
+    btnSaveReview.textContent = 'Enregistrer';
+  }
+});
+
+async function toggleReviewVisible(id, visible) {
+  try {
+    const res = await fetch(`/api/reviews/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'same-origin',
-      body: JSON.stringify({ lu: shouldBeRead }),
+      body: JSON.stringify({ visible }),
     });
+    const data = await res.json();
     if (res.ok) {
-      await loadMessages();
+      showToast(visible ? 'Avis affiché sur le site.' : 'Avis masqué du site.');
+      const r = allReviews.find(x => String(x.id) === String(id));
+      if (r) r.visible = visible ? 1 : 0;
+    } else {
+      showToast(data.error || 'Erreur.', 'error');
+      await loadReviews();
     }
-  } catch (e) {}
+  } catch {
+    showToast('Erreur réseau.', 'error');
+  }
 }
 
-async function deleteMessage(id) {
-  if (!confirm('Supprimer définitivement ce message ?')) return;
+async function deleteReview(id) {
+  if (!confirm('Supprimer définitivement cet avis ? Cette action est irréversible.')) return;
   try {
-    const res = await fetch(`/api/contact/messages/${id}`, {
+    const res = await fetch(`/api/reviews/${id}`, {
       method: 'DELETE',
-      credentials: 'same-origin'
+      credentials: 'same-origin',
     });
+    const data = await res.json();
     if (res.ok) {
-      showToast('Message supprimé.');
-      await loadMessages();
+      showToast('Avis supprimé.');
+      await loadReviews();
+    } else {
+      showToast(data.error || 'Erreur lors de la suppression.', 'error');
     }
-  } catch (e) {}
+  } catch {
+    showToast('Erreur réseau.', 'error');
+  }
 }
 
 // ============================================================

@@ -34,6 +34,80 @@
 </head>
 <body>
 
+  <!-- ========== SPRITE D'ICÔNES (prestations) ==========
+       Icônes Tabler Icons (https://tabler.io/icons — licence MIT).
+       Grille 24×24, trait seul ; épaisseur/arrondis via .service-icon.
+       8 icônes = 8 prestations + « ico-default » (repli service perso). -->
+  <svg class="svg-sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+    <!-- Robe de Mariée → robe (dessinée, style Tabler) -->
+    <symbol id="ico-mariage" viewBox="0 0 24 24">
+      <path d="M9 3l3 2l3 -2" />
+      <path d="M9 3c-.4 2.5 -1 4.6 -1.6 6.3c1.2 .5 2.6 .7 4.6 .7s3.4 -.2 4.6 -.7c-.6 -1.7 -1.2 -3.8 -1.6 -6.3" />
+      <path d="M7.4 9.3c-1.6 3 -3 6.4 -3.4 9.6c1.6 1 4.4 1.5 8 1.5s6.4 -.5 8 -1.5c-.4 -3.2 -1.8 -6.6 -3.4 -9.6" />
+    </symbol>
+    <!-- Chemises à la Main → chemise à boutons (dessinée, style Tabler) -->
+    <symbol id="ico-chemises" viewBox="0 0 24 24">
+      <path d="M8 3l-4 3l2 3l1 -1v10a1 1 0 0 0 1 1h8a1 1 0 0 0 1 -1v-10l1 1l2 -3l-4 -3" />
+      <path d="M8 3l4 3l4 -3" />
+      <path d="M12 6v13" />
+      <path d="M12 10h.01" />
+      <path d="M12 13.5h.01" />
+      <path d="M12 17h.01" />
+    </symbol>
+    <!-- Doudounes en Duvet → doudoune matelassée (dessinée, style Tabler) -->
+    <symbol id="ico-doudounes" viewBox="0 0 24 24">
+      <path d="M8 3c1 1.7 2 2.5 4 2.5s3 -.8 4 -2.5l2 3l-1 3l1 1v10a1 1 0 0 1 -1 1h-10a1 1 0 0 1 -1 -1v-10l1 -1l-1 -3z" />
+      <path d="M12 5.5v15.5" />
+      <path d="M6 11h12" />
+      <path d="M6 15h12" />
+    </symbol>
+    <!-- Cuir et Peaux → veste (tabler: jacket) -->
+    <symbol id="ico-cuir" viewBox="0 0 24 24">
+      <path d="M16 3l-4 5l-4 -5" />
+      <path d="M12 19a2 2 0 0 1 -2 2h-4a2 2 0 0 1 -2 -2v-8.172a2 2 0 0 1 .586 -1.414l.828 -.828a2 2 0 0 0 .586 -1.414v-2.172a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v2.172a2 2 0 0 0 .586 1.414l.828 .828a2 2 0 0 1 .586 1.414v8.172a2 2 0 0 1 -2 2h-4a2 2 0 0 1 -2 -2" />
+      <path d="M20 13h-3a1 1 0 0 0 -1 1v2a1 1 0 0 0 1 1h3" />
+      <path d="M4 17h3a1 1 0 0 0 1 -1v-2a1 1 0 0 0 -1 -1h-3" />
+      <path d="M12 19v-11" />
+    </symbol>
+    <!-- Rideaux et Linge → rideaux (dessinés, style Tabler) -->
+    <symbol id="ico-rideaux" viewBox="0 0 24 24">
+      <path d="M3 4h18" />
+      <path d="M5.5 4c0 5 -.6 9.5 -1.6 12.5c1.1 1 3.1 1 4.2 0c-.4 -3 -.6 -7.5 -.6 -12.5" />
+      <path d="M18.5 4c0 5 .6 9.5 1.6 12.5c-1.1 1 -3.1 1 -4.2 0c.4 -3 .6 -7.5 .6 -12.5" />
+      <path d="M12 4v13" />
+    </symbol>
+    <!-- Couture et Réparation → aiguille et fil (tabler: needle-thread) -->
+    <symbol id="ico-couture" viewBox="0 0 24 24">
+      <path d="M3 21c-.667 -.667 3.262 -6.236 11.785 -16.709a3.5 3.5 0 1 1 5.078 4.791c-10.575 8.612 -16.196 12.585 -16.863 11.918" />
+      <path d="M17.5 6.5l-1 1" />
+      <path d="M17 7c-2.333 -2.667 -3.5 -4 -5 -4s-2 1 -2 2c0 4 8.161 8.406 6 11c-1.056 1.268 -3.363 1.285 -5.75 .808" />
+      <path d="M5.739 15.425c-1.393 -.565 -3.739 -1.925 -3.739 -3.425" />
+      <path d="M19.5 9.5l1.5 1.5" />
+    </symbol>
+    <!-- Blanchisserie → lave-linge (tabler: wash-machine) -->
+    <symbol id="ico-blanchisserie" viewBox="0 0 24 24">
+      <path d="M5 5a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2l0 -14" />
+      <path d="M8 14a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
+      <path d="M8 6h.01" />
+      <path d="M11 6h.01" />
+      <path d="M14 6h2" />
+      <path d="M8 14c1.333 -.667 2.667 -.667 4 0c1.333 .667 2.667 .667 4 0" />
+    </symbol>
+    <!-- Dépôt de Cordonnerie → chaussure (tabler: shoe) -->
+    <symbol id="ico-cordonnerie" viewBox="0 0 24 24">
+      <path d="M4 6h5.426a1 1 0 0 1 .863 .496l1.064 1.823a3 3 0 0 0 1.896 1.407l4.677 1.114a4 4 0 0 1 3.074 3.89v2.27a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1v-10a1 1 0 0 1 1 -1" />
+      <path d="M14 13l1 -2" />
+      <path d="M8 18v-1a4 4 0 0 0 -4 -4h-1" />
+      <path d="M10 12l1.5 -3" />
+    </symbol>
+    <!-- Repli → cintre 2 (tabler: hanger-2) -->
+    <symbol id="ico-default" viewBox="0 0 24 24">
+      <path d="M12 9l-7.971 4.428a2 2 0 0 0 -1.029 1.749v.823a2 2 0 0 0 2 2h1" />
+      <path d="M18 18h1a2 2 0 0 0 2 -2v-.823a2 2 0 0 0 -1.029 -1.749l-7.971 -4.428c-1.457 -.81 -1.993 -2.333 -2 -4a2 2 0 1 1 4 0" />
+      <path d="M6 18a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v1a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2l0 -1" />
+    </symbol>
+  </svg>
+
   <!-- ========== NAVBAR ========== -->
   <header class="navbar" id="navbar">
     <div class="nav-container">
@@ -59,6 +133,27 @@
 
   <!-- ========== HERO ========== -->
   <section class="hero" id="accueil">
+
+    <!-- Décor animé d'arrière-plan -->
+    <div class="satin-shimmer" aria-hidden="true"></div>
+    <div class="hero-bubbles" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <div class="hero-bg-silk-container" aria-hidden="true">
+      <svg class="hero-silk-wave silk-layer-1" viewBox="0 0 1440 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill="rgba(255,255,255,0.10)" d="M0 90c180-70 360-70 540 0s360 70 540 0 240-60 360-20v150H0z"/>
+      </svg>
+      <svg class="hero-silk-wave silk-layer-2" viewBox="0 0 1440 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill="rgba(255,255,255,0.07)" d="M0 130c220 60 420 60 640-10s420-80 640 0 160 40 -160 40H0z"/>
+      </svg>
+    </div>
+    <div class="hero-bottom-wave" aria-hidden="true">
+      <svg viewBox="0 0 1440 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill="rgba(38,132,200,0.18)" d="M0 34c160 40 320 50 540 20s400-45 620-15 200 25 280 15v46H0z"/>
+        <path fill="#eef6fd" d="M0 46c160 40 320 50 540 20s400-45 620-15 200 25 280 15v40H0z"/>
+      </svg>
+    </div>
+
     <div class="hero-content">
       <div class="hero-text">
         <p class="hero-script">Travail haute qualité</p>
@@ -140,45 +235,55 @@
 
         <li class="service-row" id="service-mariage">
           <span class="service-index">01</span>
+          <svg class="service-icon" aria-hidden="true"><use href="#ico-mariage"></use></svg>
           <div class="service-body"><h3>Robe de Mariée</h3></div>
         </li>
 
         <li class="service-row" id="service-chemises">
           <span class="service-index">02</span>
+          <svg class="service-icon" aria-hidden="true"><use href="#ico-chemises"></use></svg>
           <div class="service-body"><h3>Chemises à la Main</h3></div>
         </li>
 
         <li class="service-row" id="service-doudounes">
           <span class="service-index">03</span>
+          <svg class="service-icon" aria-hidden="true"><use href="#ico-doudounes"></use></svg>
           <div class="service-body"><h3>Doudounes en Duvet</h3></div>
         </li>
 
         <li class="service-row" id="service-cuir">
           <span class="service-index">04</span>
+          <svg class="service-icon" aria-hidden="true"><use href="#ico-cuir"></use></svg>
           <div class="service-body"><h3>Cuir et Peaux</h3></div>
         </li>
 
         <li class="service-row" id="service-rideaux">
           <span class="service-index">05</span>
+          <svg class="service-icon" aria-hidden="true"><use href="#ico-rideaux"></use></svg>
           <div class="service-body"><h3>Rideaux et Linge</h3></div>
         </li>
 
         <li class="service-row" id="service-couture">
           <span class="service-index">06</span>
+          <svg class="service-icon" aria-hidden="true"><use href="#ico-couture"></use></svg>
           <div class="service-body"><h3>Couture et Réparation</h3></div>
         </li>
 
         <li class="service-row" id="service-blanchisserie">
           <span class="service-index">07</span>
+          <svg class="service-icon" aria-hidden="true"><use href="#ico-blanchisserie"></use></svg>
           <div class="service-body"><h3>Blanchisserie</h3></div>
         </li>
 
         <li class="service-row" id="service-cordonnerie">
           <span class="service-index">08</span>
+          <svg class="service-icon" aria-hidden="true"><use href="#ico-cordonnerie"></use></svg>
           <div class="service-body"><h3>Dépôt de Cordonnerie</h3></div>
         </li>
 
       </ol>
+
+      <div class="services-sep" aria-hidden="true"></div>
     </div>
   </section>
 

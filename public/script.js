@@ -11,6 +11,16 @@
 document.addEventListener('DOMContentLoaded', () => {
   let observer;
 
+  // Icônes de prestations : correspondance slug → symbole du sprite SVG.
+  const SERVICE_ICONS = new Set([
+    'mariage', 'chemises', 'doudounes', 'cuir',
+    'rideaux', 'couture', 'blanchisserie', 'cordonnerie',
+  ]);
+  function serviceIconId(slug) {
+    const base = String(slug || '').replace(/-\d+$/, '');
+    return SERVICE_ICONS.has(base) ? `ico-${base}` : 'ico-default';
+  }
+
   // -------- PRIX DYNAMIQUES (API) --------
   async function loadPrices() {
     const list = document.querySelector('.service-list');
@@ -36,12 +46,29 @@ document.addEventListener('DOMContentLoaded', () => {
         index.textContent = String(i + 1).padStart(2, '0');
         row.appendChild(index);
 
+        const icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        icon.setAttribute('class', 'service-icon');
+        icon.setAttribute('aria-hidden', 'true');
+        const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+        use.setAttribute('href', `#${serviceIconId(svc.slug)}`);
+        icon.appendChild(use);
+        row.appendChild(icon);
+
         const body = document.createElement('div');
         body.className = 'service-body';
 
         const title = document.createElement('h3');
         title.textContent = (svc.nom || '').replace(/\s*&\s*/g, ' et ');
         body.appendChild(title);
+
+        // Description : affichée uniquement si l'admin en a saisi une.
+        const descText = (svc.description || '').trim();
+        if (descText) {
+          const desc = document.createElement('p');
+          desc.className = 'service-desc';
+          desc.textContent = descText;
+          body.appendChild(desc);
+        }
 
         row.appendChild(body);
         list.appendChild(row);
@@ -195,7 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // -------- AVIS CAROUSEL --------
   const track    = document.getElementById('avisTrack');
-  const cards    = track.querySelectorAll('.avis-card');
+  let   cards    = track.querySelectorAll('.avis-card');
   const dotsWrap = document.getElementById('avisDots');
   const prevBtn  = document.getElementById('avisPrev');
   const nextBtn  = document.getElementById('avisNext');
@@ -266,8 +293,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Init carousel
   function initCarousel() {
+    cards   = track.querySelectorAll('.avis-card');
     perView = getPerView();
-    total   = Math.ceil(cards.length / perView);
+    total   = Math.max(1, Math.ceil(cards.length / perView));
     current = 0;
     buildDots();
     goTo(0);
@@ -278,6 +306,90 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('resize', () => {
     initCarousel();
   });
+
+  // -------- AVIS DYNAMIQUES (API) --------
+  function makeReviewCard(r) {
+    const note = Math.max(1, Math.min(5, Number(r.note) || 5));
+
+    const card = document.createElement('div');
+    card.className = 'avis-card';
+
+    const header = document.createElement('div');
+    header.className = 'avis-card-header';
+
+    const stars = document.createElement('div');
+    stars.className = 'stars';
+    const full = document.createElement('span');
+    full.textContent = '★'.repeat(note);
+    stars.appendChild(full);
+    if (note < 5) {
+      const dim = document.createElement('span');
+      dim.style.opacity = '0.3';
+      dim.textContent = '★'.repeat(5 - note);
+      stars.appendChild(dim);
+    }
+
+    const src = document.createElement('span');
+    const srcName = r.source || 'Google';
+    src.className = 'avis-source ' + (
+      srcName === 'Pages Jaunes' ? 'pages-source' :
+      srcName === 'Autre'        ? 'autre-source' : 'google-source'
+    );
+    src.textContent = srcName;
+
+    header.appendChild(stars);
+    header.appendChild(src);
+
+    const p = document.createElement('p');
+    p.className = 'avis-text';
+    p.textContent = '« ' + String(r.texte || '').trim() + ' »';
+
+    const author = document.createElement('div');
+    author.className = 'avis-author';
+    const avatar = document.createElement('div');
+    avatar.className = 'author-avatar';
+    avatar.textContent = (String(r.auteur || '?').trim()[0] || '?').toUpperCase();
+    const meta = document.createElement('div');
+    const strong = document.createElement('strong');
+    strong.textContent = r.auteur || '';
+    meta.appendChild(strong);
+    if (r.localite) {
+      const span = document.createElement('span');
+      span.textContent = r.localite;
+      meta.appendChild(span);
+    }
+    author.appendChild(avatar);
+    author.appendChild(meta);
+
+    card.appendChild(header);
+    card.appendChild(p);
+    card.appendChild(author);
+    return card;
+  }
+
+  async function loadReviews() {
+    try {
+      const res = await fetch('/api/reviews');
+      if (!res.ok) return;
+      const data = await res.json();
+      if (!data.reviews || !data.reviews.length) return;
+
+      track.innerHTML = '';
+      data.reviews.forEach(r => track.appendChild(makeReviewCard(r)));
+
+      initCarousel();
+
+      // Ré-enregistrer les nouvelles cartes pour l'effet d'apparition au scroll
+      if (observer) {
+        track.querySelectorAll('.avis-card').forEach(el => {
+          el.classList.add('reveal');
+          observer.observe(el);
+        });
+      }
+    } catch (e) {
+      // On garde les avis statiques présents dans le HTML
+    }
+  }
 
   // -------- STATS COUNTER --------
   const statNums = document.querySelectorAll('.stat-number');
@@ -319,6 +431,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
   revealEls.forEach(el => observer.observe(el));
+
+  // Charger les avis gérés depuis l'admin (remplace les avis statiques si présents)
+  loadReviews();
 
   // Stats observer
   const statsSection = document.querySelector('.stats-section');

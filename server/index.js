@@ -19,6 +19,26 @@ const PORT = process.env.PORT || 3000;
 // et le cookie `Secure` fonctionnent correctement.
 app.set('trust proxy', 1);
 
+// ============================================================
+//   REDIRECTION 301 → DOMAINE CANONIQUE
+// ============================================================
+// Le Worker Cloudflare `pressing-proxy` sert le site sur pressingduparcheller.fr
+// en relayant en interne vers pressing-parc-heller.alwaysdata.net avec le header
+// marqueur `x-proxied`. Une requête qui atteint l'ancien hôte SANS ce marqueur
+// vient donc d'un accès direct → on la redirige en 301 vers le domaine .fr.
+// (La condition sur le marqueur évite la boucle infinie avec le Worker.)
+if (process.env.NODE_ENV === 'production') {
+  const CANONICAL_HOST = 'pressingduparcheller.fr';
+  const LEGACY_HOSTS   = ['pressing-parc-heller.alwaysdata.net'];
+  app.use((req, res, next) => {
+    const host = (req.headers.host || '').toLowerCase().split(':')[0];
+    if (LEGACY_HOSTS.includes(host) && !req.headers['x-proxied']) {
+      return res.redirect(301, `https://${CANONICAL_HOST}${req.originalUrl}`);
+    }
+    next();
+  });
+}
+
 // Helmet : en-têtes HTTP de sécurité (CSP, HSTS, X-Frame-Options, nosniff, etc.)
 app.use(helmet({
   contentSecurityPolicy: {

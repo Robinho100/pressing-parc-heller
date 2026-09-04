@@ -173,15 +173,17 @@ async function initDb() {
   // Avis non vérifiés (repris de l'ancien site WEBCELOS, jamais confirmés comme
   // réels) : on les retire définitivement, y compris sur une base déjà seedée
   // (ex. prod) où le bloc de seed ci-dessus ne s'exécute plus.
-  await db.execute(`
-    DELETE FROM reviews WHERE auteur IN ('Paul', 'Jacques Brossard', 'JM Paceux', 'Christine')
-    AND texte IN (
+  await db.execute({
+    sql: `DELETE FROM reviews WHERE auteur IN (?, ?, ?, ?)
+      AND texte IN (?, ?, ?, ?)`,
+    args: [
+      'Paul', 'Jacques Brossard', 'JM Paceux', 'Christine',
       'Très bon pressing. Des gens sympathiques et professionnels qui connaissent leur métier. 10 ans que je fais nettoyer mes costumes dans cet établissement. De loin le meilleur pressing des alentours.',
       "Venant d'être victime d'un incendie qui a ravagé notre appartement, nous avons trouvé auprès du Pressing du Parc Heller une aide technique des plus efficaces dans les délais les plus courts. Grâce à leur compétence, un grand nombre de vêtements ont pu être sauvés. Merci très sincèrement.",
       "Je cherchais un bon pressing depuis longtemps et je vous recommande celui-ci. Travail très bien fait par des professionnels. Si vous avez des vêtements de qualité je vous le conseille, de plus l'accueil est agréable. Parking facile, rue en sens unique.",
-      "Matériel à l'ancienne qui fonctionne très bien. Personnel accueillant et professionnel. Mes vêtements sont toujours rendus dans un état impeccable. Je recommande vivement cet établissement familial."
-    )
-  `);
+      "Matériel à l'ancienne qui fonctionne très bien. Personnel accueillant et professionnel. Mes vêtements sont toujours rendus dans un état impeccable. Je recommande vivement cet établissement familial.",
+    ],
+  });
 
   // Migrations : synchronisation des services et paramètres
   await db.execute("DELETE FROM services WHERE slug = 'nettoyage'");

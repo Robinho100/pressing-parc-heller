@@ -1012,6 +1012,19 @@ a {
   color: var(--gray-600);
 }
 
+/* Prix de la prestation, aligné à droite de la ligne (visible seulement si saisi en admin) */
+.service-price {
+  flex-shrink: 0;
+  margin-left: auto;
+  padding-left: 16px;
+  font-family: var(--font-heading);
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--blue-royal);
+  white-space: nowrap;
+  text-align: right;
+}
+
 /* Sprite d'icônes : conteneur masqué mais accessible aux <use> */
 .svg-sprite {
   position: absolute;

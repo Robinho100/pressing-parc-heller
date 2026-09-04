@@ -71,6 +71,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         row.appendChild(body);
+
+        // Prix : affiché uniquement si l'admin en a saisi un, aligné à droite de la ligne.
+        const prixText = (svc.prix || '').trim();
+        if (prixText) {
+          const prix = document.createElement('span');
+          prix.className = 'service-price';
+          prix.textContent = prixText;
+          row.appendChild(prix);
+        }
+
         list.appendChild(row);
 
         // Enregistrer la ligne avec l'intersection observer pour l'effet de scroll reveal

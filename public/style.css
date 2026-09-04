@@ -16,6 +16,7 @@
 :root {
   --azure: #3f9be6;          /* Bleu azur / ciel vif — bleu de thème demandé (Dodger Blue) */
   --azure-dark: #2f83c9;     /* Azur assombri pour hover / dégradés */
+  --azure-flat: #2878C3;     /* Bleu uni pour l'essai héros/nav (fond plat, sans dégradé) */
   --blue-royal: #2684c8;     /* Bleu de l'enseigne "PRESSING" (échantillonné sur la photo de façade) */
   --blue-dark: #2070aa;      /* Variante foncée du bleu de l'enseigne */
   --blue-light: #eff6ff;     /* Bleu glacé très doux */
@@ -61,10 +62,7 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   body { animation: none; }
-  .satin-shimmer,
-  .hero-bubbles span,
-  .hero-silk-wave,
-  .hero-bottom-wave svg {
+  .hero-bubbles span {
     animation: none !important;
   }
   .hero-bubbles { display: none; }
@@ -218,16 +216,14 @@ a {
   z-index: 1000;
   padding: 0;
   transition: all var(--transition);
-  background: rgba(255, 255, 255, 0.97);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(38, 132, 200, 0.12);
-  box-shadow: 0 2px 20px rgba(38, 132, 200, 0.07);
+  background: var(--azure-flat);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 2px 20px rgba(15, 41, 66, 0.12);
 }
 
 .navbar.scrolled {
-  background: var(--white);
-  box-shadow: 0 4px 24px rgba(15, 41, 66, 0.1);
+  background: var(--azure-flat);
+  box-shadow: 0 4px 24px rgba(15, 41, 66, 0.18);
 }
 
 .nav-container {
@@ -244,7 +240,7 @@ a {
   display: flex;
   align-items: center;
   gap: 10px;
-  color: var(--navy);
+  color: var(--white);
   font-weight: 600;
 }
 
@@ -275,12 +271,12 @@ a {
   font-size: 1.22rem;
   font-weight: 800;
   letter-spacing: 0.01em;
-  color: var(--navy);
+  color: var(--white);
   line-height: 1;
 }
 
 .logo-accent {
-  color: var(--blue-royal);
+  color: #cfe6fb;
 }
 
 .nav-menu ul {
@@ -291,7 +287,7 @@ a {
 }
 
 .nav-link {
-  color: var(--gray-800);
+  color: var(--white);
   font-size: 0.92rem;
   font-weight: 600;
   padding: 8px 14px;
@@ -309,7 +305,7 @@ a {
   left: 14px;
   right: 14px;
   height: 2px;
-  background: var(--blue-royal);
+  background: var(--white);
   border-radius: 2px;
   transform: scaleX(0);
   transition: transform 0.25s ease;
@@ -320,21 +316,23 @@ a {
 }
 
 .nav-link:hover {
-  color: var(--blue-royal);
-  background: rgba(38, 132, 200, 0.06);
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.14);
 }
 
 .nav-link.nav-cta {
-  background: var(--blue-royal);
+  background: var(--azure-flat);
   color: var(--white);
   font-weight: 600;
+  border: 1.5px solid rgba(255, 255, 255, 0.55);
 }
 
 .nav-link.nav-cta:hover {
-  background: var(--blue-dark);
+  background: rgba(255, 255, 255, 0.14);
   color: var(--white);
+  border-color: var(--white);
   transform: translateY(-1px);
-  box-shadow: 0 4px 16px rgba(38,132,200,0.35);
+  box-shadow: 0 4px 16px rgba(15,41,66,0.25);
 }
 
 .nav-toggle {
@@ -351,7 +349,7 @@ a {
   display: block;
   width: 24px;
   height: 2px;
-  background: var(--navy);
+  background: var(--white);
   border-radius: 2px;
   transition: all var(--transition);
 }
@@ -363,123 +361,34 @@ a {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-color: #1b5f92;
-  background-image:
-    radial-gradient(ellipse 90% 70% at 50% -10%, rgba(255,255,255,0.16) 0%, transparent 60%),
-    linear-gradient(160deg, #16537f 0%, #2f83c9 55%, #1f6ba3 100%);
-  background-repeat: no-repeat;
-  background-size: cover;
+  background-color: var(--azure-flat);
+  background-image: none;
   color: var(--white);
   overflow: hidden;
   padding-top: 72px;
 }
 
-/* Vignette pour donner de la profondeur, façon tissu texturé */
+/* Vignette désactivée pour l'essai « bleu uni » (gardait un dégradé sombre sur les bords) */
 .hero::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 90% 70% at 50% 50%, transparent 45%, rgba(10, 30, 50, 0.28) 100%);
+  background: none;
   pointer-events: none;
   z-index: 1;
 }
 
-/* Arrière-plan : texture « tissu » (fines diagonales) + halos de lumière */
+/* Texture « tissu » : ne garde que le fin motif diagonal (négligeable sur l'uniformité),
+   les deux halos en dégradé de couleur ont été retirés pour l'essai « bleu uni ». */
 .hero::before {
   content: '';
   position: absolute;
   inset: 0;
   background-image:
-    radial-gradient(circle at 15% 25%, rgba(255, 255, 255, 0.10), transparent 42%),
-    radial-gradient(circle at 88% 80%, rgba(10, 40, 70, 0.28), transparent 55%),
     url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='30'%20height='30'%3E%3Cpath%20d='M0%2030L30%200M-8%208L8%20-8M22%2038L38%2022'%20stroke='%23ffffff'%20stroke-opacity='0.05'%20stroke-width='1.3'%20fill='none'/%3E%3C/svg%3E");
-  background-repeat: no-repeat, no-repeat, repeat;
+  background-repeat: repeat;
   pointer-events: none;
   z-index: 0;
-}
-
-/* Reflet de lumière satinée bien visible glissant doucement de gauche à droite */
-.satin-shimmer {
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.28) 0%, rgba(157, 200, 230, 0.18) 45%, transparent 70%);
-  pointer-events: none;
-  z-index: 1;
-  animation: shimmerDrift 9s ease-in-out infinite alternate;
-}
-
-@keyframes shimmerDrift {
-  0%   { transform: translate(-15%, -15%) scale(1); }
-  50%  { transform: translate(18%, 12%) scale(1.15); }
-  100% { transform: translate(-8%, 18%) scale(0.92); }
-}
-
-/* Ondes de soie fluides en mouvement continu dans l'arrière-plan de l'Accueil */
-.hero-bg-silk-container {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 200px;
-  pointer-events: none;
-  z-index: 1;
-  overflow: hidden;
-}
-
-.hero-silk-wave {
-  position: absolute;
-  bottom: 0;
-  left: -5%;
-  width: 110%;
-  height: 100%;
-}
-
-.silk-layer-1 {
-  animation: heroSilkDrift1 11s ease-in-out infinite alternate;
-}
-
-.silk-layer-2 {
-  animation: heroSilkDrift2 8s ease-in-out infinite alternate;
-}
-
-@keyframes heroSilkDrift1 {
-  0%   { transform: translateX(0) scaleY(1); }
-  50%  { transform: translateX(-48px) scaleY(1.22); }
-  100% { transform: translateX(38px) scaleY(0.88); }
-}
-
-@keyframes heroSilkDrift2 {
-  0%   { transform: translateX(0) scaleY(1); }
-  50%  { transform: translateX(52px) scaleY(0.84); }
-  100% { transform: translateX(-32px) scaleY(1.16); }
-}
-
-/* Vague inférieure épurée avec respiration douce
-   (z-index au-dessus de .hero-info-bar qui est en z-index:3 ;
-   la vague occupe la marge basse réservée dans .info-bar-container) */
-.hero-bottom-wave {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 70px;
-  pointer-events: none;
-  z-index: 4;
-}
-
-.hero-bottom-wave svg {
-  width: 100%;
-  height: 100%;
-  display: block;
-  animation: waveBreath 6s ease-in-out infinite alternate;
-}
-
-@keyframes waveBreath {
-  0%   { transform: translateY(0); }
-  100% { transform: translateY(10px); }
 }
 
 /* Bulles de savon flottantes dans le hero */
@@ -854,20 +763,19 @@ a {
   font-weight: 600;
 }
 
-/* Info bar below hero (Barre Blanche & Bleu Royal dynamique et interactive) */
+/* Info bar below hero — coupe droite et minimaliste : bandeau blanc net,
+   la transition avec la section Prestations (fond bleu très clair) se fait
+   par le contraste des deux aplats de couleur, sans ligne ni ombre dessinées. */
 .hero-info-bar {
   position: relative;
   z-index: 3;
-  background: var(--blue-light);
-  border-top: 1px solid rgba(38, 132, 200, 0.12);
-  border-bottom: 1px solid rgba(38, 132, 200, 0.12);
-  box-shadow: 0 4px 20px rgba(38, 132, 200, 0.08);
+  background: var(--white);
 }
 
 .info-bar-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 22px 24px 52px; /* Marge inférieure accrue pour que la vague ne s'approche pas des textes */
+  padding: 36px 24px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1131,6 +1039,15 @@ a {
   stroke: var(--blue-dark);
 }
 
+/* Icônes Cuir et Peaux / Cordonnerie : tracés plus denses (contour + détails
+   pointillés), trait un peu plus fin que les autres pour ne pas paraître trop épais. */
+#service-cuir .service-icon {
+  stroke-width: 1.35;
+}
+#service-cordonnerie .service-icon {
+  stroke-width: 1.25;
+}
+
 /* Séparateur en fin de section Prestations :
    filet fin qui s'estompe + court segment bleu arrondi au centre
    (reprend exactement le trait sous les titres de section). */
@@ -1153,14 +1070,10 @@ a {
   border-radius: 3px;
 }
 
-/* -------- STATS (Design Fond Vrai Bleu & Cartes Blanches) -------- */
+/* -------- STATS (bandeau plein bleu, rectangle plat, coupe droite haut/bas) -------- */
 .stats-section {
-  background:
-    radial-gradient(ellipse 90% 70% at 50% -10%, rgba(255,255,255,0.14) 0%, transparent 60%),
-    linear-gradient(160deg, #16537f 0%, #2f83c9 55%, #1f6ba3 100%);
-  background-repeat: no-repeat;
-  background-size: cover;
-  padding: 64px 0;
+  background: var(--azure-flat);
+  padding: 90px 0;
   color: var(--white);
   position: relative;
   overflow: hidden;
@@ -1983,7 +1896,7 @@ a {
 .footer-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 72px 24px 48px;
+  padding: 90px 24px 48px;
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1.5fr;
   gap: 48px;
@@ -2245,14 +2158,13 @@ a {
     top: 72px;
     left: 0;
     right: 0;
-    background: rgba(255,255,255,0.98);
-    backdrop-filter: blur(12px);
+    background: var(--azure-flat);
     padding: 24px;
     transform: translateY(-100%);
     opacity: 0;
     pointer-events: none;
     transition: all var(--transition);
-    border-bottom: 1px solid var(--gray-200);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.18);
   }
 
   .nav-menu.open {

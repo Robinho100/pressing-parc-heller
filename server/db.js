@@ -157,13 +157,9 @@ async function initDb() {
   const reviewsCount = await db.execute('SELECT COUNT(*) as count FROM reviews');
   if (!reviewsCount.rows[0].count) {
     const reviews = [
-      ['Paul', 'Paris · client fidèle depuis 10 ans', 'Très bon pressing. Des gens sympathiques et professionnels qui connaissent leur métier. 10 ans que je fais nettoyer mes costumes dans cet établissement. De loin le meilleur pressing des alentours.', 5, 'Google', 1],
-      ['Bénédicte', 'Antony', "Un travail de grande qualité. Si vous cherchez un bon pressing c'est la bonne adresse ! Mon manteau taché de peinture et couvert de bouloches est revenu comme neuf ! C'est un peu plus cher mais on s'y retrouve largement en rapport qualité/prix.", 5, 'Google', 2],
-      ['Jacques Brossard', 'Antony', "Venant d'être victime d'un incendie qui a ravagé notre appartement, nous avons trouvé auprès du Pressing du Parc Heller une aide technique des plus efficaces dans les délais les plus courts. Grâce à leur compétence, un grand nombre de vêtements ont pu être sauvés. Merci très sincèrement.", 5, 'Pages Jaunes', 3],
-      ['JM Paceux', 'Saint-Germain-en-Laye', "Je cherchais un bon pressing depuis longtemps et je vous recommande celui-ci. Travail très bien fait par des professionnels. Si vous avez des vêtements de qualité je vous le conseille, de plus l'accueil est agréable. Parking facile, rue en sens unique.", 5, 'Google', 4],
-      ['Sophie', 'Antony', "Très bon travail. Ils ont sauvé ma robe fétiche. Je la croyais fichue car après deux passages dans deux pressings ils n'ont rien pu faire, mais eux ils ont réussi — alors Merci !", 5, 'Google', 5],
-      ['M. Dupra', 'Antony', "J'ai trouvé dans ce pressing un très bon accueil et de très bons professionnels. Ayant subi un sinistre, ma garde-robe paraissait fichue. Ce pressing a fait preuve d'un grand professionnalisme et m'a sauvé la plupart de mes vêtements ! Merci à eux.", 5, 'Pages Jaunes', 6],
-      ['Christine', 'Antony', "Matériel à l'ancienne qui fonctionne très bien. Personnel accueillant et professionnel. Mes vêtements sont toujours rendus dans un état impeccable. Je recommande vivement cet établissement familial.", 5, 'Google', 7],
+      ['Bénédicte', 'Antony', "Un travail de grande qualité. Si vous cherchez un bon pressing c'est la bonne adresse ! Mon manteau taché de peinture et couvert de bouloches est revenu comme neuf ! C'est un peu plus cher mais on s'y retrouve largement en rapport qualité/prix.", 5, 'Google', 1],
+      ['Sophie', 'Antony', "Très bon travail. Ils ont sauvé ma robe fétiche. Je la croyais fichue car après deux passages dans deux pressings ils n'ont rien pu faire, mais eux ils ont réussi — alors Merci !", 5, 'Google', 2],
+      ['M. Dupra', 'Antony', "J'ai trouvé dans ce pressing un très bon accueil et de très bons professionnels. Ayant subi un sinistre, ma garde-robe paraissait fichue. Ce pressing a fait preuve d'un grand professionnalisme et m'a sauvé la plupart de mes vêtements ! Merci à eux.", 5, 'Pages Jaunes', 3],
     ];
     for (const r of reviews) {
       await db.execute({
@@ -173,6 +169,19 @@ async function initDb() {
     }
     console.log('✅ Avis clients insérés en base.');
   }
+
+  // Avis non vérifiés (repris de l'ancien site WEBCELOS, jamais confirmés comme
+  // réels) : on les retire définitivement, y compris sur une base déjà seedée
+  // (ex. prod) où le bloc de seed ci-dessus ne s'exécute plus.
+  await db.execute(`
+    DELETE FROM reviews WHERE auteur IN ('Paul', 'Jacques Brossard', 'JM Paceux', 'Christine')
+    AND texte IN (
+      'Très bon pressing. Des gens sympathiques et professionnels qui connaissent leur métier. 10 ans que je fais nettoyer mes costumes dans cet établissement. De loin le meilleur pressing des alentours.',
+      "Venant d'être victime d'un incendie qui a ravagé notre appartement, nous avons trouvé auprès du Pressing du Parc Heller une aide technique des plus efficaces dans les délais les plus courts. Grâce à leur compétence, un grand nombre de vêtements ont pu être sauvés. Merci très sincèrement.",
+      "Je cherchais un bon pressing depuis longtemps et je vous recommande celui-ci. Travail très bien fait par des professionnels. Si vous avez des vêtements de qualité je vous le conseille, de plus l'accueil est agréable. Parking facile, rue en sens unique.",
+      "Matériel à l'ancienne qui fonctionne très bien. Personnel accueillant et professionnel. Mes vêtements sont toujours rendus dans un état impeccable. Je recommande vivement cet établissement familial."
+    )
+  `);
 
   // Migrations : synchronisation des services et paramètres
   await db.execute("DELETE FROM services WHERE slug = 'nettoyage'");

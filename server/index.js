@@ -24,15 +24,29 @@ app.set('trust proxy', 1);
 // ============================================================
 // Le Worker Cloudflare `pressing-proxy` sert le site sur pressingduparcheller.fr
 // en relayant en interne vers pressing-parc-heller.alwaysdata.net avec le header
-// marqueur `x-proxied`. Une requête qui atteint l'ancien hôte SANS ce marqueur
-// vient donc d'un accès direct → on la redirige en 301 vers le domaine .fr.
-// (La condition sur le marqueur évite la boucle infinie avec le Worker.)
+// `x-proxied` = PROXY_SECRET (secret partagé Worker ↔ serveur). Toute requête
+// sans ce secret exact vient d'un accès direct qui contourne Cloudflare (et ses
+// règles de sécurité) → 301 vers le domaine .fr, donc repassage par Cloudflare.
+// (Le Worker envoie toujours le secret : pas de boucle infinie.)
+// Sans PROXY_SECRET défini, repli sur l'ancien comportement (simple présence du
+// header) pour ne pas casser le site pendant la mise en place.
 if (process.env.NODE_ENV === 'production') {
+  const crypto         = require('crypto');
   const CANONICAL_HOST = 'pressingduparcheller.fr';
-  const LEGACY_HOSTS   = ['pressing-parc-heller.alwaysdata.net'];
+  const PROXY_SECRET   = process.env.PROXY_SECRET || '';
+  if (!PROXY_SECRET) {
+    console.warn('⚠️  PROXY_SECRET non défini : accès direct à l\'hôte Alwaysdata non verrouillé.');
+  }
+  const secretOk = (value) => {
+    if (typeof value !== 'string') return false;
+    const a = Buffer.from(value);
+    const b = Buffer.from(PROXY_SECRET);
+    return a.length === b.length && crypto.timingSafeEqual(a, b);
+  };
   app.use((req, res, next) => {
-    const host = (req.headers.host || '').toLowerCase().split(':')[0];
-    if (LEGACY_HOSTS.includes(host) && !req.headers['x-proxied']) {
+    const marker  = req.headers['x-proxied'];
+    const proxied = PROXY_SECRET ? secretOk(marker) : Boolean(marker);
+    if (!proxied) {
       return res.redirect(301, `https://${CANONICAL_HOST}${req.originalUrl}`);
     }
     next();
